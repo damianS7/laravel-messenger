@@ -6,12 +6,14 @@
       </div>
     </div>
     <div class="col-9 sideBar-main">
-      <div class="row">
-        <div class="col-8 sideBar-name">
+      <div class="row h-auto">
+        <div class="col-12 sideBar-name">
           <span class="name-meta">{{ name }}</span>
         </div>
-        <div class="col-4 float-right sideBar-time">
-          <span class="time-meta float-right">18:18</span>
+      </div>
+      <div class="row">
+        <div class="col-12 sideBar-time">
+          <span class="time-meta">18:18</span>
         </div>
       </div>
     </div>
