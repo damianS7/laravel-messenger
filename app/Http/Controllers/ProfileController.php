@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
+use Auth;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        // Se necesita esta autentificado para llevar a cabo acciones
+        // de CRUD sobre las notas
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +22,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = Auth::user()->id;
+        $profile = Profile::where('user_id', $user_id)->get();
+
+        // Devolvemos el json con el perfil y codigo 200
+        return response()->json(['profile' => $profile], 200);
     }
 
     /**
