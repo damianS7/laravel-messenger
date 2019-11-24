@@ -28,7 +28,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        fetchContacts(context) {
+        fetchData(context) {
             axios.get("http://127.0.0.1:8000/contacts/").then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {

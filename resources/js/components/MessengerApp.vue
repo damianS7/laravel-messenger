@@ -24,11 +24,11 @@ import UserProfileComponent from "./UserProfile.vue";
 import ContactListComponent from "./ContactList.vue";
 import ContactProfileComponent from "./ContactProfile.vue";
 import ConversationComponent from "./Conversation.vue";
-import FindContactComponent from "./FindContactList.vue";
+import UserList from "./UserList.vue";
 import { mapActions } from "vuex";
 export default {
   methods: {
-    ...mapActions(["fetchContacts"])
+    ...mapActions(["fetchData"])
   },
   computed: {},
   components: {
@@ -36,11 +36,11 @@ export default {
     "contact-profile-menu": ContactProfileComponent,
     "user-contacts": ContactListComponent,
     "contact-conversation": ConversationComponent,
-    "contact-finder": FindContactComponent
+    "contact-finder": UserList
   },
   mounted() {
     console.log("mounted");
-    this.fetchContacts();
+    this.fetchData();
     // Carga los contactos del usuario
     //this.fetchContacts();
   }

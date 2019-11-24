@@ -18,6 +18,7 @@
             class="form-control"
             name="searchText"
             placeholder="Search People"
+            v-model="keyword"
           />
           <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
@@ -25,33 +26,32 @@
     </div>
 
     <div class="compose-sideBar">
-      <div class="row sideBar-body">
-        <div class="col-sm-3 col-xs-3 sideBar-avatar">
-          <div class="avatar-icon">
-            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" />
-          </div>
-        </div>
-        <div class="col-sm-9 col-xs-9 sideBar-main">
-          <div class="row">
-            <div class="col-sm-8 col-xs-8 sideBar-name">
-              <span class="name-meta">John Doe</span>
-            </div>
-            <div class="col-sm-4 col-xs-4 float-right sideBar-time">
-              <span class="time-meta float-right">
-                <button class="btn btn-sm btn-primary">ADD</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <user-list-item
+        v-for="(user, index) of filterUsers"
+        v-bind:key="index"
+        :name="user.name"
+        :phone="user.phone"
+      ></user-list-item>
     </div>
   </b-col>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import UserListItem from "./UserListItem.vue";
 export default {
   data: function() {
-    return {};
+    return {
+      keyword: ""
+    };
+  },
+  computed: {
+    ...mapState(["messenger_users"]),
+    filterUsers: function() {
+      return this.messenger_users.filter(contact =>
+        contact.name.toLowerCase().includes(this.keyword.toLowerCase())
+      );
+    }
   },
   methods: {
     hide() {
@@ -59,7 +59,7 @@ export default {
       div.style.left = "-100%";
     }
   },
-  components: {}
+  components: { "user-list-item": UserListItem }
 };
 </script>
 <style>
