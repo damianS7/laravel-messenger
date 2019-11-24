@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
+// Contactos (GET/ADD/DELETE)
+Route::get('/contacts', 'ContactController@index');
+// Route::post('/contacts/{user_id}', 'ContactController@store');
+// Route::get('/contacts/{contact_id}', 'ContactController@destroy');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Messages (GET/ADD)
+// Route::get('/messages/', 'MessengerController@index');
+// Route::post('/messages/', 'MessengerController@store');
