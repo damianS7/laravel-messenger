@@ -68001,27 +68001,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container app" }, [
-    _c("div", { staticClass: "row app-one" }, [
-      _c("div", { staticClass: "col-4 side" }, [
+  return _c(
+    "div",
+    { staticClass: "container app", attrs: { id: "app-wrap" } },
+    [
+      _c("div", { staticClass: "row app-one" }, [
+        _c("div", { staticClass: "col-4 side" }, [
+          _c(
+            "div",
+            { staticClass: "side-one" },
+            [_c("user-profile-menu"), _vm._v(" "), _c("user-contacts")],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "side-two" }, [_c("contact-finder")], 1)
+        ]),
+        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "side-one" },
-          [_c("user-profile-menu"), _vm._v(" "), _c("user-contacts")],
+          { staticClass: "col-8 conversation" },
+          [_c("contact-conversation")],
           1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "side-two" }, [_c("contact-finder")], 1)
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-8 conversation" },
-        [_c("contact-conversation")],
-        1
-      )
-    ])
-  ])
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -82203,6 +82207,31 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     contacts: [],
     conversations: [],
     messages: [{
+      id: 1,
+      name: 'damianS7',
+      content: 'Hello1',
+      isSender: false
+    }, {
+      id: 2,
+      name: 'damianS8',
+      content: 'Hello2',
+      isSender: false
+    }, {
+      id: 3,
+      name: 'damianS9',
+      content: 'Hello3',
+      isSender: true
+    }, {
+      id: 4,
+      name: 'damianS2',
+      content: 'Hello4',
+      isSender: false
+    }, {
+      id: 5,
+      name: 'damianS3',
+      content: 'Hello5',
+      isSender: true
+    }, {
       id: 1,
       name: 'damianS7',
       content: 'Hello1',

@@ -1,5 +1,5 @@
 <template>
-  <div class="container app">
+  <div id="app-wrap" class="container app">
     <div class="row app-one">
       <div class="col-4 side">
         <div class="side-one">

@@ -14,6 +14,11 @@ export default new Vuex.Store({
             { id: 3, name: 'damianS9', content: 'Hello3', isSender: true },
             { id: 4, name: 'damianS2', content: 'Hello4', isSender: false },
             { id: 5, name: 'damianS3', content: 'Hello5', isSender: true },
+            { id: 1, name: 'damianS7', content: 'Hello1', isSender: false },
+            { id: 2, name: 'damianS8', content: 'Hello2', isSender: false },
+            { id: 3, name: 'damianS9', content: 'Hello3', isSender: true },
+            { id: 4, name: 'damianS2', content: 'Hello4', isSender: false },
+            { id: 5, name: 'damianS3', content: 'Hello5', isSender: true }
         ]
     },
     getters: {
