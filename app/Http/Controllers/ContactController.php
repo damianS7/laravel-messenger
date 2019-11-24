@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Contact;
+use App\UserContact;
 use App\User;
+use Auth;
 
 class ContactController extends Controller
 {
@@ -22,13 +23,21 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $user_id = 1; // where
+        $user_id = Auth::user()->id;
+        
+        // Contactos disponibles en la app (Para que el usuario agrege)
+        // Importante que se muestren todos los usuarios excepto el nuestro
+        // y los que ya tenemos agregados a contactos
+        $contacts = User::where('id', '!=', $user_id)->orderBy('name', 'ASC')->get();
+
         // Obtenemos los contactos del usuario
-        //$contacts = Contact::orderBy('name', 'ASC')->get();
-        $contacts = User::orderBy('name', 'ASC')->get();
+        $user_contacts = UserContact::select(['users.name', 'users.phone'])
+            ->join('users', 'user_contacts.contact_id', '=', 'users.id')
+            ->where('user_contacts.user_id', $user_id)
+            ->get();
 
         // Devolvemos el json con las notas y codigo 200
-        return response()->json($contacts, 200);
+        return response()->json(['contacts' => $contacts, 'user_contacts' => $user_contacts], 200);
     }
 
     /**
