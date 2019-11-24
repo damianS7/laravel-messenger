@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class People extends Model
 {
     public $timestamps = false;
-    protected $table = "contacts";
+    protected $table = "users";
 }
