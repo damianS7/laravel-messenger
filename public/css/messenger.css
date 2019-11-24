@@ -1,7 +1,5 @@
 html,
-body,
-div,
-span {
+body {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -9,6 +7,16 @@ span {
   margin: 0;
   box-sizing: border-box;
 }
+
+.myhc {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 
 body {
   background: url("http://shurl.esy.es/y") no-repeat fixed center;
@@ -339,7 +347,7 @@ body {
 
 .message-body {
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 5px !important;
   width: auto;
   height: auto;
 }

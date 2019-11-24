@@ -1,5 +1,5 @@
 <template>
-  <b-col class="p-0">
+  <b-col class="p-0 side">
     <div class="row newMessage-heading">
       <div class="row newMessage-main">
         <div class="col-sm-2 col-xs-2 newMessage-back">
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="compose-sideBar">
+    <div class="compose-sideBar myhc">
       <user-list-item
         v-for="(user, index) of filterUsers"
         v-bind:key="index"

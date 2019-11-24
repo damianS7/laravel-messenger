@@ -1,5 +1,5 @@
 <template>
-  <b-col class="p-0">
+  <b-col class="p-0 side">
     <b-row class="searchBox">
       <div class="col-12 searchBox-inner">
         <div class="form-group has-feedback">
@@ -16,7 +16,7 @@
       </div>
     </b-row>
 
-    <div class="sideBar">
+    <div class="sideBar myhc">
       <contact-list-item
         v-for="(contact, index) of filterContacts"
         v-bind:key="index"
