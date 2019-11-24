@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserContact extends Model
+class Contact extends Model
 {
     public $timestamps = false;
     protected $table = "user_contacts";
-    //
 }

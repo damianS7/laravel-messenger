@@ -4,9 +4,9 @@
 
 use App\Model;
 use Faker\Generator as Faker;
-use App\UserContact;
+use App\Contact;
 
-$factory->define(UserContact::class, function (Faker $faker) {
+$factory->define(Contact::class, function (Faker $faker) {
     $user_ids = DB::table('users')->pluck('id');
     return [
         'user_id' => 1,
