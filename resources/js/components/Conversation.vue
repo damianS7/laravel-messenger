@@ -1,7 +1,5 @@
 <template>
   <div class="side">
-    <contact-profile></contact-profile>
-
     <div class="message" id="conversation">
       <conversation-message
         v-for="(message, index) of messages"
@@ -28,7 +26,6 @@
 </template>
 
 <script>
-import ContactProfile from "./ContactProfile.vue";
 import ConversationMessage from "./ConversationMessage.vue";
 import { mapState } from "vuex";
 export default {
@@ -39,7 +36,6 @@ export default {
     ...mapState(["messages"])
   },
   components: {
-    "contact-profile": ContactProfile,
     "conversation-message": ConversationMessage
   }
 };

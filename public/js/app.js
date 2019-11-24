@@ -1946,41 +1946,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ContactProfile.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ContactProfile.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log("Contact Profile mounted.");
-  },
-  components: {}
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Conversation.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Conversation.vue?vue&type=script&lang=js& ***!
@@ -1990,9 +1955,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ContactProfile_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactProfile.vue */ "./resources/js/components/ContactProfile.vue");
-/* harmony import */ var _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConversationMessage.vue */ "./resources/js/components/ConversationMessage.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConversationMessage.vue */ "./resources/js/components/ConversationMessage.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2026,19 +1990,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("Conversation mounted.");
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(["messages"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["messages"])),
   components: {
-    "contact-profile": _ContactProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    "conversation-message": _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    "conversation-message": _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -2053,7 +2013,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ContactProfile_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactProfile.vue */ "./resources/js/components/ContactProfile.vue");
 //
 //
 //
@@ -2065,14 +2024,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["name", "message", "isSender"],
   mounted: function mounted() {
     console.log("Conversation mounted.");
-  },
-  components: {
-    "contact-profile": _ContactProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -2089,10 +2044,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserProfile_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserProfile.vue */ "./resources/js/components/UserProfile.vue");
 /* harmony import */ var _ContactList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactList.vue */ "./resources/js/components/ContactList.vue");
-/* harmony import */ var _ContactProfile_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ContactProfile.vue */ "./resources/js/components/ContactProfile.vue");
-/* harmony import */ var _Conversation_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Conversation.vue */ "./resources/js/components/Conversation.vue");
-/* harmony import */ var _UserList_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserList.vue */ "./resources/js/components/UserList.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Conversation_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Conversation.vue */ "./resources/js/components/Conversation.vue");
+/* harmony import */ var _UserList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UserList.vue */ "./resources/js/components/UserList.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2120,21 +2074,58 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(["fetchData"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])(["fetchData"]), {
+    showPeople: function showPeople() {
+      var div = document.getElementsByClassName("side-people")[0];
+      div.style.left = "0%";
+    },
+    showProfile: function showProfile() {
+      var div = document.getElementsByClassName("side-profile")[0];
+      div.style.left = "0%";
+    }
+  }),
   computed: {},
   components: {
-    "user-profile-menu": _UserProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    "contact-profile-menu": _ContactProfile_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    "user-contacts": _ContactList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    "contact-conversation": _Conversation_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    "contact-finder": _UserList_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    profile: _UserProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    contacts: _ContactList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    conversation: _Conversation_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    "people-finder": _UserList_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   mounted: function mounted() {
     console.log("mounted");
@@ -2219,7 +2210,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   methods: {
     hide: function hide() {
-      var div = document.getElementsByClassName("side-two")[0];
+      var div = document.getElementsByClassName("side-people")[0];
       div.style.left = "-100%";
     }
   },
@@ -2297,23 +2288,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      isHidden: true
+      isHiddenProfile: true
     };
   },
   mounted: function mounted() {
     console.log("Component mounted.");
   },
   methods: {
-    show: function show() {
-      var div = document.getElementsByClassName("side-two")[0];
-      div.style.left = "0";
-    },
-    hide: function hide() {
-      var div = document.getElementsByClassName("side-two")[0];
-      div.style.left = "0";
+    hideProfile: function hideProfile() {
+      var div = document.getElementsByClassName("side-profile")[0];
+      div.style.left = "-100%";
     }
   },
   components: {}
@@ -35551,7 +35557,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background: url(\"http://shurl.esy.es/y\") no-repeat fixed center;\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-one {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-two {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: relative;\r\n  top: -100%;\r\n  left: -100%;\r\n  -webkit-transition: left 0.3s ease;\r\n  transition: left 0.3s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  /*background: url(\"w.jpg\") no-repeat fixed center;*/\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
+exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background: url(\"http://shurl.esy.es/y\") no-repeat fixed center;\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-people{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  /*background: url(\"w.jpg\") no-repeat fixed center;*/\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
 
 // exports
 
@@ -67691,7 +67697,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "b-col",
-    { staticClass: "p-0 side" },
+    { staticClass: "side" },
     [
       _c("b-row", { staticClass: "searchBox" }, [
         _c("div", { staticClass: "col-12 searchBox-inner" }, [
@@ -67815,58 +67821,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ContactProfile.vue?vue&type=template&id=f5feafd8&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ContactProfile.vue?vue&type=template&id=f5feafd8& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row heading" }, [
-      _c("div", { staticClass: "col-4 heading-avatar" }, [
-        _c("div", { staticClass: "heading-avatar-icon" }, [
-          _c("img", {
-            attrs: { src: "https://bootdey.com/img/Content/avatar/avatar6.png" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6 heading-name" }, [
-        _c("a", { staticClass: "heading-name-meta" }, [_vm._v("John Doe")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "heading-online" }, [_vm._v("Online")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2 heading-dot float-right" }, [
-        _c("i", {
-          staticClass: "fa fa-ellipsis-v fa-2x float-right",
-          attrs: { "aria-hidden": "true" }
-        })
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Conversation.vue?vue&type=template&id=63f956ee&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Conversation.vue?vue&type=template&id=63f956ee& ***!
@@ -67882,32 +67836,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "side" },
-    [
-      _c("contact-profile"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "message", attrs: { id: "conversation" } },
-        _vm._l(_vm.messages, function(message, index) {
-          return _c("conversation-message", {
-            key: index,
-            attrs: {
-              message: message.content,
-              name: message.name,
-              isSender: message.isSender
-            }
-          })
-        }),
-        1
-      ),
-      _vm._v(" "),
-      _vm._m(0)
-    ],
-    1
-  )
+  return _c("div", { staticClass: "side" }, [
+    _c(
+      "div",
+      { staticClass: "message", attrs: { id: "conversation" } },
+      _vm._l(_vm.messages, function(message, index) {
+        return _c("conversation-message", {
+          key: index,
+          attrs: {
+            message: message.content,
+            name: message.name,
+            isSender: message.isSender
+          }
+        })
+      }),
+      1
+    ),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -68006,28 +67953,93 @@ var render = function() {
     { staticClass: "container app", attrs: { id: "app-wrap" } },
     [
       _c("div", { staticClass: "row app-one" }, [
-        _c("div", { staticClass: "col-4 side" }, [
+        _c("div", { staticClass: "col-12 col-sm-4 side" }, [
           _c(
             "div",
-            { staticClass: "side-one" },
-            [_c("user-profile-menu"), _vm._v(" "), _c("user-contacts")],
+            { staticClass: "side-left" },
+            [
+              _c("b-row", { staticClass: "heading" }, [
+                _c("div", { staticClass: "col-6 heading-avatar" }, [
+                  _c("div", { staticClass: "heading-avatar-icon" }, [
+                    _c("img", {
+                      attrs: {
+                        src:
+                          "https://bootdey.com/img/Content/avatar/avatar1.png"
+                      },
+                      on: { click: _vm.showProfile }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-4 heading-compose float-right" },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-comments fa-2x float-right",
+                      attrs: { "aria-hidden": "true" },
+                      on: { click: _vm.showPeople }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-2 heading-dot float-right" }, [
+                  _c("i", {
+                    staticClass: "fa fa-ellipsis-v fa-2x float-right",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("contacts")
+            ],
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "side-two" }, [_c("contact-finder")], 1)
+          _c("div", { staticClass: "side-people" }, [_c("people-finder")], 1),
+          _vm._v(" "),
+          _c("div", { staticClass: "side-profile" }, [_c("profile")], 1)
         ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-8 conversation" },
-          [_c("contact-conversation")],
+          { staticClass: "col-12 col-sm-8 conversation" },
+          [_vm._m(0), _vm._v(" "), _c("conversation")],
           1
         )
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row heading" }, [
+      _c("div", { staticClass: "col-4 heading-avatar" }, [
+        _c("div", { staticClass: "heading-avatar-icon" }, [
+          _c("img", {
+            attrs: { src: "https://bootdey.com/img/Content/avatar/avatar6.png" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-6 heading-name" }, [
+        _c("a", { staticClass: "heading-name-meta" }, [_vm._v("John Doe")]),
+        _vm._v(" "),
+        _c("span", { staticClass: "heading-online" }, [_vm._v("Online")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2 heading-dot float-right" }, [
+        _c("i", {
+          staticClass: "fa fa-ellipsis-v fa-2x float-right",
+          attrs: { "aria-hidden": "true" }
+        })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -68202,45 +68214,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row heading" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-4 heading-compose float-right" }, [
-      _c("i", {
-        staticClass: "fa fa-comments fa-2x float-right",
-        attrs: { "aria-hidden": "true" },
-        on: { click: _vm.show }
-      })
+  return _c("b-col", { staticClass: "side" }, [
+    _c("div", { staticClass: "row newMessage-heading" }, [
+      _c("div", { staticClass: "row newMessage-main" }, [
+        _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
+          _c("i", {
+            staticClass: "fa fa-arrow-left",
+            attrs: { "aria-hidden": "true" },
+            on: { click: _vm.hideProfile }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-10 col-xs-10 newMessage-title" }, [
+          _vm._v("Profile")
+        ])
+      ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6 heading-avatar" }, [
-      _c("div", { staticClass: "heading-avatar-icon" }, [
-        _c("img", {
-          attrs: { src: "https://bootdey.com/img/Content/avatar/avatar1.png" }
-        })
+    _c("div", { staticClass: "row composeBox h-auto" }, [
+      _c(
+        "div",
+        { staticClass: "col-12 composeBox-inner heading-avatar h-auto" },
+        [
+          _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
+            _c("img", {
+              staticClass: "img-fluid",
+              attrs: {
+                src: "https://bootdey.com/img/Content/avatar/avatar1.png"
+              }
+            })
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "compose-sideBar myhc" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [_vm._v("Alias:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12" }, [
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", value: "" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [_vm._v("Description:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12" }, [
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", value: "" }
+          })
+        ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2 heading-dot float-right" }, [
-      _c("i", {
-        staticClass: "fa fa-ellipsis-v fa-2x float-right",
-        attrs: { "aria-hidden": "true" }
-      })
-    ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -81680,75 +81713,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactListItem_vue_vue_type_template_id_5b8aa4f6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactListItem_vue_vue_type_template_id_5b8aa4f6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ContactProfile.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/ContactProfile.vue ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ContactProfile_vue_vue_type_template_id_f5feafd8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactProfile.vue?vue&type=template&id=f5feafd8& */ "./resources/js/components/ContactProfile.vue?vue&type=template&id=f5feafd8&");
-/* harmony import */ var _ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactProfile.vue?vue&type=script&lang=js& */ "./resources/js/components/ContactProfile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ContactProfile_vue_vue_type_template_id_f5feafd8___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ContactProfile_vue_vue_type_template_id_f5feafd8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ContactProfile.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ContactProfile.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/ContactProfile.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ContactProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ContactProfile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ContactProfile.vue?vue&type=template&id=f5feafd8&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/ContactProfile.vue?vue&type=template&id=f5feafd8& ***!
-  \***********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_f5feafd8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ContactProfile.vue?vue&type=template&id=f5feafd8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ContactProfile.vue?vue&type=template&id=f5feafd8&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_f5feafd8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_f5feafd8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

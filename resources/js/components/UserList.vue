@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     hide() {
-      var div = document.getElementsByClassName("side-two")[0];
+      var div = document.getElementsByClassName("side-people")[0];
       div.style.left = "-100%";
     }
   },

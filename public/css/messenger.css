@@ -50,7 +50,7 @@ body {
   margin: 0;
   height: 100%;
 }
-.side-one {
+.side-left {
   padding: 0;
   margin: 0;
   height: 100%;
@@ -61,17 +61,30 @@ body {
   top: 0;
 }
 
-.side-two {
+.side-profile {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  position: absolute;
+  top: 0%;
+  left: -100%;
+  -webkit-transition: left 1s ease;
+  transition: left 1s ease;
+}
+
+.side-people{
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
   z-index: 2;
-  position: relative;
-  top: -100%;
+  position: absolute;
+  top: 0%;
   left: -100%;
-  -webkit-transition: left 0.3s ease;
-  transition: left 0.3s ease;
+  -webkit-transition: left 1s ease;
+  transition: left 1s ease;
 }
 
 .heading {
@@ -86,6 +99,11 @@ body {
 .heading-avatar {
   padding: 0;
   cursor: pointer;
+}
+
+.profile-avatar-icon img {
+  height: 200px;
+  width: 100%;
 }
 
 .heading-avatar-icon img {

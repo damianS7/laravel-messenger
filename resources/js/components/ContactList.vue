@@ -1,5 +1,5 @@
 <template>
-  <b-col class="p-0 side">
+  <b-col class="side">
     <b-row class="searchBox">
       <div class="col-12 searchBox-inner">
         <div class="form-group has-feedback">

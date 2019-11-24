@@ -10,13 +10,11 @@
 </template>
 
 <script>
-import ContactProfile from "./ContactProfile.vue";
 export default {
   props: ["name", "message", "isSender"],
   mounted() {
     console.log("Conversation mounted.");
-  },
-  components: { "contact-profile": ContactProfile }
+  }
 };
 </script>
 <style>
