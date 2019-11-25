@@ -12,9 +12,7 @@
 <script>
 export default {
   props: ["name", "message", "isSender"],
-  mounted() {
-    console.log("Conversation mounted.");
-  }
+  mounted() {}
 };
 </script>
 <style>
