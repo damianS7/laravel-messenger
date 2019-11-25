@@ -56,73 +56,28 @@ class ConversationController extends Controller
         
         $conversation_id = $conversation->id;
 
-        $messages = Message::where(['conversation_id' => $conversation_id])->orderBy('sent_at', 'ASC')->get();
+        $messages = Message::select(['messages.*', 'users.name'])
+        ->join('users', 'messages.author_id', '=', 'users.id')
+        ->where(['messages.conversation_id' => $conversation_id])
+        ->orderBy('sent_at', 'ASC')
+        ->get();
         return response()->json(['conversation' => $conversation_id, 'messages' => $messages], 200);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Agrega un mensaje nuevo a una conversacion
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function appendMessage(Request $request, $conversation_id)
     {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function fetchLastMessages(Request $request, $conversation_id, $after_date)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $messages = Message::where(['conversation_id' => $conversation_id])
+        ->whereDate('sent_at', '>', $after_date)
+        ->orderBy('sent_at', 'ASC')->get();
+        return response()->json(['messages' => $messages], 200);
     }
 }

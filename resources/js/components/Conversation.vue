@@ -4,9 +4,10 @@
       <conversation-message
         v-for="(message, index) of messages"
         v-bind:key="index"
+        :author_id="message.author_id"
         :message="message.content"
         :name="message.name"
-        :isSender="message.isSender"
+        :isSender="isSender(message.author_id)"
       ></conversation-message>
     </div>
 
@@ -41,6 +42,12 @@ export default {
     };
   },
   methods: {
+    isSender(author_id) {
+      if (author_id == this.$store.state.profile.user_id) {
+        return true;
+      }
+      return false;
+    },
     sendMessage(event) {
       this.$store.commit("pushMessage", this.input);
       this.input = "";

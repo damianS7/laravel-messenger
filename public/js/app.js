@@ -2003,6 +2003,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2012,6 +2013,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
+    isSender: function isSender(author_id) {
+      if (author_id == this.$store.state.profile.user_id) {
+        return true;
+      }
+
+      return false;
+    },
     sendMessage: function sendMessage(event) {
       this.$store.commit("pushMessage", this.input);
       this.input = "";
@@ -67896,9 +67904,10 @@ var render = function() {
         return _c("conversation-message", {
           key: index,
           attrs: {
+            author_id: message.author_id,
             message: message.content,
             name: message.name,
-            isSender: message.isSender
+            isSender: _vm.isSender(message.author_id)
           }
         })
       }),
