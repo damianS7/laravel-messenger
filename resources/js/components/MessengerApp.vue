@@ -31,7 +31,7 @@
         </div>
 
         <div class="side-profile">
-          <profile :name="profile.name" :info="profile.info" :avatar="profile.avatar"></profile>
+          <profile></profile>
         </div>
       </div>
 

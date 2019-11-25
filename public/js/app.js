@@ -1886,8 +1886,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
-    fetchContactData: function fetchContactData(contact_id) {
-      this.$store.dispatch("fetchConversation", contact_id);
+    fetchContactData: function fetchContactData(contact) {
+      this.$store.commit("setSelectedContact", contact);
+      this.$store.dispatch("fetchConversation", contact.id);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
@@ -2150,7 +2151,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       div.style.left = "0%";
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(["profile"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])(["fetchData"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(["profile", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])(["fetchData"])),
   components: {
     profile: _UserProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     contacts: _ContactList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2300,6 +2301,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2335,21 +2343,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name", "info", "avatar"],
   data: function data() {
     return {
+      stateAlias: this.name,
       stateInfo: this.info
     };
   },
-  computed: {},
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["profile"])),
   methods: {
     hideProfile: function hideProfile() {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "-100%";
     },
-    updateAlias: function updateAlias(e) {
-      this.$store.commit("updateProfile", e.target.value, this.stateInfo, this.stateInfo);
+    updateProfile: function updateProfile(e) {
+      /*this.$store.commit(
+        "updateProfile",
+        this.stateAlias,
+        this.stateInfo,
+        this.stateInfo
+      );*/
+      this.$store.dispatch("updateProfile");
     }
   },
   mounted: function mounted() {},
@@ -67780,7 +67796,7 @@ var render = function() {
             },
             nativeOn: {
               click: function($event) {
-                return _vm.fetchContactData(contact.id)
+                return _vm.fetchContactData(contact)
               }
             }
           })
@@ -68072,20 +68088,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "side-people" }, [_c("people-finder")], 1),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "side-profile" },
-            [
-              _c("profile", {
-                attrs: {
-                  name: _vm.profile.name,
-                  info: _vm.profile.info,
-                  avatar: _vm.profile.avatar
-                }
-              })
-            ],
-            1
-          )
+          _c("div", { staticClass: "side-profile" }, [_c("profile")], 1)
         ]),
         _vm._v(" "),
         _c(
@@ -68097,7 +68100,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-6 heading-name" }, [
                 _c("a", { staticClass: "heading-name-meta" }, [
-                  _vm._v(_vm._s(_vm.profile.name))
+                  _vm._v(_vm._s(_vm.selected_contact.name))
                 ]),
                 _vm._v(" "),
                 _c("span", { staticClass: "heading-online" }, [
@@ -68315,7 +68318,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("b-col", { staticClass: "side" }, [
+  return _c("b-col", { staticClass: "p-0 h-100" }, [
     _c("div", { staticClass: "row newMessage-heading" }, [
       _c("div", { staticClass: "row newMessage-main" }, [
         _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
@@ -68349,29 +68352,62 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "compose-sideBar myhc" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [_vm._v("Alias:")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.name },
-            on: { input: _vm.updateAlias }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12" }, [_vm._v("Description:")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text" },
-            domProps: { value: _vm.info }
-          })
+    _c("div", { staticClass: "compose-sideBar" }, [
+      _c("div", { staticClass: "compose-sideBar myhc" }, [
+        _c("div", { staticClass: "row sideBar-body" }, [
+          _c("div", { staticClass: "col-12" }, [_vm._v("Alias:")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.profile.name,
+                  expression: "profile.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.profile.name },
+              on: {
+                change: _vm.updateProfile,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.profile, "name", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [_vm._v("About you:")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.profile.info,
+                  expression: "profile.info"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { rows: "4" },
+              domProps: { value: _vm.profile.info },
+              on: {
+                change: _vm.updateProfile,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.profile, "info", $event.target.value)
+                }
+              }
+            })
+          ])
         ])
       ])
     ])
@@ -82273,6 +82309,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     people: [],
     contacts: [],
+    selected_contact: {},
     profile: {},
     conversation: [],
     messages: [{
@@ -82327,7 +82364,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       isSender: true
     }]
   },
-  getters: {},
+  getters: {
+    getSelectedContact: function getSelectedContact(state, getters) {
+      return state.selected_contact;
+    }
+  },
   mutations: {
     setMessengerUsers: function setMessengerUsers(state, users) {
       state.people = users;
@@ -82353,11 +82394,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     setMessages: function setMessages(state, messages) {
       state.messages = messages;
+    },
+    setSelectedContact: function setSelectedContact(state, contact) {
+      state.selected_contact = contact;
     }
   },
   actions: {
-    updateProfile: function updateProfile(context, name, info, avatar) {
-      context.commit('updateProfile', name, info, avatar);
+    updateProfile: function updateProfile(context) {
+      //context.commit('updateProfile', name, info, avatar);
+      var profile = this.state.profile;
+      axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
+        profile: profile,
+        _method: "put"
+      });
     },
     fetchConversation: function fetchConversation(context, contact_id) {
       axios.get("http://127.0.0.1:8000/conversation/" + contact_id).then(function (response) {

@@ -54,8 +54,14 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        updateProfile(context, name, info, avatar) {
-            context.commit('updateProfile', name, info, avatar);
+        updateProfile(context) {
+            //context.commit('updateProfile', name, info, avatar);
+
+            var profile = this.state.profile;
+            axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
+                profile: profile,
+                _method: "put"
+            });
         },
         fetchConversation(context, contact_id) {
             axios.get("http://127.0.0.1:8000/conversation/" + contact_id).then(function (response) {
@@ -64,6 +70,7 @@ export default new Vuex.Store({
                     // Agregamos las notas al array
                     context.commit('setMessages', response["data"]['messages']);
                 }
+
             });
         },
         fetchData(context) {

@@ -2,31 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Profile;
-use Auth;
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class PeopleController extends Controller
 {
     public function __construct()
     {
         // Se necesita esta autentificado para llevar a cabo acciones
-        // de CRUD sobre el perfil
+        // de CRUD sobre las notas
         $this->middleware('auth');
     }
     
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($keyword = '')
     {
+        // Mostrar gente de forma aleatorioa TOP 100
         $user_id = Auth::user()->id;
-        $profile = Profile::where('user_id', $user_id)->get();
+        
+        $people = User::where('id', '!=', $user_id)->orderBy('name', 'ASC')->get();
 
-        // Devolvemos el json con el perfil y codigo 200
-        return response()->json(['profile' => $profile], 200);
+        // Buscar gente con el keyword ...
+        if (!empty($keyword)) {
+        }
     }
 
     /**
@@ -79,15 +81,19 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $profile_id)
+    public function update(Request $request, $id)
     {
-        $user_id = Auth::user()->id;
-        $profile = Profile::where(['id' => $profile_id ,'user_id' => $user_id])->first();
-        $profile->name = $request['profile']['name'];
-        $profile->info = $request['profile']['info'];
-        $profile->save();
-        
-        // Devolvemos el json con el perfil y codigo 200
-        return response()->json(['profile' => $profile], 200);
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
