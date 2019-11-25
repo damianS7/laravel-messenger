@@ -38,7 +38,7 @@
 
 <script>
 import { mapState } from "vuex";
-import UserListItem from "./UserListItem.vue";
+import PeopleListItem from "./PeopleListItem.vue";
 export default {
   data: function() {
     return {
@@ -46,9 +46,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(["messenger_users"]),
+    ...mapState(["people"]),
     filterUsers: function() {
-      return this.messenger_users.filter(contact =>
+      return this.people.filter(contact =>
         contact.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     }
@@ -59,7 +59,7 @@ export default {
       div.style.left = "-100%";
     }
   },
-  components: { "user-list-item": UserListItem }
+  components: { "user-list-item": PeopleListItem }
 };
 </script>
 <style>
