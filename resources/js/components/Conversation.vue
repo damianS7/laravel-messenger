@@ -15,7 +15,13 @@
         <i class="fa fa-smile-o fa-2x"></i>
       </div>
       <div class="col-10 reply-main">
-        <textarea class="form-control" rows="1" id="comment"></textarea>
+        <textarea
+          v-on:keyup.enter="sendMessage"
+          v-model="input"
+          class="form-control"
+          rows="1"
+          id="comment"
+        ></textarea>
       </div>
 
       <div class="col-1 reply-send">
@@ -29,8 +35,21 @@
 import ConversationMessage from "./ConversationMessage.vue";
 import { mapState } from "vuex";
 export default {
-  mounted() {
-    console.log("Conversation mounted.");
+  data: function() {
+    return {
+      input: ""
+    };
+  },
+  methods: {
+    sendMessage(event) {
+      this.$store.commit("pushMessage", this.input);
+      this.input = "";
+    },
+    appendMessage(message) {}
+  },
+  updated() {
+    var div = document.getElementById("conversation");
+    div.scrollTop = div.scrollHeight;
   },
   computed: {
     ...mapState(["messages"])
