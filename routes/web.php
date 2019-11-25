@@ -18,6 +18,7 @@ Auth::routes();
 // Contactos (GET/ADD/DELETE)
 Route::get('/contacts', 'ContactController@index');
 Route::get('/profile', 'ProfileController@index');
+Route::get('/conversation/{contact_id}', 'ConversationController@index');
 // Route::post('/contacts/{user_id}', 'ContactController@store');
 // Route::get('/contacts/{contact_id}', 'ContactController@destroy');
 
