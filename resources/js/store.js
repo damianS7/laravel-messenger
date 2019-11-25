@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         people: [],
         contacts: [],
+        selected_contact: {},
         profile: {},
         conversation: [],
         messages: [
@@ -23,7 +24,9 @@ export default new Vuex.Store({
         ]
     },
     getters: {
-
+        getSelectedContact: (state, getters) => {
+            return state.selected_contact;
+        },
     },
     mutations: {
         setMessengerUsers(state, users) {
@@ -45,6 +48,9 @@ export default new Vuex.Store({
         },
         setMessages(state, messages) {
             state.messages = messages;
+        },
+        setSelectedContact(state, contact) {
+            state.selected_contact = contact;
         }
     },
     actions: {

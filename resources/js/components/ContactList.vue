@@ -23,7 +23,7 @@
         :contact="contact"
         :name="contact.name"
         :phone="contact.phone"
-        @click.native="fetchContactData(contact.id)"
+        @click.native="fetchContactData(contact)"
       ></contact-list-item>
     </div>
   </b-col>
@@ -40,8 +40,9 @@ export default {
     };
   },
   methods: {
-    fetchContactData(contact_id) {
-      this.$store.dispatch("fetchConversation", contact_id);
+    fetchContactData(contact) {
+      this.$store.commit("setSelectedContact", contact);
+      this.$store.dispatch("fetchConversation", contact.id);
     }
   },
   computed: {

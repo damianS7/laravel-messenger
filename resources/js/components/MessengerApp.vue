@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a class="heading-name-meta">{{profile.name}}</a>
+            <a class="heading-name-meta">{{ selected_contact.name }}</a>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
@@ -61,7 +61,7 @@ import UserProfileComponent from "./UserProfile.vue";
 import ContactListComponent from "./ContactList.vue";
 import ConversationComponent from "./Conversation.vue";
 import PeopleList from "./PeopleList.vue";
-import { mapState, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   methods: {
     showPeople() {
@@ -74,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["profile"]),
+    ...mapState(["profile", "selected_contact"]),
     ...mapActions(["fetchData"])
   },
   components: {
