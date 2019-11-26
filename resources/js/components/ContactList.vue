@@ -20,10 +20,11 @@
       <contact-list-item
         v-for="(contact, index) of filterContacts"
         v-bind:key="index"
-        :contact="contact"
-        :name="contact.name"
-        :phone="contact.phone"
-        @click.native="fetchContactData(contact)"
+        :index="index"
+        :alias="contact.profile.alias"
+        :name="contact.profile.name"
+        :phone="contact.profile.phone"
+        @click.native="contactEvents(contact)"
       ></contact-list-item>
     </div>
   </b-col>
@@ -40,16 +41,15 @@ export default {
     };
   },
   methods: {
-    fetchContactData(contact) {
+    contactEvents(contact) {
       this.$store.commit("setSelectedContact", contact);
-      this.$store.dispatch("fetchConversation", contact.id);
     }
   },
   computed: {
     ...mapState(["contacts"]),
     filterContacts: function() {
       return this.contacts.filter(contact =>
-        contact.name.toLowerCase().includes(this.keyword.toLowerCase())
+        contact.profile.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     }
   },

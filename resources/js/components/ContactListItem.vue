@@ -8,12 +8,13 @@
     <div class="col-9 sideBar-main">
       <div class="row h-auto">
         <div class="col-12 sideBar-name">
-          <span class="name-meta">{{ name }}</span>
+          <span v-if="alias !== null" class="name-meta">{{ alias }}</span>
+          <span v-else class="name-meta">{{ name }}</span>
         </div>
       </div>
       <div class="row">
         <div class="col-12 sideBar-time">
-          <span class="time-meta">18:18</span>
+          <span class="time-meta">{{ lastMessageDate }}</span>
         </div>
       </div>
     </div>
@@ -23,9 +24,19 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["name"],
+  props: ["name", "id", "index", "alias"],
+  methods: {},
   computed: {
-    ...mapState(["contacts"])
+    ...mapState(["contacts"]),
+    lastMessageDate: function() {
+      var contacts = this.$store.state.contacts;
+      for (var index in contacts) {
+        var contact = contacts[index];
+        var count = contact.conversation.messages.length;
+        return contact.conversation.messages[count - 1].sent_at;
+      }
+      //return this.$store.getters.lastMessageTime;
+    }
   }
 };
 </script>
