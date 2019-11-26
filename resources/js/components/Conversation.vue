@@ -2,11 +2,13 @@
   <div class="side">
     <div class="message" id="conversation">
       <conversation-message
-        v-for="(message, index) of messages"
+        v-for="(message, index) of selected_contact.conversation.messages"
         v-bind:key="index"
+        :alias="message.alias"
         :author_id="message.author_id"
         :message="message.content"
         :name="message.name"
+        :sent_at="message.sent_at"
         :isSender="isSender(message.author_id)"
       ></conversation-message>
     </div>
@@ -49,7 +51,7 @@ export default {
       return false;
     },
     sendMessage(event) {
-      this.$store.commit("pushMessage", this.input);
+      this.$store.dispatch("postMessage", this.input);
       this.input = "";
     },
     appendMessage(message) {}
@@ -59,7 +61,7 @@ export default {
     div.scrollTop = div.scrollHeight;
   },
   computed: {
-    ...mapState(["messages"])
+    ...mapState(["selected_contact"])
   },
   components: {
     "conversation-message": ConversationMessage
