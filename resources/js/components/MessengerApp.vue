@@ -11,7 +11,7 @@
             </div>
 
             <div class="col-4 heading-name">
-              <a class="heading-name-meta">{{profile.name}}</a>
+              <a class="heading-name-meta">{{ profile.alias }}</a>
               <span class="heading-online">Online</span>
             </div>
 
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a class="heading-name-meta">{{ selected_contact.name }}</a>
+            <a class="heading-name-meta">{{ selected_contact.profile.name }}</a>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
@@ -71,6 +71,15 @@ export default {
     showProfile() {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "0%";
+    },
+    init() {
+      // Peticion al servidor de los datos necesarios para inicializar la app
+      this.$store.dispatch("fetchData");
+
+      // Timer para enviar peticiones al servidor en busca de mensajes nuevos
+      window.setInterval(() => {
+        this.$store.dispatch("fetchLastMessages");
+      }, 2000);
     }
   },
   computed: {
@@ -84,7 +93,7 @@ export default {
     "people-finder": PeopleList
   },
   mounted() {
-    this.fetchData;
+    this.init();
   }
 };
 </script>

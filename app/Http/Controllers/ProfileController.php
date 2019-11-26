@@ -14,6 +14,19 @@ class ProfileController extends Controller
         // de CRUD sobre el perfil
         $this->middleware('auth');
     }
+
+    public static function getProfile($user_id)
+    {
+        // SELECT users.id, users.name, users.phone, users.email, users.created_at AS member_since, profiles.avatar, profiles.info FROM users
+        // LEFT JOIN profiles ON users.id = profiles.user_id
+        return Profile::select(['users.id AS user_id', 'users.name',
+        'profiles.alias', 'profiles.avatar', 'profiles.info',
+        'users.phone', 'users.email', 'users.created_at AS member_since'])
+        ->from('users')
+        ->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
+        ->where('users.id', $user_id)
+        ->first();
+    }
     
     /**
      * Display a listing of the resource.
@@ -83,7 +96,7 @@ class ProfileController extends Controller
     {
         $user_id = Auth::user()->id;
         $profile = Profile::where(['id' => $profile_id ,'user_id' => $user_id])->first();
-        $profile->name = $request['profile']['name'];
+        $profile->alias = $request['profile']['alias'];
         $profile->info = $request['profile']['info'];
         $profile->save();
         

@@ -1877,6 +1877,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1886,9 +1887,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
-    fetchContactData: function fetchContactData(contact) {
+    contactEvents: function contactEvents(contact) {
       this.$store.commit("setSelectedContact", contact);
-      this.$store.dispatch("fetchConversation", contact.id);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
@@ -1896,7 +1896,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       return this.contacts.filter(function (contact) {
-        return contact.name.toLowerCase().includes(_this.keyword.toLowerCase());
+        return contact.profile.name.toLowerCase().includes(_this.keyword.toLowerCase());
       });
     }
   }),
@@ -1945,10 +1945,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]))
+  props: ["name", "id", "index", "alias"],
+  methods: {},
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
+    lastMessageDate: function lastMessageDate() {
+      var contacts = this.$store.state.contacts;
+
+      for (var index in contacts) {
+        var contact = contacts[index];
+        var count = contact.conversation.messages.length;
+        return contact.conversation.messages[count - 1].sent_at;
+      } //return this.$store.getters.lastMessageTime;
+
+    }
+  })
 });
 
 /***/ }),
@@ -2004,6 +2017,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2021,7 +2036,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return false;
     },
     sendMessage: function sendMessage(event) {
-      this.$store.commit("pushMessage", this.input);
+      this.$store.dispatch("postMessage", this.input);
       this.input = "";
     },
     appendMessage: function appendMessage(message) {}
@@ -2030,7 +2045,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["messages"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_contact"])),
   components: {
     "conversation-message": _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -2058,9 +2073,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name", "message", "isSender"],
-  mounted: function mounted() {}
+  props: ["name", "message", "isSender", "alias", "sent_at"]
 });
 
 /***/ }),
@@ -2157,6 +2173,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     showProfile: function showProfile() {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "0%";
+    },
+    init: function init() {
+      var _this = this;
+
+      // Peticion al servidor de los datos necesarios para inicializar la app
+      this.$store.dispatch("fetchData"); // Timer para enviar peticiones al servidor en busca de mensajes nuevos
+
+      window.setInterval(function () {
+        _this.$store.dispatch("fetchLastMessages");
+      }, 2000);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(["profile", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])(["fetchData"])),
@@ -2167,7 +2193,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     "people-finder": _PeopleList_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   mounted: function mounted() {
-    this.fetchData;
+    this.init();
   }
 });
 
@@ -67798,13 +67824,14 @@ var render = function() {
           return _c("contact-list-item", {
             key: index,
             attrs: {
-              contact: contact,
-              name: contact.name,
-              phone: contact.phone
+              index: index,
+              alias: contact.profile.alias,
+              name: contact.profile.name,
+              phone: contact.profile.phone
             },
             nativeOn: {
               click: function($event) {
-                return _vm.fetchContactData(contact)
+                return _vm.contactEvents(contact)
               }
             }
           })
@@ -67843,11 +67870,23 @@ var render = function() {
     _c("div", { staticClass: "col-9 sideBar-main" }, [
       _c("div", { staticClass: "row h-auto" }, [
         _c("div", { staticClass: "col-12 sideBar-name" }, [
-          _c("span", { staticClass: "name-meta" }, [_vm._v(_vm._s(_vm.name))])
+          _vm.alias !== null
+            ? _c("span", { staticClass: "name-meta" }, [
+                _vm._v(_vm._s(_vm.alias))
+              ])
+            : _c("span", { staticClass: "name-meta" }, [
+                _vm._v(_vm._s(_vm.name))
+              ])
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 sideBar-time" }, [
+          _c("span", { staticClass: "time-meta" }, [
+            _vm._v(_vm._s(_vm.lastMessageDate))
+          ])
+        ])
+      ])
     ])
   ])
 }
@@ -67861,16 +67900,6 @@ var staticRenderFns = [
         _c("img", {
           attrs: { src: "https://bootdey.com/img/Content/avatar/avatar4.png" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 sideBar-time" }, [
-        _c("span", { staticClass: "time-meta" }, [_vm._v("18:18")])
       ])
     ])
   }
@@ -67900,13 +67929,18 @@ var render = function() {
     _c(
       "div",
       { staticClass: "message", attrs: { id: "conversation" } },
-      _vm._l(_vm.messages, function(message, index) {
+      _vm._l(_vm.selected_contact.conversation.messages, function(
+        message,
+        index
+      ) {
         return _c("conversation-message", {
           key: index,
           attrs: {
+            alias: message.alias,
             author_id: message.author_id,
             message: message.content,
             name: message.name,
+            sent_at: message.sent_at,
             isSender: _vm.isSender(message.author_id)
           }
         })
@@ -68011,8 +68045,16 @@ var render = function() {
             _vm._v(_vm._s(_vm.message))
           ]),
           _vm._v(" "),
+          _vm.alias !== null
+            ? _c("span", { staticClass: "message-time float-right" }, [
+                _vm._v(_vm._s(_vm.alias))
+              ])
+            : _c("span", { staticClass: "message-time float-right" }, [
+                _vm._v(_vm._s(_vm.name))
+              ]),
+          _vm._v(" "),
           _c("span", { staticClass: "message-time float-right" }, [
-            _vm._v(_vm._s(_vm.name))
+            _vm._v(_vm._s(_vm.sent_at))
           ])
         ])
       ]
@@ -68066,7 +68108,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-4 heading-name" }, [
                   _c("a", { staticClass: "heading-name-meta" }, [
-                    _vm._v(_vm._s(_vm.profile.name))
+                    _vm._v(_vm._s(_vm.profile.alias))
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "heading-online" }, [
@@ -68109,7 +68151,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-6 heading-name" }, [
                 _c("a", { staticClass: "heading-name-meta" }, [
-                  _vm._v(_vm._s(_vm.selected_contact.name))
+                  _vm._v(_vm._s(_vm.selected_contact.profile.name))
                 ]),
                 _vm._v(" "),
                 _c("span", { staticClass: "heading-online" }, [
@@ -68372,20 +68414,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.profile.name,
-                  expression: "profile.name"
+                  value: _vm.profile.alias,
+                  expression: "profile.alias"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text" },
-              domProps: { value: _vm.profile.name },
+              domProps: { value: _vm.profile.alias },
               on: {
                 change: _vm.updateProfile,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.profile, "name", $event.target.value)
+                  _vm.$set(_vm.profile, "alias", $event.target.value)
                 }
               }
             })
@@ -82318,64 +82360,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     people: [],
     contacts: [],
-    selected_contact: {},
-    profile: {},
-    conversation: [],
-    messages: [{
-      id: 1,
-      name: 'damianS7',
-      content: 'Hello1',
-      isSender: false
-    }, {
-      id: 2,
-      name: 'damianS8',
-      content: 'Hello2',
-      isSender: false
-    }, {
-      id: 3,
-      name: 'damianS9',
-      content: 'Hello3',
-      isSender: true
-    }, {
-      id: 4,
-      name: 'damianS2',
-      content: 'Hello4',
-      isSender: false
-    }, {
-      id: 5,
-      name: 'damianS3',
-      content: 'Hello5',
-      isSender: true
-    }, {
-      id: 1,
-      name: 'damianS7',
-      content: 'Hello1',
-      isSender: false
-    }, {
-      id: 2,
-      name: 'damianS8',
-      content: 'Hello2',
-      isSender: false
-    }, {
-      id: 3,
-      name: 'damianS9',
-      content: 'Hello3',
-      isSender: true
-    }, {
-      id: 4,
-      name: 'damianS2',
-      content: 'Hello4',
-      isSender: false
-    }, {
-      id: 5,
-      name: 'damianS3',
-      content: 'Hello5',
-      isSender: true
-    }]
+    selected_contact: {
+      profile: {
+        name: ''
+      },
+      conversation: {}
+    },
+    profile: {}
   },
   getters: {
+    getMessagesFromConversation: function getMessagesFromConversation(conversation_index) {//return state.conversations[conversation_index].messages;
+    },
     getSelectedContact: function getSelectedContact(state, getters) {
       return state.selected_contact;
+    },
+    getContactById: function getContactById(state, getters, id) {//return state.contacts;
     }
   },
   mutations: {
@@ -82393,22 +82392,29 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       state.profile.info = info;
       state.profile.avatar = avatar;
     },
-    pushMessage: function pushMessage(state, message) {
-      state.messages.push({
-        id: 5,
-        name: 'damianS3',
-        content: message,
-        isSender: true
-      });
+    pushMessage: function pushMessage(state, message) {//state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
     },
-    setMessages: function setMessages(state, messages) {
-      state.messages = messages;
+    pushMessageToConversation: function pushMessageToConversation(state, message) {
+      var conversation_id = message.conversation_id;
+
+      for (var index in state.contacts) {
+        var contact = state.contacts[index];
+
+        if (contact.conversation.conversation_id == conversation_id) {
+          contact.conversation.messages.push(message); // Actualizamos la fecha del ultimo mensaje recibido
+        }
+      } //state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
+
     },
     setSelectedContact: function setSelectedContact(state, contact) {
       state.selected_contact = contact;
+    },
+    setConversations: function setConversations(state, conversations) {
+      state.conversations = conversations;
     }
   },
   actions: {
+    // Envia los datos del perfil actualizado a la base de datos
     updateProfile: function updateProfile(context) {
       //context.commit('updateProfile', name, info, avatar);
       var profile = this.state.profile;
@@ -82417,22 +82423,29 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         _method: "put"
       });
     },
-    fetchConversation: function fetchConversation(context, contact_id) {
-      axios.get("http://127.0.0.1:8000/conversation/" + contact_id).then(function (response) {
+    fetchLastMessages: function fetchLastMessages(context) {
+      axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
           // Agregamos las notas al array
-          context.commit('setMessages', response["data"]['messages']);
+          // context.commit('setMessages', response["data"]['messages']);
+          // Comprobamos que existan datos para agregar!
+          //return context.getContactById(response['messages']);
+          var data = response['data']['messages'];
+
+          for (var key in data) {
+            context.commit('pushMessageToConversation', data[key]);
+          }
         }
       });
     },
     fetchData: function fetchData(context) {
-      axios.get("http://127.0.0.1:8000/contacts/").then(function (response) {
+      axios.get("http://127.0.0.1:8000/fetchAll/").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
           // Agregamos las notas al array
-          context.commit('setContacts', response["data"]['user_contacts']);
-          context.commit('setMessengerUsers', response["data"]['users']);
+          //console.log(response['data']['contacts']);
+          context.commit('setContacts', response['data']['contacts']); ///context.commit('setMessengerUsers', response["data"]['users']);
         }
       });
       axios.get("http://127.0.0.1:8000/profile/").then(function (response) {
@@ -82441,6 +82454,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           // Agregamos las notas al array
           context.commit('setProfile', response["data"]['profile'][0]);
         }
+      });
+    },
+    // Envio de mensajes al servidor
+    postMessage: function postMessage(context, message) {
+      var conversation_id = context.state.selected_contact.conversation.conversation_id;
+      axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
+        message: message
       });
     }
   }

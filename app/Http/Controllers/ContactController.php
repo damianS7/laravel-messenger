@@ -15,6 +15,11 @@ class ContactController extends Controller
         // de CRUD sobre las notas
         $this->middleware('auth');
     }
+
+    public function getUserContacts($user_id) {
+        $contacts = Contact::where('user_id', $user_id)->get();
+        return $contacts;
+    }
     
     /**
      * Display a listing of the resource.

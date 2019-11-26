@@ -7,25 +7,18 @@ export default new Vuex.Store({
     state: {
         people: [],
         contacts: [],
-        selected_contact: {},
-        profile: {},
-        conversation: [],
-        messages: [
-            { id: 1, name: 'damianS7', content: 'Hello1', isSender: false },
-            { id: 2, name: 'damianS8', content: 'Hello2', isSender: false },
-            { id: 3, name: 'damianS9', content: 'Hello3', isSender: true },
-            { id: 4, name: 'damianS2', content: 'Hello4', isSender: false },
-            { id: 5, name: 'damianS3', content: 'Hello5', isSender: true },
-            { id: 1, name: 'damianS7', content: 'Hello1', isSender: false },
-            { id: 2, name: 'damianS8', content: 'Hello2', isSender: false },
-            { id: 3, name: 'damianS9', content: 'Hello3', isSender: true },
-            { id: 4, name: 'damianS2', content: 'Hello4', isSender: false },
-            { id: 5, name: 'damianS3', content: 'Hello5', isSender: true }
-        ]
+        selected_contact: { profile: { name: '' }, conversation: {} },
+        profile: {}
     },
     getters: {
+        getMessagesFromConversation(conversation_index) {
+            //return state.conversations[conversation_index].messages;
+        },
         getSelectedContact: (state, getters) => {
             return state.selected_contact;
+        },
+        getContactById: (state, getters, id) => {
+            //return state.contacts;
         },
     },
     mutations: {
@@ -44,16 +37,28 @@ export default new Vuex.Store({
             state.profile.avatar = avatar;
         },
         pushMessage(state, message) {
-            state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
+            //state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
         },
-        setMessages(state, messages) {
-            state.messages = messages;
+        pushMessageToConversation(state, message) {
+            var conversation_id = message.conversation_id;
+            for (var index in state.contacts) {
+                var contact = state.contacts[index];
+                if (contact.conversation.conversation_id == conversation_id) {
+                    contact.conversation.messages.push(message);
+                    // Actualizamos la fecha del ultimo mensaje recibido
+                }
+            }
+            //state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
         },
         setSelectedContact(state, contact) {
             state.selected_contact = contact;
+        },
+        setConversations(state, conversations) {
+            state.conversations = conversations;
         }
     },
     actions: {
+        // Envia los datos del perfil actualizado a la base de datos
         updateProfile(context) {
             //context.commit('updateProfile', name, info, avatar);
 
@@ -63,23 +68,30 @@ export default new Vuex.Store({
                 _method: "put"
             });
         },
-        fetchConversation(context, contact_id) {
-            axios.get("http://127.0.0.1:8000/conversation/" + contact_id).then(function (response) {
+        fetchLastMessages(context) {
+            axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
                     // Agregamos las notas al array
-                    context.commit('setMessages', response["data"]['messages']);
+                    // context.commit('setMessages', response["data"]['messages']);
+                    // Comprobamos que existan datos para agregar!
+                    //return context.getContactById(response['messages']);
+                    var data = response['data']['messages'];
+                    for (var key in data) {
+                        context.commit('pushMessageToConversation', data[key]);
+                    }
                 }
 
             });
         },
         fetchData(context) {
-            axios.get("http://127.0.0.1:8000/contacts/").then(function (response) {
+            axios.get("http://127.0.0.1:8000/fetchAll/").then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
                     // Agregamos las notas al array
-                    context.commit('setContacts', response["data"]['user_contacts']);
-                    context.commit('setMessengerUsers', response["data"]['users']);
+                    //console.log(response['data']['contacts']);
+                    context.commit('setContacts', response['data']['contacts']);
+                    ///context.commit('setMessengerUsers', response["data"]['users']);
                 }
             });
 
@@ -89,6 +101,13 @@ export default new Vuex.Store({
                     // Agregamos las notas al array
                     context.commit('setProfile', response["data"]['profile'][0]);
                 }
+            });
+        },
+        // Envio de mensajes al servidor
+        postMessage(context, message) {
+            var conversation_id = context.state.selected_contact.conversation.conversation_id;
+            axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
+                message: message
             });
         }
     }
