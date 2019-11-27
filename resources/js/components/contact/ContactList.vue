@@ -35,6 +35,7 @@ import { mapState } from "vuex";
 import ContactListItem from "./ContactListItem.vue";
 
 export default {
+  name: "ContactList",
   data: function() {
     return {
       keyword: ""

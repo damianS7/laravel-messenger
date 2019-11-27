@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  name: "ConversationMessage",
   props: ["name", "message", "isSender", "alias", "sent_at"]
 };
 </script>

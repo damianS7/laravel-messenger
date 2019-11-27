@@ -38,6 +38,7 @@
 import { mapState } from "vuex";
 
 export default {
+  name: "ContactProfile",
   data: function() {
     return {
       stateAlias: this.name,

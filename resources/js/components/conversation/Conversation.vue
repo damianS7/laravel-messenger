@@ -38,6 +38,7 @@
 import ConversationMessage from "./ConversationMessage.vue";
 import { mapState } from "vuex";
 export default {
+  name: "Conversation",
   data: function() {
     return {
       input: ""

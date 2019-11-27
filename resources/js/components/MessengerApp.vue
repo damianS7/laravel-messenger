@@ -57,12 +57,13 @@
 </template>
 
 <script>
-import UserProfileComponent from "./UserProfile.vue";
-import ContactListComponent from "./ContactList.vue";
-import ConversationComponent from "./Conversation.vue";
-import PeopleList from "./PeopleList.vue";
+import UserProfile from "./profile/UserProfile.vue";
+import ContactList from "./contact/ContactList.vue";
+import Conversation from "./conversation/Conversation.vue";
+import PeopleList from "./people/PeopleList.vue";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
+  name: "MessengerApp",
   methods: {
     showPeople() {
       var div = document.getElementsByClassName("side-people")[0];
@@ -87,9 +88,9 @@ export default {
     ...mapActions(["fetchData"])
   },
   components: {
-    profile: UserProfileComponent,
-    contacts: ContactListComponent,
-    conversation: ConversationComponent,
+    profile: UserProfile,
+    contacts: ContactList,
+    conversation: Conversation,
     "people-finder": PeopleList
   },
   mounted() {

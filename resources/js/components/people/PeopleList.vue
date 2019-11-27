@@ -40,6 +40,7 @@
 import { mapState } from "vuex";
 import PeopleListItem from "./PeopleListItem.vue";
 export default {
+  name: "PeopleList",
   data: function() {
     return {
       keyword: ""
