@@ -27,6 +27,14 @@ export default new Vuex.Store({
         },
         getConversationById: (state, getters) => (id) => {
             return state.conversations.find(conversation => conversation.conversation_id === id);
+        },
+        getContactIndex: (state, getters) => (user_id) => {
+            for (var index in state.contacts) {
+                var contact = state.contacts[index];
+                if (contact.user_id === user_id) {
+                    return index;
+                }
+            }
         }
     },
     mutations: {
@@ -44,6 +52,9 @@ export default new Vuex.Store({
         },
         setConversations(state, conversations) {
             state.conversations = conversations;
+        },
+        removeContact(state, index) {
+            Vue.delete(state.contacts, index);
         },
         // ==================
         pushMessageToConversation(state, payload) {
@@ -66,6 +77,17 @@ export default new Vuex.Store({
             var conversation_id = context.state.selected_contact.conversation_id;
             axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
                 message: message
+            });
+        },
+        // Peticion para borrar un contacto
+        deleteContact(context, data) {
+            axios.post("http://127.0.0.1:8000/contacts/" + data.contact_id, {
+            }).then(function (response) {
+                // Si el request tuvo exito (codigo 200)
+                if (response.status == 204) {
+                    context.commit("removeContact", data.index);
+                    context.commit("setSelectedContact", {});
+                }
             });
         },
         // Peticion al servidor para recibir los nuevos mensajes

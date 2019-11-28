@@ -2440,17 +2440,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ContactProfile",
   data: function data() {
     return {};
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["selected_contact"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getContactIndex"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["removeContact", "setSelectedContact"])),
   methods: {
     hideProfile: function hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
+    },
+    deleteContact: function deleteContact() {
+      if (typeof this.selected_contact.user_id === "undefined") {
+        return;
+      }
+
+      var contact_id = this.selected_contact.user_id;
+      var index = this.getContactIndex(contact_id); //this.$store.commit("removeContactById", index);
+
+      this.$store.dispatch("deleteContact", {
+        contact_id: contact_id,
+        index: index
+      });
     },
     updateProfile: function updateProfile() {}
   }
@@ -68498,7 +68514,7 @@ var render = function() {
   return _c("b-col", { staticClass: "p-0 h-100" }, [
     _c("div", { staticClass: "row newMessage-heading" }, [
       _c("div", { staticClass: "row newMessage-main" }, [
-        _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
+        _c("div", { staticClass: "col-2 newMessage-back" }, [
           _c("i", {
             staticClass: "fa fa-arrow-left",
             attrs: { "aria-hidden": "true" },
@@ -68506,8 +68522,19 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-10 col-xs-10 newMessage-title" }, [
+        _c("div", { staticClass: "col-5 newMessage-title" }, [
           _vm._v("Profile")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-5 newMessage-title" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-danger",
+              on: { click: _vm.deleteContact }
+            },
+            [_vm._v("DELETE CONTACT")]
+          )
         ])
       ])
     ]),
@@ -82704,6 +82731,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           return conversation.conversation_id === id;
         });
       };
+    },
+    getContactIndex: function getContactIndex(state, getters) {
+      return function (user_id) {
+        for (var index in state.contacts) {
+          var contact = state.contacts[index];
+
+          if (contact.user_id === user_id) {
+            return index;
+          }
+        }
+      };
     }
   },
   mutations: {
@@ -82721,6 +82759,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     setConversations: function setConversations(state, conversations) {
       state.conversations = conversations;
+    },
+    removeContact: function removeContact(state, index) {
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);
     },
     // ==================
     pushMessageToConversation: function pushMessageToConversation(state, payload) {
@@ -82742,6 +82783,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var conversation_id = context.state.selected_contact.conversation_id;
       axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
         message: message
+      });
+    },
+    // Peticion para borrar un contacto
+    deleteContact: function deleteContact(context, data) {
+      axios.post("http://127.0.0.1:8000/contacts/" + data.contact_id, {}).then(function (response) {
+        // Si el request tuvo exito (codigo 200)
+        if (response.status == 204) {
+          context.commit("removeContact", data.index);
+          context.commit("setSelectedContact", {});
+        }
       });
     },
     // Peticion al servidor para recibir los nuevos mensajes

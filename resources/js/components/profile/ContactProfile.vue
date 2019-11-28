@@ -2,10 +2,13 @@
   <b-col class="p-0 h-100">
     <div class="row newMessage-heading">
       <div class="row newMessage-main">
-        <div class="col-sm-2 col-xs-2 newMessage-back">
+        <div class="col-2 newMessage-back">
           <i @click="hideProfile" class="fa fa-arrow-left" aria-hidden="true"></i>
         </div>
-        <div class="col-sm-10 col-xs-10 newMessage-title">Profile</div>
+        <div class="col-5 newMessage-title">Profile</div>
+        <div class="col-5 newMessage-title">
+          <button @click="deleteContact" class="btn btn-sm btn-danger">DELETE CONTACT</button>
+        </div>
       </div>
     </div>
 
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "ContactProfile",
@@ -53,12 +56,24 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["selected_contact"])
+    ...mapState(["contacts", "selected_contact"]),
+    ...mapGetters(["getContactIndex"]),
+    ...mapMutations(["removeContact", "setSelectedContact"])
   },
   methods: {
     hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
+    },
+    deleteContact() {
+      if (typeof this.selected_contact.user_id === "undefined") {
+        return;
+      }
+
+      var contact_id = this.selected_contact.user_id;
+      var index = this.getContactIndex(contact_id);
+      //this.$store.commit("removeContactById", index);
+      this.$store.dispatch("deleteContact", { contact_id, index });
     },
     updateProfile() {}
   }

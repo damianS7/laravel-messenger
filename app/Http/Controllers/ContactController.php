@@ -48,9 +48,22 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $contact_id)
     {
+        // ID de usuario que agregara el contacto
+        $user_id = Auth::user()->id;
+
         // Agrega un contacto
+        $contact = new Contact;
+        $contact->user_id = $user_id;
+        $contact->contact_id = $contact_id;
+        $contact->save();
+        
+        // Crea la conversacion(vacia) entre los dos usuarios
+        $conversation = new Conversation;
+        $conversation->user_a_id = $user_id;
+        $conversation->user_b_id = $user_id;
+        $conversation->save();
     }
 
     /**
@@ -59,8 +72,16 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($contact_id)
     {
+        // Id del usuario que va a eliminar contactos de su "agenda"
+        $user_id = Auth::user()->id;
+
         // Elimina un contacto
+        $contact = Contact::where(['user_id' => $user_id,'contact_id' => $contact_id])->first();
+        $contact->delete();
+
+        // Elimina la conversacion
+        return response()->json([$contact], 204);
     }
 }
