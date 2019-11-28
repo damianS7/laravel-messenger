@@ -18,21 +18,21 @@
 
     <div class="sideBar myhc">
       <contact-list-item
-        v-for="(contact, index) of filterContacts"
-        v-bind:key="index"
-        :index="index"
-        :alias="contact.profile.alias"
-        :name="contact.profile.name"
-        :phone="contact.profile.phone"
-        @click.native="contactEvents(contact)"
+        v-for="contact of filterContacts"
+        v-bind:key="contact.user_id"
+        :contact_id="contact.user_id"
+        :name="contact.name"
+        :alias="contact.alias"
+        :phone="contact.phone"
+        @click.native="selectContact(contact)"
       ></contact-list-item>
     </div>
   </b-col>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import ContactListItem from "./ContactListItem.vue";
+import { mapState, mapGetters } from "vuex";
+import ContactListItem from "./ContactListItem";
 
 export default {
   name: "ContactList",
@@ -42,7 +42,7 @@ export default {
     };
   },
   methods: {
-    contactEvents(contact) {
+    selectContact(contact) {
       this.$store.commit("setSelectedContact", contact);
     }
   },
@@ -50,7 +50,7 @@ export default {
     ...mapState(["contacts"]),
     filterContacts: function() {
       return this.contacts.filter(contact =>
-        contact.profile.name.toLowerCase().includes(this.keyword.toLowerCase())
+        contact.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     }
   },
