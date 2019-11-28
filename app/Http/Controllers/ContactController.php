@@ -6,19 +6,14 @@ use Illuminate\Http\Request;
 use App\Contact;
 use App\User;
 use Auth;
+use DB;
 
 class ContactController extends Controller
 {
     public function __construct()
     {
-        // Se necesita esta autentificado para llevar a cabo acciones
-        // de CRUD sobre las notas
+        // Se necesita esta autentificado para usar este controlador
         $this->middleware('auth');
-    }
-
-    public function getUserContacts($user_id) {
-        $contacts = Contact::where('user_id', $user_id)->get();
-        return $contacts;
     }
     
     /**
@@ -28,31 +23,23 @@ class ContactController extends Controller
      */
     public function index()
     {
+        // ID de usuario que necesita los contactos
         $user_id = Auth::user()->id;
-        
-        // Contactos disponibles en la app (Para que el usuario agrege)
-        // Importante que se muestren todos los usuarios excepto el nuestro
-        // y los que ya tenemos agregados a contactos
-        $contacts = User::where('id', '!=', $user_id)->orderBy('name', 'ASC')->get();
-
-        // Obtenemos los contactos del usuario
-        $user_contacts = Contact::select(['users.id', 'users.name', 'users.phone'])
-            ->join('users', 'contacts.contact_id', '=', 'users.id')
+    
+        // Obtenemos los contactos del usuario junto con sus perfiles
+        $user_contacts = Contact::select(['users.id AS user_id', 'users.name',
+            'users.phone','users.email', 'users.created_at AS member_since',
+            'conversations.id AS conversation_id',
+            'profiles.alias', 'profiles.info', 'profiles.avatar'])
+            ->from('users')
+            ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
+            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+            ->leftJoin('conversations', 'conversations.user_a_id', '=', DB::raw('LEAST(contacts.user_id, contacts.contact_id) AND conversations.user_b_id = GREATEST(contacts.user_id, contacts.contact_id)'))
             ->where('contacts.user_id', $user_id)
             ->get();
 
         // Devolvemos el json con las notas y codigo 200
-        return response()->json(['users' => $contacts, 'user_contacts' => $user_contacts], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(['contacts' => $user_contacts], 200);
     }
 
     /**
@@ -63,41 +50,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        // Agrega un contacto
     }
 
     /**
@@ -108,6 +61,6 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Elimina un contacto
     }
 }
