@@ -1838,11 +1838,12 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _profile_UserProfile_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile/UserProfile.vue */ "./resources/js/components/profile/UserProfile.vue");
-/* harmony import */ var _contact_ContactList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./contact/ContactList.vue */ "./resources/js/components/contact/ContactList.vue");
-/* harmony import */ var _conversation_Conversation_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./conversation/Conversation.vue */ "./resources/js/components/conversation/Conversation.vue");
-/* harmony import */ var _people_PeopleList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./people/PeopleList.vue */ "./resources/js/components/people/PeopleList.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _profile_UserProfile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile/UserProfile */ "./resources/js/components/profile/UserProfile.vue");
+/* harmony import */ var _profile_ContactProfile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile/ContactProfile */ "./resources/js/components/profile/ContactProfile.vue");
+/* harmony import */ var _contact_ContactList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./contact/ContactList */ "./resources/js/components/contact/ContactList.vue");
+/* harmony import */ var _conversation_Conversation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./conversation/Conversation */ "./resources/js/components/conversation/Conversation.vue");
+/* harmony import */ var _people_PeopleList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./people/PeopleList */ "./resources/js/components/people/PeopleList.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1907,6 +1908,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1923,6 +1931,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "0%";
     },
+    showContactProfile: function showContactProfile() {
+      var div = document.getElementsByClassName("side-contact-profile")[0];
+      div.style.right = "0%";
+    },
     init: function init() {
       var _this = this;
 
@@ -1934,12 +1946,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 2000);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(["profile", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])(["fetchData"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapState"])(["profile", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(["fetchData"])),
   components: {
-    profile: _profile_UserProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    contacts: _contact_ContactList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    conversation: _conversation_Conversation_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    "people-finder": _people_PeopleList_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    profile: _profile_UserProfile__WEBPACK_IMPORTED_MODULE_0__["default"],
+    contacts: _contact_ContactList__WEBPACK_IMPORTED_MODULE_2__["default"],
+    conversation: _conversation_Conversation__WEBPACK_IMPORTED_MODULE_3__["default"],
+    "contact-profile": _profile_ContactProfile__WEBPACK_IMPORTED_MODULE_1__["default"],
+    "people-finder": _people_PeopleList__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   mounted: function mounted() {
     this.init();
@@ -1958,7 +1971,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _ContactListItem_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactListItem.vue */ "./resources/js/components/contact/ContactListItem.vue");
+/* harmony import */ var _ContactListItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactListItem */ "./resources/js/components/contact/ContactListItem.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2007,7 +2020,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
-    contactEvents: function contactEvents(contact) {
+    selectContact: function selectContact(contact) {
       this.$store.commit("setSelectedContact", contact);
     }
   },
@@ -2016,12 +2029,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       return this.contacts.filter(function (contact) {
-        return contact.profile.name.toLowerCase().includes(_this.keyword.toLowerCase());
+        return contact.name.toLowerCase().includes(_this.keyword.toLowerCase());
       });
     }
   }),
   components: {
-    "contact-list-item": _ContactListItem_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    "contact-list-item": _ContactListItem__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -2068,18 +2081,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name", "id", "index", "alias"],
+  props: ["name", "id", "index", "alias", "contact_id"],
   methods: {},
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     lastMessageDate: function lastMessageDate() {
-      var contacts = this.$store.state.contacts;
+      //var contacts = this.$store.state.contacts;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-      for (var index in contacts) {
-        var contact = contacts[index];
-        var count = contact.conversation.messages.length;
-        return contact.conversation.messages[count - 1].sent_at;
-      } //return this.$store.getters.lastMessageTime;
+      try {
+        for (var _iterator = this.contacts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var contact = _step.value;
+          var conversation = this.$store.getters.getConversationById(contact.conversation_id);
 
+          if (typeof conversation !== "undefined") {
+            if (conversation.messages.length > 0) {
+              if (contact.user_id == this.contact_id) {
+                return conversation.messages[conversation.messages.length - 1].sent_at;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
     }
   })
 });
@@ -2095,7 +2132,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConversationMessage.vue */ "./resources/js/components/conversation/ConversationMessage.vue");
+/* harmony import */ var _ConversationMessage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConversationMessage */ "./resources/js/components/conversation/ConversationMessage.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2159,16 +2196,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     sendMessage: function sendMessage(event) {
       this.$store.dispatch("postMessage", this.input);
       this.input = "";
-    },
-    appendMessage: function appendMessage(message) {}
+    }
   },
   updated: function updated() {
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_contact"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedContactConversation"])),
   components: {
-    "conversation-message": _ConversationMessage_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    "conversation-message": _ConversationMessage__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -2332,6 +2368,86 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ContactProfile.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/ContactProfile.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ContactProfile",
+  data: function data() {
+    return {};
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["selected_contact"])),
+  methods: {
+    hideProfile: function hideProfile() {
+      var div = document.getElementsByClassName("side-contact-profile")[0];
+      div.style.right = "-100%";
+    },
+    updateProfile: function updateProfile() {}
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/UserProfile.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/UserProfile.vue?vue&type=script&lang=js& ***!
@@ -2388,29 +2504,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserProfile",
   data: function data() {
-    return {
-      stateAlias: this.name,
-      stateInfo: this.info
-    };
+    return {};
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["profile"])),
   methods: {
-    hideProfile: function hideProfile() {
+    hideProfile: function hideProfile(event) {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "-100%";
     },
-    updateProfile: function updateProfile(e) {
-      /*this.$store.commit(
-        "updateProfile",
-        this.stateAlias,
-        this.stateInfo,
-        this.stateInfo
-      );*/
-      this.$store.dispatch("updateProfile");
+    updateProfile: function updateProfile(event) {
+      this.$store.dispatch("saveProfile");
     }
-  },
-  mounted: function mounted() {},
-  components: {}
+  }
 });
 
 /***/ }),
@@ -35645,7 +35750,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background: url(\"http://shurl.esy.es/y\") no-repeat fixed center;\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-people{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  /*background: url(\"w.jpg\") no-repeat fixed center;*/\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
+exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background: url(\"http://shurl.esy.es/y\") no-repeat fixed center;\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-people{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  /*background: url(\"w.jpg\") no-repeat fixed center;*/\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
 
 // exports
 
@@ -67846,20 +67951,41 @@ var render = function() {
           "div",
           { staticClass: "col-12 col-sm-8 conversation" },
           [
+            _c(
+              "div",
+              { staticClass: "side-contact-profile" },
+              [_c("contact-profile")],
+              1
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "row heading" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "col-4 heading-avatar" }, [
+                _c("div", { staticClass: "heading-avatar-icon" }, [
+                  _c("img", {
+                    attrs: {
+                      src: "https://bootdey.com/img/Content/avatar/avatar6.png"
+                    },
+                    on: { click: _vm.showContactProfile }
+                  })
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-6 heading-name" }, [
-                _c("a", { staticClass: "heading-name-meta" }, [
-                  _vm._v(_vm._s(_vm.selected_contact.profile.name))
-                ]),
+                _c(
+                  "a",
+                  {
+                    staticClass: "heading-name-meta",
+                    on: { click: _vm.showContactProfile }
+                  },
+                  [_vm._v(_vm._s(_vm.selected_contact.name))]
+                ),
                 _vm._v(" "),
                 _c("span", { staticClass: "heading-online" }, [
                   _vm._v("Online")
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _vm._m(0)
             ]),
             _vm._v(" "),
             _c("conversation")
@@ -67871,18 +67997,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4 heading-avatar" }, [
-      _c("div", { staticClass: "heading-avatar-icon" }, [
-        _c("img", {
-          attrs: { src: "https://bootdey.com/img/Content/avatar/avatar6.png" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -67960,18 +68074,18 @@ var render = function() {
       _c(
         "div",
         { staticClass: "sideBar myhc" },
-        _vm._l(_vm.filterContacts, function(contact, index) {
+        _vm._l(_vm.filterContacts, function(contact) {
           return _c("contact-list-item", {
-            key: index,
+            key: contact.user_id,
             attrs: {
-              index: index,
-              alias: contact.profile.alias,
-              name: contact.profile.name,
-              phone: contact.profile.phone
+              contact_id: contact.user_id,
+              name: contact.name,
+              alias: contact.alias,
+              phone: contact.phone
             },
             nativeOn: {
               click: function($event) {
-                return _vm.contactEvents(contact)
+                return _vm.selectContact(contact)
               }
             }
           })
@@ -68069,7 +68183,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "message", attrs: { id: "conversation" } },
-      _vm._l(_vm.selected_contact.conversation.messages, function(
+      _vm._l(_vm.getSelectedContactConversation.messages, function(
         message,
         index
       ) {
@@ -68124,7 +68238,13 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "col-1 reply-send" }, [
+        _c("i", {
+          staticClass: "fa fa-send fa-2x",
+          attrs: { "aria-hidden": "true" },
+          on: { click: _vm.sendMessage }
+        })
+      ])
     ])
   ])
 }
@@ -68135,17 +68255,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-1 reply-emojis" }, [
       _c("i", { staticClass: "fa fa-smile-o fa-2x" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-1 reply-send" }, [
-      _c("i", {
-        staticClass: "fa fa-send fa-2x",
-        attrs: { "aria-hidden": "true" }
-      })
     ])
   }
 ]
@@ -68355,6 +68464,123 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ContactProfile.vue?vue&type=template&id=638bd33a&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/ContactProfile.vue?vue&type=template&id=638bd33a& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("b-col", { staticClass: "p-0 h-100" }, [
+    _c("div", { staticClass: "row newMessage-heading" }, [
+      _c("div", { staticClass: "row newMessage-main" }, [
+        _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
+          _c("i", {
+            staticClass: "fa fa-arrow-left",
+            attrs: { "aria-hidden": "true" },
+            on: { click: _vm.hideProfile }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-10 col-xs-10 newMessage-title" }, [
+          _vm._v("Profile")
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row composeBox h-auto" }, [
+      _c(
+        "div",
+        { staticClass: "col-12 composeBox-inner heading-avatar h-auto" },
+        [
+          _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
+            _c("img", {
+              staticClass: "img-fluid",
+              attrs: {
+                src: "https://bootdey.com/img/Content/avatar/avatar1.png"
+              }
+            })
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "compose-sideBar" }, [
+      _c("div", { staticClass: "compose-sideBar myhc" }, [
+        _c("div", { staticClass: "row sideBar-body" }, [
+          _c("div", { staticClass: "col-12" }, [_vm._v("Alias:")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected_contact.alias,
+                  expression: "selected_contact.alias"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.selected_contact.alias },
+              on: {
+                change: _vm.updateProfile,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.selected_contact, "alias", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [_vm._v("About you:")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected_contact.info,
+                  expression: "selected_contact.info"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { rows: "4" },
+              domProps: { value: _vm.selected_contact.info },
+              on: {
+                change: _vm.updateProfile,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.selected_contact, "info", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -82279,6 +82505,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/profile/ContactProfile.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/profile/ContactProfile.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ContactProfile_vue_vue_type_template_id_638bd33a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactProfile.vue?vue&type=template&id=638bd33a& */ "./resources/js/components/profile/ContactProfile.vue?vue&type=template&id=638bd33a&");
+/* harmony import */ var _ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactProfile.vue?vue&type=script&lang=js& */ "./resources/js/components/profile/ContactProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ContactProfile_vue_vue_type_template_id_638bd33a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ContactProfile_vue_vue_type_template_id_638bd33a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/profile/ContactProfile.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/ContactProfile.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/profile/ContactProfile.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ContactProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ContactProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/ContactProfile.vue?vue&type=template&id=638bd33a&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/profile/ContactProfile.vue?vue&type=template&id=638bd33a& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_638bd33a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ContactProfile.vue?vue&type=template&id=638bd33a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ContactProfile.vue?vue&type=template&id=638bd33a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_638bd33a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactProfile_vue_vue_type_template_id_638bd33a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/profile/UserProfile.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/profile/UserProfile.vue ***!
@@ -82365,137 +82660,136 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
+    // Datos de usuario y perfil
+    user: {},
     // Perfil del usuario logeado en la app
     profile: {
-      id: null,
-      user_id: null,
-      name: null,
-      alias: null,
-      avatar: null,
-      info: null
+      id: '',
+      user_id: '',
+      name: '',
+      alias: '',
+      avatar: '',
+      info: ''
     },
     // Gente disponible en la app para "conectar"
     people: [],
     // Contactos del usuarios
     contacts: [],
-    // Perfiles de los contactos
-    contacts_profiles: [],
     // Conversaciones entre el usuario y cada contacto        
-    contacts_conversations: [],
+    conversations: [],
     // Contacto seleccionado actualmente
-    selected_contact: {
-      user_id: null,
-      profile: {
-        user_id: null,
-        alias: null,
-        info: null,
-        avatar: null,
-        name: null,
-        email: null,
-        member_since: null
-      },
-      conversation: {
-        conversation_id: null,
-        messages: []
-      }
-    }
+    selected_contact: {}
   },
   getters: {
-    filterContacts: function filterContacts(state, getters) {
-      return state.selected_contact;
+    getSelectedContactConversation: function getSelectedContactConversation(state, getters) {
+      if (typeof state.selected_contact.conversation_id === 'undefined') {
+        return [];
+      }
+
+      return getters.getConversationById(state.selected_contact.conversation_id);
     },
-    getMessagesFromConversation: function getMessagesFromConversation(conversation_index) {//return state.conversations[conversation_index].messages;
-    },
-    getSelectedContact: function getSelectedContact(state, getters) {
-      return state.selected_contact;
-    },
-    getContactById: function getContactById(state, getters, id) {//return state.contacts;
+    getConversationById: function getConversationById(state, getters) {
+      return function (id) {
+        return state.conversations.find(function (conversation) {
+          return conversation.conversation_id === id;
+        });
+      };
     }
   },
   mutations: {
-    setMessengerUsers: function setMessengerUsers(state, users) {
-      state.people = users;
-    },
     setContacts: function setContacts(state, contacts) {
       state.contacts = contacts;
     },
     setProfile: function setProfile(state, profile) {
       state.profile = profile;
     },
-    updateProfile: function updateProfile(state, name, info, avatar) {
-      state.profile.name = name;
-      state.profile.info = info;
-      state.profile.avatar = avatar;
-    },
-    pushMessage: function pushMessage(state, message) {//state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
-    },
-    pushMessageToConversation: function pushMessageToConversation(state, message) {
-      var conversation_id = message.conversation_id;
-
-      for (var index in state.contacts) {
-        var contact = state.contacts[index];
-
-        if (contact.conversation.conversation_id == conversation_id) {
-          contact.conversation.messages.push(message); // Actualizamos la fecha del ultimo mensaje recibido
-        }
-      } //state.messages.push({ id: 5, name: 'damianS3', content: message, isSender: true });
-
-    },
     setSelectedContact: function setSelectedContact(state, contact) {
       state.selected_contact = contact;
     },
+    setPeople: function setPeople(state, people) {
+      state.people = people;
+    },
     setConversations: function setConversations(state, conversations) {
       state.conversations = conversations;
+    },
+    // ==================
+    pushMessageToConversation: function pushMessageToConversation(state, payload) {
+      // Agregamos el mensaje a la conversacion
+      payload.conversation.messages.push(payload.message); // Actualizamos la fecha del ultimo mensaje recibidos
     }
   },
   actions: {
     // Envia los datos del perfil actualizado a la base de datos
-    updateProfile: function updateProfile(context) {
-      //context.commit('updateProfile', name, info, avatar);
+    saveProfile: function saveProfile(context) {
       var profile = this.state.profile;
       axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
         profile: profile,
         _method: "put"
       });
     },
+    // Envio de mensajes al servidor
+    postMessage: function postMessage(context, message) {
+      var conversation_id = context.state.selected_contact.conversation_id;
+      axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
+        message: message
+      });
+    },
+    // Peticion al servidor para recibir los nuevos mensajes
     fetchLastMessages: function fetchLastMessages(context) {
       axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
-          // Agregamos las notas al array
-          // context.commit('setMessages', response["data"]['messages']);
-          // Comprobamos que existan datos para agregar!
-          //return context.getContactById(response['messages']);
-          var data = response['data']['messages'];
+          var data = response['data']['messages']; // Si no hay datos ...
 
-          for (var key in data) {
-            context.commit('pushMessageToConversation', data[key]);
+          if (data.length == 0) {
+            return;
+          } // Iteramos sobre los datos
+
+
+          for (var index in data) {
+            var conversation = context.getters.getConversationById(data[index].conversation_id);
+            var message = data[index];
+            context.commit('pushMessageToConversation', {
+              message: message,
+              conversation: conversation
+            });
           }
         }
       });
     },
+    // ---------------------
     fetchData: function fetchData(context) {
-      axios.get("http://127.0.0.1:8000/fetchAll/").then(function (response) {
+      // People
+      axios.get("http://127.0.0.1:8000/people/").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
           // Agregamos las notas al array
-          //console.log(response['data']['contacts']);
-          context.commit('setContacts', response['data']['contacts']); ///context.commit('setMessengerUsers', response["data"]['users']);
+          context.commit('setPeople', response['data']['people']);
         }
-      });
+      }); // Contactos (con los perfiles)
+
+      axios.get("http://127.0.0.1:8000/contacts/").then(function (response) {
+        // Si el request tuvo exito (codigo 200)
+        if (response.status == 200) {
+          // Agregamos las notas al array
+          context.commit('setContacts', response['data']['contacts']);
+        }
+      }); // Contact Conversations
+
+      axios.get("http://127.0.0.1:8000/conversations/").then(function (response) {
+        // Si el request tuvo exito (codigo 200)
+        if (response.status == 200) {
+          // Agregamos las notas al array
+          context.commit('setConversations', response['data']['conversations']);
+        }
+      }); // Datos de usuario y perfil
+
       axios.get("http://127.0.0.1:8000/profile/").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
           // Agregamos las notas al array
           context.commit('setProfile', response["data"]['profile'][0]);
         }
-      });
-    },
-    // Envio de mensajes al servidor
-    postMessage: function postMessage(context, message) {
-      var conversation_id = context.state.selected_contact.conversation.conversation_id;
-      axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
-        message: message
       });
     }
   }
