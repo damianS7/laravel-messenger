@@ -52,9 +52,17 @@ export default {
       return false;
     },
     sendMessage(event) {
+      // No hay nada que enviar
+      if (this.input.length == 0) {
+        return;
+      }
+
+      // Ningun usuario seleccionado
       if (typeof this.selected_contact.user_id !== "undefined") {
         this.$store.dispatch("postMessage", this.input);
       }
+
+      // Borrar texto del input
       this.input = "";
     }
   },
