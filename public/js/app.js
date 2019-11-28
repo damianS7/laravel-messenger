@@ -2187,14 +2187,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     isSender: function isSender(author_id) {
-      if (author_id == this.$store.state.profile.user_id) {
+      if (author_id == this.profile.user_id) {
         return true;
       }
 
       return false;
     },
     sendMessage: function sendMessage(event) {
-      this.$store.dispatch("postMessage", this.input);
+      if (typeof this.selected_contact.user_id !== "undefined") {
+        this.$store.dispatch("postMessage", this.input);
+      }
+
       this.input = "";
     }
   },
@@ -2202,7 +2205,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedContactConversation"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_contact", "profile"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedContactConversation"])),
   components: {
     "conversation-message": _ConversationMessage__WEBPACK_IMPORTED_MODULE_0__["default"]
   }

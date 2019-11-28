@@ -46,13 +46,15 @@ export default {
   },
   methods: {
     isSender(author_id) {
-      if (author_id == this.$store.state.profile.user_id) {
+      if (author_id == this.profile.user_id) {
         return true;
       }
       return false;
     },
     sendMessage(event) {
-      this.$store.dispatch("postMessage", this.input);
+      if (typeof this.selected_contact.user_id !== "undefined") {
+        this.$store.dispatch("postMessage", this.input);
+      }
       this.input = "";
     }
   },
@@ -61,7 +63,7 @@ export default {
     div.scrollTop = div.scrollHeight;
   },
   computed: {
-    ...mapState(["selected_contact"]),
+    ...mapState(["selected_contact", "profile"]),
     ...mapGetters(["getSelectedContactConversation"])
   },
   components: {
