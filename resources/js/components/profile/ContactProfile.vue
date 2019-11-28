@@ -22,11 +22,21 @@
         <div class="row sideBar-body">
           <div class="col-12">Alias:</div>
           <div class="col-12">
-            <input type="text" class="form-control" v-model="profile.alias" @change="updateProfile" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="selected_contact.alias"
+              @change="updateProfile"
+            />
           </div>
           <div class="col-12">About you:</div>
           <div class="col-12">
-            <textarea class="form-control" rows="4" v-model="profile.info" @change="updateProfile"></textarea>
+            <textarea
+              class="form-control"
+              rows="4"
+              v-model="selected_contact.info"
+              @change="updateProfile"
+            ></textarea>
           </div>
         </div>
       </div>
@@ -40,31 +50,18 @@ import { mapState } from "vuex";
 export default {
   name: "ContactProfile",
   data: function() {
-    return {
-      stateAlias: this.name,
-      stateInfo: this.info
-    };
+    return {};
   },
   computed: {
-    ...mapState(["profile"])
+    ...mapState(["selected_contact"])
   },
   methods: {
     hideProfile() {
-      var div = document.getElementsByClassName("side-profile")[0];
-      div.style.left = "-100%";
+      var div = document.getElementsByClassName("side-contact-profile")[0];
+      div.style.right = "-100%";
     },
-    updateProfile(e) {
-      /*this.$store.commit(
-        "updateProfile",
-        this.stateAlias,
-        this.stateInfo,
-        this.stateInfo
-      );*/
-      this.$store.dispatch("updateProfile");
-    }
-  },
-  mounted() {},
-  components: {}
+    updateProfile() {}
+  }
 };
 </script>
 <style>

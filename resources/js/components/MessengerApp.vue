@@ -36,14 +36,20 @@
       </div>
 
       <div class="col-12 col-sm-8 conversation">
+        <div class="side-contact-profile">
+          <contact-profile></contact-profile>
+        </div>
         <div class="row heading">
           <div class="col-4 heading-avatar">
             <div class="heading-avatar-icon">
-              <img src="https://bootdey.com/img/Content/avatar/avatar6.png" />
+              <img
+                @click="showContactProfile"
+                src="https://bootdey.com/img/Content/avatar/avatar6.png"
+              />
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a class="heading-name-meta">{{ selected_contact.name }}</a>
+            <a @click="showContactProfile" class="heading-name-meta">{{ selected_contact.name }}</a>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
@@ -58,6 +64,7 @@
 
 <script>
 import UserProfile from "./profile/UserProfile";
+import ContactProfile from "./profile/ContactProfile";
 import ContactList from "./contact/ContactList";
 import Conversation from "./conversation/Conversation";
 import PeopleList from "./people/PeopleList";
@@ -72,6 +79,10 @@ export default {
     showProfile() {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "0%";
+    },
+    showContactProfile() {
+      var div = document.getElementsByClassName("side-contact-profile")[0];
+      div.style.right = "0%";
     },
     init() {
       // Peticion al servidor de los datos necesarios para inicializar la app
@@ -91,6 +102,7 @@ export default {
     profile: UserProfile,
     contacts: ContactList,
     conversation: Conversation,
+    "contact-profile": ContactProfile,
     "people-finder": PeopleList
   },
   mounted() {
