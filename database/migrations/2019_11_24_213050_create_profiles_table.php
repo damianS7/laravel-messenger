@@ -19,7 +19,7 @@ class CreateProfilesTable extends Migration
             $table->string('alias');
             $table->string('avatar');
             $table->text('info');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
         });
     }
 

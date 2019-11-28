@@ -17,8 +17,9 @@ class CreateConversationsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_a_id');
             $table->unsignedBigInteger('user_b_id');
-            $table->foreign('user_a_id')->references('id')->on('users');
-            $table->foreign('user_b_id')->references('id')->on('users');
+            $table->foreign('user_a_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('user_b_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->unique(['user_a_id', 'user_b_id']);
         });
     }
 

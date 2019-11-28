@@ -19,8 +19,8 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('author_id');
             $table->text('content');
             $table->timestamp('sent_at');
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('conversation_id')->references('id')->on('conversations');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('CASCADE');
         });
     }
 

@@ -17,8 +17,8 @@ class CreateMessagesQueueTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('to_user_id');
             $table->unsignedBigInteger('message_id');
-            $table->foreign('to_user_id')->references('id')->on('users');
-            $table->foreign('message_id')->references('id')->on('messages');
+            $table->foreign('to_user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('message_id')->references('id')->on('messages')->onDelete('CASCADE');
         });
     }
 

@@ -20,6 +20,7 @@ class CreateContactsTable extends Migration
             $table->unique(['user_id', 'contact_id']);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('contact_id')->references('id')->on('users');
+            // unique
         });
     }
 
