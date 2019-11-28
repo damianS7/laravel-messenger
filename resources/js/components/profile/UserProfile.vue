@@ -40,31 +40,20 @@ import { mapState } from "vuex";
 export default {
   name: "UserProfile",
   data: function() {
-    return {
-      stateAlias: this.name,
-      stateInfo: this.info
-    };
+    return {};
   },
   computed: {
     ...mapState(["profile"])
   },
   methods: {
-    hideProfile() {
+    hideProfile(event) {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "-100%";
     },
-    updateProfile(e) {
-      /*this.$store.commit(
-        "updateProfile",
-        this.stateAlias,
-        this.stateInfo,
-        this.stateInfo
-      );*/
-      this.$store.dispatch("updateProfile");
+    updateProfile(event) {
+      this.$store.dispatch("saveProfile");
     }
-  },
-  mounted() {},
-  components: {}
+  }
 };
 </script>
 <style>

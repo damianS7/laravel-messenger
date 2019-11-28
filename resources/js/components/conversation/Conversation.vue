@@ -2,7 +2,7 @@
   <div class="side">
     <div class="message" id="conversation">
       <conversation-message
-        v-for="(message, index) of selected_contact.conversation.messages"
+        v-for="(message, index) of getSelectedContactConversation.messages"
         v-bind:key="index"
         :alias="message.alias"
         :author_id="message.author_id"
@@ -28,15 +28,15 @@
       </div>
 
       <div class="col-1 reply-send">
-        <i class="fa fa-send fa-2x" aria-hidden="true"></i>
+        <i class="fa fa-send fa-2x" aria-hidden="true" @click="sendMessage"></i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ConversationMessage from "./ConversationMessage.vue";
-import { mapState } from "vuex";
+import ConversationMessage from "./ConversationMessage";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "Conversation",
   data: function() {
@@ -54,15 +54,15 @@ export default {
     sendMessage(event) {
       this.$store.dispatch("postMessage", this.input);
       this.input = "";
-    },
-    appendMessage(message) {}
+    }
   },
   updated() {
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
   computed: {
-    ...mapState(["selected_contact"])
+    ...mapState(["selected_contact"]),
+    ...mapGetters(["getSelectedContactConversation"])
   },
   components: {
     "conversation-message": ConversationMessage

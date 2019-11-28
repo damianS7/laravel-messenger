@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a class="heading-name-meta">{{ selected_contact.profile.name }}</a>
+            <a class="heading-name-meta">{{ selected_contact.name }}</a>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
@@ -57,10 +57,10 @@
 </template>
 
 <script>
-import UserProfile from "./profile/UserProfile.vue";
-import ContactList from "./contact/ContactList.vue";
-import Conversation from "./conversation/Conversation.vue";
-import PeopleList from "./people/PeopleList.vue";
+import UserProfile from "./profile/UserProfile";
+import ContactList from "./contact/ContactList";
+import Conversation from "./conversation/Conversation";
+import PeopleList from "./people/PeopleList";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   name: "MessengerApp",
