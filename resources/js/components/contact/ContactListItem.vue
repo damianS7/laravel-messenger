@@ -24,18 +24,26 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["name", "id", "index", "alias"],
+  props: ["name", "id", "index", "alias", "contact_id"],
   methods: {},
   computed: {
     ...mapState(["contacts"]),
     lastMessageDate: function() {
-      var contacts = this.$store.state.contacts;
-      for (var index in contacts) {
-        var contact = contacts[index];
-        var count = contact.conversation.messages.length;
-        return contact.conversation.messages[count - 1].sent_at;
+      //var contacts = this.$store.state.contacts;
+      for (var contact of this.contacts) {
+        var conversation = this.$store.getters.getConversationById(
+          contact.conversation_id
+        );
+
+        if (typeof conversation !== "undefined") {
+          if (conversation.messages.length > 0) {
+            if (contact.user_id == this.contact_id) {
+              return conversation.messages[conversation.messages.length - 1]
+                .sent_at;
+            }
+          }
+        }
       }
-      //return this.$store.getters.lastMessageTime;
     }
   }
 };
