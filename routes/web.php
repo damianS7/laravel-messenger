@@ -22,7 +22,9 @@ Route::get('/people', 'PeopleController@index');
 // Contactos disponibles
 Route::get('/contacts', 'ContactController@index');
 // Elimina un contacto
-Route::post('/contacts/{contact_id}', 'ContactController@destroy');
+Route::delete('/contacts/{contact_id}', 'ContactController@destroy');
+// Agrega un contacto
+Route::post('/contacts', 'ContactController@store');
 
 // Ruta para actualizar el perfil
 Route::put('/profile/{profile_id}', 'ProfileController@update');
