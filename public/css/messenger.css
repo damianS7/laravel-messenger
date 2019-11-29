@@ -203,6 +203,11 @@ body {
   height: calc(100% - 120px);
 }
 
+.sideBar-profile {
+  padding: 10px !important;
+  margin: 0 !important;
+}
+
 .sideBar-body {
   position: relative;
   padding: 10px !important;

@@ -22,7 +22,7 @@
 
     <div class="compose-sideBar">
       <div class="compose-sideBar myhc">
-        <div class="row sideBar-body">
+        <div class="row sideBar-profile">
           <div class="col-12">Alias:</div>
           <div class="col-12">
             <input
