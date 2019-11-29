@@ -27,9 +27,9 @@
 
     <div class="compose-sideBar myhc">
       <user-list-item
-        v-for="(user, index) of filterPeople"
+        v-for="user of filterPeople"
         v-bind:key="user.id"
-        :index="index"
+        :user_id="user.id"
         :name="user.name"
       ></user-list-item>
     </div>

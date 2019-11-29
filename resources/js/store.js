@@ -35,6 +35,14 @@ export default new Vuex.Store({
                     return index;
                 }
             }
+        },
+        getPeopleIndex: (state, getters) => (user_id) => {
+            for (var index in state.people) {
+                var contact = state.people[index];
+                if (contact.user_id === user_id) {
+                    return index;
+                }
+            }
         }
     },
     mutations: {
@@ -56,8 +64,9 @@ export default new Vuex.Store({
         removeContact(state, index) {
             Vue.delete(state.contacts, index);
         },
-        removePeople(state, index) {
-            Vue.delete(state.people, index);
+        removePeopleById(state, peopleId) {
+            var peopleIndex = state.people.findIndex(people => people.id === peopleId);
+            Vue.delete(state.people, peopleIndex);
         },
         addContact(state, contact) {
             state.contacts.push(contact);
@@ -115,9 +124,8 @@ export default new Vuex.Store({
                     if (conversation.length != 0) {
                         context.commit("addConversation", conversation);
                     }
-
                     // Borramos a la persona que hemos agregado de People
-                    context.commit("removePeople", data.index);
+                    context.commit("removePeopleById", data.user_id);
                 }
             });
         },

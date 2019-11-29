@@ -2381,16 +2381,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PeopleListItem",
-  props: ["name", "index"],
+  props: ["name", "index", "user_id"],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["addContact"])),
   methods: {
     peopleToContact: function peopleToContact() {
-      var newContact = this.people[this.index];
-      var user_id = newContact.id;
-      var index = this.index;
+      var user_id = this.user_id;
       this.$store.dispatch("saveContact", {
-        user_id: user_id,
-        index: index
+        user_id: user_id
       });
     }
   }
@@ -68435,10 +68432,10 @@ var render = function() {
     _c(
       "div",
       { staticClass: "compose-sideBar myhc" },
-      _vm._l(_vm.filterPeople, function(user, index) {
+      _vm._l(_vm.filterPeople, function(user) {
         return _c("user-list-item", {
           key: user.id,
-          attrs: { index: index, name: user.name }
+          attrs: { user_id: user.id, name: user.name }
         })
       }),
       1
@@ -82761,6 +82758,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           }
         }
       };
+    },
+    getPeopleIndex: function getPeopleIndex(state, getters) {
+      return function (user_id) {
+        for (var index in state.people) {
+          var contact = state.people[index];
+
+          if (contact.user_id === user_id) {
+            return index;
+          }
+        }
+      };
     }
   },
   mutations: {
@@ -82782,8 +82790,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     removeContact: function removeContact(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);
     },
-    removePeople: function removePeople(state, index) {
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.people, index);
+    removePeopleById: function removePeopleById(state, peopleId) {
+      var peopleIndex = state.people.findIndex(function (people) {
+        return people.id === peopleId;
+      });
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.people, peopleIndex);
     },
     addContact: function addContact(state, contact) {
       state.contacts.push(contact);
@@ -82841,7 +82852,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           } // Borramos a la persona que hemos agregado de People
 
 
-          context.commit("removePeople", data.index);
+          context.commit("removePeopleById", data.user_id);
         }
       });
     },
