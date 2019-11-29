@@ -24,9 +24,11 @@ class PeopleController extends Controller
         // Id del usuario logeado
         $user_id = Auth::user()->id;
         // Obtenemos toda la gente de la app que no esten en nuestros contactos
-        $people = User::select(['users.id', 'users.name'])
-        ->leftJoin('contacts', 'users.id', '=', 'contacts.user_id')
+        $people = User::select(['users.id', 'users.name',
+        'users.created_at AS member_since'])
+        ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
         ->whereNull('contacts.id')
+        ->where('users.id', '!=', $user_id)
         ->orderBy('name', 'ASC')
         ->get();
         return response()->json(['people' => $people], 200);
