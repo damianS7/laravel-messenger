@@ -14,7 +14,9 @@
       </div>
       <div class="row">
         <div class="col-12 sideBar-time">
-          <span class="time-meta">{{ lastMessageDate }}</span>
+          <span class="time-meta">
+            <i>{{ lastMessageDate }}</i>
+          </span>
         </div>
       </div>
     </div>
@@ -29,7 +31,6 @@ export default {
   computed: {
     ...mapState(["contacts"]),
     lastMessageDate: function() {
-      //var contacts = this.$store.state.contacts;
       for (var contact of this.contacts) {
         var conversation = this.$store.getters.getConversationById(
           contact.conversation_id
@@ -44,6 +45,7 @@ export default {
           }
         }
       }
+      return "Never";
     }
   }
 };

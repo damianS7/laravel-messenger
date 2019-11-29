@@ -2079,13 +2079,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["name", "id", "index", "alias", "contact_id"],
   methods: {},
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     lastMessageDate: function lastMessageDate() {
-      //var contacts = this.$store.state.contacts;
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -2117,6 +2118,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }
+
+      return "Never";
     }
   })
 });
@@ -68180,7 +68183,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-12 sideBar-time" }, [
           _c("span", { staticClass: "time-meta" }, [
-            _vm._v(_vm._s(_vm.lastMessageDate))
+            _c("i", [_vm._v(_vm._s(_vm.lastMessageDate))])
           ])
         ])
       ])
