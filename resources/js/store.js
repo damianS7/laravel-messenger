@@ -62,6 +62,9 @@ export default new Vuex.Store({
         addContact(state, contact) {
             state.contacts.push(contact);
         },
+        addConversation(state, conversation) {
+            state.conversations.push(conversation);
+        },
         // ==================
         pushMessageToConversation(state, payload) {
             // Agregamos el mensaje a la conversacion
@@ -104,9 +107,16 @@ export default new Vuex.Store({
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
-                    // Agregar nuevo contacto desde el json!
+                    var conversation = response['data']['conversation'];
+                    // Agregamos el nuevo contacto usando los datos recibidos
                     context.commit("addContact", response['data']['contact']);
-                    // removePeople, index
+
+                    // Agregamos una nueva conversacion si existe el objeto
+                    if (conversation.length != 0) {
+                        context.commit("addConversation", conversation);
+                    }
+
+                    // Borramos a la persona que hemos agregado de People
                     context.commit("removePeople", data.index);
                 }
             });

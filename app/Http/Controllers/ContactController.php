@@ -60,9 +60,15 @@ class ContactController extends Controller
         $contact->contact_id = $request['user_id'];
         $contact->save();
 
+        $conversation = '';
+
         // Comprobamos si existe una conversacion previa entre estos dos usuarios
         if (ConversationController::getConversation($user_id, $contact->contact_id) === null) {
-            ConversationController::createConversation($user_id, $contact->contact_id);
+            $conversation_id = ConversationController::createConversation(
+                $user_id,
+                $contact->contact_id
+            );
+            $conversation = ConversationController::getConversationJson($conversation_id);
         }
 
         // Obtenemos los contactos del usuario junto con sus perfiles
@@ -78,7 +84,8 @@ class ContactController extends Controller
             ->first();
 
         // Devolvemos el json con los datos del nuevo contacto
-        return response()->json(['contact' => $data_contact], 200);
+        return response()->json(['contact' => $data_contact,
+            'conversation' => $conversation], 200);
     }
 
     /**

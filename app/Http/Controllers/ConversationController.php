@@ -67,6 +67,16 @@ class ConversationController extends Controller
         $conversation->save();
     }
 
+    public static function getConversationJson($conversation_id)
+    {
+        // Para cada conversacion obtenemos sus mensajes
+        $messages = self::fetchMessages($conversation_id);
+        return array(
+            'conversation_id' => $conversation_id,
+            'messages' => $messages
+        );
+    }
+
 
     /**
      * Display a listing of the resource.
