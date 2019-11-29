@@ -43,6 +43,18 @@ class ConversationController extends Controller
         return $conversation;
     }
 
+    public static function getConversationById($conversation_id)
+    {
+        $conversation = Conversation::where(['id' => $conversation_id])->first();
+        
+        // Si no existe ninguna conversacion con este id, la crearemos
+        if ($conversation === null) {
+            return null;
+        }
+        
+        return $conversation;
+    }
+
     public static function createConversation($user_id_a, $user_id_b)
     {
         $conversation = new Conversation();
@@ -123,13 +135,15 @@ class ConversationController extends Controller
         // User ID
         $user_id = Auth::user()->id;
 
-        $message = new Message();
+        $message = new Message;
         $message->conversation_id = $conversation_id;
         $message->author_id = $user_id;
         $message->content = $request['message'];
         $message->save();
 
-        MessageQueueController::messageToQueue($message);
+        $conversation = self::getConversationById($conversation_id);
+
+        MessageQueueController::messageToQueue($message, $conversation);
     }
 
     public function fetchLastMessages(Request $request)

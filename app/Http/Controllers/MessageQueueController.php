@@ -10,10 +10,16 @@ use App\Message;
 
 class MessageQueueController extends Controller
 {
-    public static function messageToQueue($message)
+    public static function messageToQueue($message, $conversation)
     {
-        $queueMessage = new MessageQueue();
-        $queueMessage->to_user_id = $message->author_id;
+        self::toQueue($message, $conversation->user_a_id);
+        self::toQueue($message, $conversation->user_b_id);
+    }
+
+    public static function toQueue($message, $to_user_id)
+    {
+        $queueMessage = new MessageQueue;
+        $queueMessage->to_user_id = $to_user_id;
         $queueMessage->message_id = $message->id;
         $queueMessage->save();
     }
