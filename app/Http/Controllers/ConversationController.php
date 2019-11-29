@@ -88,8 +88,13 @@ class ConversationController extends Controller
         // Validacion isnumeric >= 1
         // ------
 
+        
         // User ID
         $user_id = Auth::user()->id;
+        
+        // Comprobamos que la cola de mensajes este limpia para que
+        // no se dupliquen mensajes.
+        MessageQueue::where('to_user_id', $user_id)->delete();
 
         // Ids de las conversaciones del usuario
         $conversation_ids = Conversation::where('user_a_id', $user_id)
