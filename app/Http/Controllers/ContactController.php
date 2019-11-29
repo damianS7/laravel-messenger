@@ -7,6 +7,7 @@ use App\Contact;
 use App\User;
 use Auth;
 use DB;
+use App\Http\Controllers\ConversationController;
 
 class ContactController extends Controller
 {
@@ -48,7 +49,7 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $contact_id)
+    public function store(Request $request)
     {
         // ID de usuario que agregara el contacto
         $user_id = Auth::user()->id;
@@ -56,14 +57,28 @@ class ContactController extends Controller
         // Agrega un contacto
         $contact = new Contact;
         $contact->user_id = $user_id;
-        $contact->contact_id = $contact_id;
+        $contact->contact_id = $request['user_id'];
         $contact->save();
-        
-        // Crea la conversacion(vacia) entre los dos usuarios
-        $conversation = new Conversation;
-        $conversation->user_a_id = $user_id;
-        $conversation->user_b_id = $user_id;
-        $conversation->save();
+
+        // Comprobamos si existe una conversacion previa entre estos dos usuarios
+        if (ConversationController::getConversation($user_id, $contact->contact_id) === null) {
+            ConversationController::createConversation($user_id, $contact->contact_id);
+        }
+
+        // Obtenemos los contactos del usuario junto con sus perfiles
+        $data_contact = Contact::select(['users.id AS user_id', 'users.name',
+            'users.phone','users.email', 'users.created_at AS member_since',
+            'conversations.id AS conversation_id',
+            'profiles.alias', 'profiles.info', 'profiles.avatar'])
+            ->from('users')
+            ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
+            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+            ->leftJoin('conversations', 'conversations.user_a_id', '=', DB::raw('LEAST(contacts.user_id, contacts.contact_id) AND conversations.user_b_id = GREATEST(contacts.user_id, contacts.contact_id)'))
+            ->where('users.id', $contact->contact_id)
+            ->first();
+
+        // Devolvemos el json con los datos del nuevo contacto
+        return response()->json(['contact' => $data_contact], 200);
     }
 
     /**

@@ -2314,11 +2314,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {
-    filterUsers: function filterUsers() {
+    filterPeople: function filterPeople() {
       var _this = this;
 
-      return this.people.filter(function (contact) {
-        return contact.name.toLowerCase().includes(_this.keyword.toLowerCase());
+      return this.people.filter(function (people) {
+        return people.name.toLowerCase().includes(_this.keyword.toLowerCase());
       });
     }
   }),
@@ -2345,6 +2345,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2372,8 +2378,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PeopleListItem",
-  props: ["name"],
-  computed: {}
+  props: ["name", "index"],
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["addContact"])),
+  methods: {
+    peopleToContact: function peopleToContact() {
+      var newContact = this.people[this.index];
+      var user_id = newContact.id;
+      var index = this.index;
+      this.$store.dispatch("saveContact", {
+        user_id: user_id,
+        index: index
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -68415,10 +68432,10 @@ var render = function() {
     _c(
       "div",
       { staticClass: "compose-sideBar myhc" },
-      _vm._l(_vm.filterUsers, function(user, index) {
+      _vm._l(_vm.filterPeople, function(user, index) {
         return _c("user-list-item", {
-          key: index,
-          attrs: { name: user.name, phone: user.phone }
+          key: user.id,
+          attrs: { index: index, name: user.name }
         })
       }),
       1
@@ -68457,7 +68474,20 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 sideBar-time" }, [
+          _c("span", { staticClass: "time-meta" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary",
+                on: { click: _vm.peopleToContact }
+              },
+              [_vm._v("ADD")]
+            )
+          ])
+        ])
+      ])
     ])
   ])
 }
@@ -68472,20 +68502,6 @@ var staticRenderFns = [
           staticClass: "img-fluid",
           attrs: { src: "https://bootdey.com/img/Content/avatar/avatar5.png" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 sideBar-time" }, [
-        _c("span", { staticClass: "time-meta" }, [
-          _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-            _vm._v("ADD")
-          ])
-        ])
       ])
     ])
   }
@@ -82763,6 +82779,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     removeContact: function removeContact(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);
     },
+    removePeople: function removePeople(state, index) {
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.people, index);
+    },
+    addContact: function addContact(state, contact) {
+      state.contacts.push(contact);
+    },
     // ==================
     pushMessageToConversation: function pushMessageToConversation(state, payload) {
       // Agregamos el mensaje a la conversacion
@@ -82787,11 +82809,27 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     // Peticion para borrar un contacto
     deleteContact: function deleteContact(context, data) {
-      axios.post("http://127.0.0.1:8000/contacts/" + data.contact_id, {}).then(function (response) {
+      axios.post("http://127.0.0.1:8000/contacts/" + data.contact_id, {
+        _method: "delete"
+      }).then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 204) {
           context.commit("removeContact", data.index);
           context.commit("setSelectedContact", {});
+        }
+      });
+    },
+    // Peticion para borrar un contacto
+    saveContact: function saveContact(context, data) {
+      axios.post("http://127.0.0.1:8000/contacts/", {
+        user_id: data.user_id
+      }).then(function (response) {
+        // Si el request tuvo exito (codigo 200)
+        if (response.status == 200) {
+          // Agregar nuevo contacto desde el json!
+          context.commit("addContact", response['data']['contact']); // removePeople, index
+
+          context.commit("removePeople", data.index);
         }
       });
     },

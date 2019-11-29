@@ -27,10 +27,10 @@
 
     <div class="compose-sideBar myhc">
       <user-list-item
-        v-for="(user, index) of filterUsers"
-        v-bind:key="index"
+        v-for="(user, index) of filterPeople"
+        v-bind:key="user.id"
+        :index="index"
         :name="user.name"
-        :phone="user.phone"
       ></user-list-item>
     </div>
   </b-col>
@@ -48,9 +48,9 @@ export default {
   },
   computed: {
     ...mapState(["people"]),
-    filterUsers: function() {
-      return this.people.filter(contact =>
-        contact.name.toLowerCase().includes(this.keyword.toLowerCase())
+    filterPeople: function() {
+      return this.people.filter(people =>
+        people.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     }
   },

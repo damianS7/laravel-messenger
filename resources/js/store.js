@@ -56,6 +56,12 @@ export default new Vuex.Store({
         removeContact(state, index) {
             Vue.delete(state.contacts, index);
         },
+        removePeople(state, index) {
+            Vue.delete(state.people, index);
+        },
+        addContact(state, contact) {
+            state.contacts.push(contact);
+        },
         // ==================
         pushMessageToConversation(state, payload) {
             // Agregamos el mensaje a la conversacion
@@ -82,11 +88,26 @@ export default new Vuex.Store({
         // Peticion para borrar un contacto
         deleteContact(context, data) {
             axios.post("http://127.0.0.1:8000/contacts/" + data.contact_id, {
+                _method: "delete"
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 204) {
                     context.commit("removeContact", data.index);
                     context.commit("setSelectedContact", {});
+                }
+            });
+        },
+        // Peticion para borrar un contacto
+        saveContact(context, data) {
+            axios.post("http://127.0.0.1:8000/contacts/", {
+                user_id: data.user_id
+            }).then(function (response) {
+                // Si el request tuvo exito (codigo 200)
+                if (response.status == 200) {
+                    // Agregar nuevo contacto desde el json!
+                    context.commit("addContact", response['data']['contact']);
+                    // removePeople, index
+                    context.commit("removePeople", data.index);
                 }
             });
         },

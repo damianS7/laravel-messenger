@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-12 sideBar-time">
           <span class="time-meta">
-            <button class="btn btn-sm btn-primary">ADD</button>
+            <button @click="peopleToContact" class="btn btn-sm btn-primary">ADD</button>
           </span>
         </div>
       </div>
@@ -23,11 +23,23 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "PeopleListItem",
-  props: ["name"],
-  computed: {}
+  props: ["name", "index"],
+  computed: {
+    ...mapState(["people"]),
+    ...mapMutations(["addContact"])
+  },
+  methods: {
+    peopleToContact() {
+      var newContact = this.people[this.index];
+      var user_id = newContact.id;
+      var index = this.index;
+
+      this.$store.dispatch("saveContact", { user_id, index });
+    }
+  }
 };
 </script>
 <style>
