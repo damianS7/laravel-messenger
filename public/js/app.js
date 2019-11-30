@@ -1950,7 +1950,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["appUser", "selectedContact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"]), {
-    avatarPath: function avatarPath() {// return "/images/" + this.profile.avatar;
+    appUserAvatarPath: function appUserAvatarPath() {
+      return "/images/" + this.appUser.avatar;
+    },
+    conversationUserAvatarPath: function conversationUserAvatarPath() {
+      return "/images/" + this.appUser.avatar;
     }
   }),
   components: {
@@ -2278,6 +2282,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2288,11 +2294,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
-    selectConversation: function selectConversation(conversation) {
-      this.$store.commit("setSelectedConversation", conversation); // this.$store.commit("setSelectedContact", conversation);
+    selectConversation: function selectConversation(conversationId) {
+      this.$store.commit("selectConversationById", {
+        conversationId: conversationId
+      });
+      var conversation = this.$store.getters.getConversationById(conversationId);
+      var user = this.$store.getters.getPeopleById(conversation.messages[0].author_id); // this.$store.commit("selectContact", conversation);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
+    contactName: function contactName() {// var user = this.$store.getters.getPeopleById();
+    },
+    avatarPath: function avatarPath() {// var user = this.$store.getters.getPeopleById();
+    },
     filterConversations: function filterConversations() {
       return this.conversations.filter(function (conversation) {
         return conversation.messages.length > 0;
@@ -2348,10 +2362,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["id"],
+  props: ["id", "avatarPath"],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts"]), {
     avatarPath: function avatarPath() {
-      return "";
+      var conversation = this.$store.getters.getConversationById(this.id);
+      var user = this.$store.getters.getPeopleById(conversation.messages[0].author_id);
+      return "/images/" + user.avatar;
     },
     contactName: function contactName() {
       // Get contactBy??s
@@ -2366,7 +2382,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (typeof conversation !== "undefined") {
             if (contact.conversation_id == this.id) {
               return contact.name;
-            } else {}
+            }
           }
         }
       } catch (err) {
@@ -2384,7 +2400,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
 
-      return "-";
+      var conversation = this.$store.getters.getConversationById(this.id);
+      var user = this.$store.getters.getPeopleById(conversation.messages[0].author_id);
+      return user.phone;
     },
     lastMessageDate: function lastMessageDate() {
       var _iteratorNormalCompletion2 = true;
@@ -2750,7 +2768,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {};
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["appUser"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["appUser"]), {
+    avatarPath: function avatarPath() {
+      return "/images/" + this.appUser.avatar;
+    }
+  }),
   methods: {
     hideProfile: function hideProfile(event) {
       var div = document.getElementsByClassName("side-profile")[0];
@@ -68146,7 +68168,7 @@ var render = function() {
                 _c("div", { staticClass: "col-3 heading-avatar" }, [
                   _c("div", { staticClass: "heading-avatar-icon" }, [
                     _c("img", {
-                      attrs: { src: _vm.avatarPath },
+                      attrs: { src: _vm.appUserAvatarPath },
                       on: { click: _vm.showProfile }
                     })
                   ])
@@ -68198,7 +68220,7 @@ var render = function() {
               _c("div", { staticClass: "col-4 heading-avatar" }, [
                 _c("div", { staticClass: "heading-avatar-icon" }, [
                   _c("img", {
-                    attrs: { src: _vm.avatarPath },
+                    attrs: { src: _vm.conversationUserAvatarPath },
                     on: { click: _vm.showContactProfile }
                   })
                 ])
@@ -68524,11 +68546,15 @@ var render = function() {
       { staticClass: "sideBar-conversations myhc" },
       _vm._l(_vm.filterConversations, function(conversation) {
         return _c("conversation-list-item", {
-          key: conversation.conversation_id,
-          attrs: { id: conversation.conversation_id },
+          key: conversation.id,
+          attrs: {
+            id: conversation.id,
+            avatar: _vm.avatarPath,
+            name: _vm.contactName
+          },
           nativeOn: {
             click: function($event) {
-              return _vm.selectConversation(conversation)
+              return _vm.selectConversation(conversation.id)
             }
           }
         })
@@ -68953,7 +68979,7 @@ var render = function() {
           _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
             _c("img", {
               staticClass: "img-fluid",
-              attrs: { src: _vm.appUser.avatar }
+              attrs: { src: _vm.avatarPath }
             })
           ])
         ]
@@ -83166,6 +83192,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       };
     },
+    getPeopleById: function getPeopleById(state, getters) {
+      return function (userId) {
+        return state.people.find(function (people) {
+          return people.id === userId;
+        });
+      };
+    },
     getContactIndex: function getContactIndex(state, getters) {
       return function (user_id) {
         for (var index in state.contacts) {
@@ -83202,17 +83235,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     setSelectedConversation: function setSelectedConversation(state, conversation) {
       state.selectedConversation = conversation;
     },
+    selectConversationById: function selectConversationById(state, payload) {
+      var conversationIndex = state.conversations.findIndex(function (conversation) {
+        return conversation.id === payload.conversationId;
+      });
+      state.selectedConversation = state.conversations[conversationIndex];
+    },
     setPeople: function setPeople(state, people) {
       state.people = people;
     },
     setConversations: function setConversations(state, conversations) {
       state.conversations = conversations;
-    },
-    selectConversationById: function selectConversationById(state, data) {
-      var conversationIndex = state.conversations.findIndex(function (conversation) {
-        return conversation.conversation_id === data.conversation_id;
-      });
-      state.selectedConversation = state.conversations[conversationIndex];
     },
     removeContact: function removeContact(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);

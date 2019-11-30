@@ -25,11 +25,15 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["id"],
+  props: ["id", "avatarPath"],
   computed: {
     ...mapState(["conversations", "contacts"]),
     avatarPath: function() {
-      return "";
+      var conversation = this.$store.getters.getConversationById(this.id);
+      var user = this.$store.getters.getPeopleById(
+        conversation.messages[0].author_id
+      );
+      return "/images/" + user.avatar;
     },
     contactName: function() {
       // Get contactBy??s
@@ -37,11 +41,15 @@ export default {
         if (typeof conversation !== "undefined") {
           if (contact.conversation_id == this.id) {
             return contact.name;
-          } else {
           }
         }
       }
-      return "-";
+
+      var conversation = this.$store.getters.getConversationById(this.id);
+      var user = this.$store.getters.getPeopleById(
+        conversation.messages[0].author_id
+      );
+      return user.phone;
     },
     lastMessageDate: function() {
       for (var conversation of this.conversations) {

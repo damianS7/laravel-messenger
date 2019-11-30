@@ -6,7 +6,7 @@
           <b-row class="heading">
             <div class="col-3 heading-avatar">
               <div class="heading-avatar-icon">
-                <img @click="showProfile" :src="avatarPath" />
+                <img @click="showProfile" :src="appUserAvatarPath" />
               </div>
             </div>
 
@@ -42,7 +42,7 @@
         <div class="row heading">
           <div class="col-4 heading-avatar">
             <div class="heading-avatar-icon">
-              <img @click="showContactProfile" :src="avatarPath" />
+              <img @click="showContactProfile" :src="conversationUserAvatarPath" />
             </div>
           </div>
           <div class="col-6 heading-name">
@@ -99,8 +99,11 @@ export default {
   computed: {
     ...mapState(["appUser", "selectedContact"]),
     ...mapActions(["fetchData"]),
-    avatarPath: function() {
-      // return "/images/" + this.profile.avatar;
+    appUserAvatarPath: function() {
+      return "/images/" + this.appUser.avatar;
+    },
+    conversationUserAvatarPath: function() {
+      return "/images/" + this.appUser.avatar;
     }
   },
   components: {

@@ -3,9 +3,11 @@
     <div class="sideBar-conversations myhc">
       <conversation-list-item
         v-for="conversation of filterConversations"
-        v-bind:key="conversation.conversation_id"
-        :id="conversation.conversation_id"
-        @click.native="selectConversation(conversation)"
+        v-bind:key="conversation.id"
+        :id="conversation.id"
+        :avatar="avatarPath"
+        :name="contactName"
+        @click.native="selectConversation(conversation.id)"
       ></conversation-list-item>
     </div>
   </b-col>
@@ -23,14 +25,28 @@ export default {
     };
   },
   methods: {
-    selectConversation(conversation) {
-      this.$store.commit("setSelectedConversation", conversation);
+    selectConversation(conversationId) {
+      this.$store.commit("selectConversationById", { conversationId });
 
-      // this.$store.commit("setSelectedContact", conversation);
+      var conversation = this.$store.getters.getConversationById(
+        conversationId
+      );
+
+      var user = this.$store.getters.getPeopleById(
+        conversation.messages[0].author_id
+      );
+
+      // this.$store.commit("selectContact", conversation);
     }
   },
   computed: {
     ...mapState(["conversations"]),
+    contactName: function() {
+      // var user = this.$store.getters.getPeopleById();
+    },
+    avatarPath: function() {
+      // var user = this.$store.getters.getPeopleById();
+    },
     filterConversations: function() {
       return this.conversations.filter(conversation => {
         return conversation.messages.length > 0;

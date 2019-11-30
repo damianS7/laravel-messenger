@@ -42,6 +42,9 @@ export default new Vuex.Store({
         getConversationById: (state, getters) => (conversationId) => {
             return state.conversations.find(conversation => conversation.id === conversationId);
         },
+        getPeopleById: (state, getters) => (userId) => {
+            return state.people.find(people => people.id === userId);
+        },
         getContactIndex: (state, getters) => (user_id) => {
             for (var index in state.contacts) {
                 var contact = state.contacts[index];
@@ -72,17 +75,17 @@ export default new Vuex.Store({
         setSelectedConversation(state, conversation) {
             state.selectedConversation = conversation;
         },
+        selectConversationById(state, payload) {
+            var conversationIndex = state.conversations.findIndex(conversation =>
+                conversation.id === payload.conversationId
+            );
+            state.selectedConversation = state.conversations[conversationIndex];
+        },
         setPeople(state, people) {
             state.people = people
         },
         setConversations(state, conversations) {
             state.conversations = conversations;
-        },
-        selectConversationById(state, data) {
-            var conversationIndex = state.conversations.findIndex(conversation =>
-                conversation.conversation_id === data.conversation_id
-            );
-            state.selectedConversation = state.conversations[conversationIndex];
         },
         removeContact(state, index) {
             Vue.delete(state.contacts, index);

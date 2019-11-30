@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index');
 
@@ -40,3 +39,6 @@ Route::get('/conversations', 'ConversationController@index');
 
 // Ruta para recuperar los nuevos mensajes recibidos.
 Route::get('/conversations/update', 'ConversationController@fetchLastMessages');
+
+// Ruta para la carga inicial de la app
+Route::get('/messenger/fetch', 'MessengerController@index');

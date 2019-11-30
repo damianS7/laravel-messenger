@@ -14,11 +14,10 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    public static function getProfile($user_id)
+    public static function getProfile()
     {
-        // SELECT users.id, users.name, users.phone, users.email, users.created_at AS member_since, profiles.avatar, profiles.info FROM users
-        // LEFT JOIN profiles ON users.id = profiles.user_id
-        return Profile::select(['users.id AS user_id', 'users.name',
+        $user_id = Auth::user()->id;
+        return Profile::select(['users.id', 'users.name',
         'profiles.alias', 'profiles.avatar', 'profiles.info',
         'users.phone', 'users.email', 'users.created_at AS member_since'])
         ->from('users')

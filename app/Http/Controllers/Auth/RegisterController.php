@@ -79,7 +79,7 @@ class RegisterController extends Controller
             $profile->user_id = $user->id;
             $profile->alias = $user->name;
             $profile->info = '...';
-            $profile->avatar = 'avatar.jpg';
+            $profile->avatar = 'avatar1.png';
             $profile->save();
         }
 

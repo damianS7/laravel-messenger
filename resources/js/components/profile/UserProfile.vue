@@ -12,7 +12,7 @@
     <div class="row composeBox h-auto">
       <div class="col-12 composeBox-inner heading-avatar h-auto">
         <div class="profile-avatar-icon h-auto">
-          <img class="img-fluid" :src="appUser.avatar" />
+          <img class="img-fluid" :src="avatarPath" />
         </div>
       </div>
     </div>
@@ -43,7 +43,10 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["appUser"])
+    ...mapState(["appUser"]),
+    avatarPath: function() {
+      return "/images/" + this.appUser.avatar;
+    }
   },
   methods: {
     hideProfile(event) {

@@ -19,7 +19,9 @@ class ConversationController extends Controller
 
     public static function fetchMessages($conversation_id)
     {
-        $messages = Message::select(['messages.*', 'users.name', 'profiles.alias'])
+        $messages = Message::select(['messages.*',
+        'users.name AS author_name',
+        'profiles.alias AS author_alias'])
         ->join('users', 'users.id', '=', 'messages.author_id')
         ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
         ->join('conversations', 'messages.conversation_id', '=', 'conversations.id')
@@ -84,11 +86,34 @@ class ConversationController extends Controller
         // Para cada conversacion obtenemos sus mensajes
         $messages = self::fetchMessages($conversation_id);
         return array(
-            'conversation_id' => $conversation_id,
+            'id' => $conversation_id,
             'messages' => $messages
         );
     }
 
+    public static function getConversations()
+    {
+        $user_id = Auth::user()->id;
+        
+        // Comprobamos que la cola de mensajes este limpia para que
+        // no se dupliquen mensajes.
+        MessageQueue::where('to_user_id', $user_id)->delete();
+
+        // Ids de las conversaciones del usuario
+        $conversations = Conversation::where('user_a_id', $user_id)
+        ->orWhere('user_b_id', $user_id)->get();
+
+        $data = array();
+        // Para cada conversacion obtenemos sus mensajes
+        foreach ($conversations as $index => $conversation) {
+            $messages = self::fetchMessages($conversation->id);
+            $data[$index] = array(
+                'id' => $conversation->id,
+                'messages' => $messages
+            );
+        }
+        return $data;
+    }
 
     /**
      * Display a listing of the resource.
@@ -109,15 +134,15 @@ class ConversationController extends Controller
         MessageQueue::where('to_user_id', $user_id)->delete();
 
         // Ids de las conversaciones del usuario
-        $conversation_ids = Conversation::where('user_a_id', $user_id)
+        $conversations = Conversation::where('user_a_id', $user_id)
         ->orWhere('user_b_id', $user_id)->get();
 
         $data['conversations'] = array();
         // Para cada conversacion obtenemos sus mensajes
-        foreach ($conversation_ids as $index => $conversation) {
+        foreach ($conversations as $index => $conversation) {
             $messages = self::fetchMessages($conversation->id);
             $data['conversations'][$index] = array(
-                'conversation_id' => $conversation->id,
+                'id' => $conversation->id,
                 'messages' => $messages
             );
         }
