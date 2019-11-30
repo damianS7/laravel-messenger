@@ -31,6 +31,7 @@
         v-bind:key="contact.user_id"
         :contact_id="contact.user_id"
         :name="contact.name"
+        :avatar="contact.avatar"
         :alias="contact.alias"
         :phone="contact.phone"
         @click.native="selectContact(contact)"
@@ -53,6 +54,10 @@ export default {
   methods: {
     selectContact(contact) {
       this.$store.commit("setSelectedContact", contact);
+      // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
+      this.$store.commit("selectConversationById", {
+        conversation_id: contact.conversation_id
+      });
     },
     hide() {
       var div = document.getElementsByClassName("side-contacts")[0];

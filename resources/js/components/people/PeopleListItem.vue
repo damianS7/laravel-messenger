@@ -2,7 +2,7 @@
   <div class="row sideBar-body">
     <div class="col-3 sideBar-avatar">
       <div class="avatar-icon">
-        <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar5.png" />
+        <img class="img-fluid" :src="avatar" />
       </div>
     </div>
     <div class="col-9 sideBar-main">
@@ -26,7 +26,7 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "PeopleListItem",
-  props: ["name", "index", "user_id"],
+  props: ["name", "index", "user_id", "avatar"],
   computed: {
     ...mapState(["people"]),
     ...mapMutations(["addContact"])

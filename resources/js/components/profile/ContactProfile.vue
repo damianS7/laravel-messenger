@@ -15,7 +15,7 @@
     <div class="row composeBox h-auto">
       <div class="col-12 composeBox-inner heading-avatar h-auto">
         <div class="profile-avatar-icon h-auto">
-          <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+          <img class="img-fluid" :src="selected_contact.avatar" />
         </div>
       </div>
     </div>

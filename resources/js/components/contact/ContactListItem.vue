@@ -2,7 +2,7 @@
   <div class="row sideBar-body">
     <div class="col-3 sideBar-avatar">
       <div class="avatar-icon">
-        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
+        <img :src="avatar" />
       </div>
     </div>
     <div class="col-9 sideBar-main">
@@ -26,7 +26,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["name", "id", "index", "alias", "contact_id"],
+  props: ["name", "id", "index", "alias", "contact_id", "avatar"],
   methods: {},
   computed: {
     ...mapState(["contacts"]),
