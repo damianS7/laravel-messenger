@@ -10,7 +10,7 @@
     </div>
 
     <div class="row composeBox">
-      <div class="col-sm-12 composeBox-inner">
+      <div class="col-12 composeBox-inner">
         <div class="form-group has-feedback">
           <input
             id="composeText"

@@ -25,7 +25,7 @@
       </div>
     </b-row>
 
-    <div class="sideBar myhc">
+    <div class="compose-sideBar myhc">
       <contact-list-item
         v-for="contact of filterContacts"
         v-bind:key="contact.user_id"
