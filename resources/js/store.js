@@ -17,6 +17,7 @@ export default new Vuex.Store({
         conversations: [],
         // Contacto seleccionado actualmente
         selected_contact: {},
+        selected_conversation: {}
     },
     getters: {
         getSelectedContactConversation: (state, getters) => {
@@ -24,6 +25,12 @@ export default new Vuex.Store({
                 return [];
             }
             return getters.getConversationById(state.selected_contact.conversation_id);
+        },
+        getSelectedConversation: (state, getters) => {
+            if (typeof state.selected_conversation.conversation_id === 'undefined') {
+                return {};
+            }
+            return state.selected_conversation;
         },
         getConversationById: (state, getters) => (id) => {
             return state.conversations.find(conversation => conversation.conversation_id === id);
@@ -54,6 +61,9 @@ export default new Vuex.Store({
         },
         setSelectedContact(state, contact) {
             state.selected_contact = contact;
+        },
+        setSelectedConversation(state, conversation) {
+            state.selected_conversation = conversation;
         },
         setPeople(state, people) {
             state.people = people
@@ -92,7 +102,7 @@ export default new Vuex.Store({
         },
         // Envio de mensajes al servidor
         postMessage(context, message) {
-            var conversation_id = context.state.selected_contact.conversation_id;
+            var conversation_id = context.state.selected_conversation.conversation_id;
             axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
                 message: message
             });

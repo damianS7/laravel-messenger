@@ -2223,7 +2223,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } // Ningun usuario seleccionado
 
 
-      if (typeof this.selected_contact.user_id !== "undefined") {
+      if (typeof this.selected_conversation.conversation_id !== "undefined") {
         this.$store.dispatch("postMessage", this.input);
       } // Borrar texto del input
 
@@ -2235,7 +2235,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_contact", "profile"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedContactConversation"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_conversation", "profile"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedConversation"])),
   components: {
     "conversation-message": _ConversationMessage__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -2283,11 +2283,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
-    selectConversation: function selectConversation(contact) {// this.$store.commit("setSelectedConversation", contact);
+    selectConversation: function selectConversation(conversation) {
+      this.$store.commit("setSelectedConversation", conversation);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
-    filterContacts: function filterContacts() {
+    filterConversations: function filterConversations() {
       var _this = this;
 
       return this.contacts.filter(function (contact) {
@@ -2312,6 +2313,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2339,11 +2346,42 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id"],
-  computed: {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
     lastMessageDate: function lastMessageDate() {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.conversations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var conversation = _step.value;
+
+          if (typeof conversation !== "undefined") {
+            if (conversation.messages.length > 0) {
+              if (conversation.conversation_id == this.id) {
+                return conversation.messages[conversation.messages.length - 1].sent_at;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
       return "Never";
     }
-  }
+  })
 });
 
 /***/ }),
@@ -68362,10 +68400,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "message", attrs: { id: "conversation" } },
-      _vm._l(_vm.getSelectedContactConversation.messages, function(
-        message,
-        index
-      ) {
+      _vm._l(_vm.getSelectedConversation.messages, function(message, index) {
         return _c("conversation-message", {
           key: index,
           attrs: {
@@ -68464,11 +68499,11 @@ var render = function() {
       { staticClass: "sideBar-conversations myhc" },
       _vm._l(_vm.conversations, function(conversation) {
         return _c("conversation-list-item", {
-          key: conversation.id,
-          attrs: { conversation_id: conversation.id },
+          key: conversation.conversation_id,
+          attrs: { id: conversation.conversation_id },
           nativeOn: {
             click: function($event) {
-              return _vm.selectConversation(conversation.id)
+              return _vm.selectConversation(conversation)
             }
           }
         })
@@ -83107,7 +83142,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     // Conversaciones entre el usuario y cada contacto        
     conversations: [],
     // Contacto seleccionado actualmente
-    selected_contact: {}
+    selected_contact: {},
+    selected_conversation: {}
   },
   getters: {
     getSelectedContactConversation: function getSelectedContactConversation(state, getters) {
@@ -83116,6 +83152,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       }
 
       return getters.getConversationById(state.selected_contact.conversation_id);
+    },
+    getSelectedConversation: function getSelectedConversation(state, getters) {
+      if (typeof state.selected_conversation.conversation_id === 'undefined') {
+        return {};
+      }
+
+      return state.selected_conversation;
     },
     getConversationById: function getConversationById(state, getters) {
       return function (id) {
@@ -83157,6 +83200,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     setSelectedContact: function setSelectedContact(state, contact) {
       state.selected_contact = contact;
     },
+    setSelectedConversation: function setSelectedConversation(state, conversation) {
+      state.selected_conversation = conversation;
+    },
     setPeople: function setPeople(state, people) {
       state.people = people;
     },
@@ -83195,7 +83241,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     // Envio de mensajes al servidor
     postMessage: function postMessage(context, message) {
-      var conversation_id = context.state.selected_contact.conversation_id;
+      var conversation_id = context.state.selected_conversation.conversation_id;
       axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
         message: message
       });

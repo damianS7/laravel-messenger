@@ -2,7 +2,7 @@
   <div class="side">
     <div class="message" id="conversation">
       <conversation-message
-        v-for="(message, index) of getSelectedContactConversation.messages"
+        v-for="(message, index) of getSelectedConversation.messages"
         v-bind:key="index"
         :alias="message.alias"
         :author_id="message.author_id"
@@ -58,7 +58,7 @@ export default {
       }
 
       // Ningun usuario seleccionado
-      if (typeof this.selected_contact.user_id !== "undefined") {
+      if (typeof this.selected_conversation.conversation_id !== "undefined") {
         this.$store.dispatch("postMessage", this.input);
       }
 
@@ -71,8 +71,8 @@ export default {
     div.scrollTop = div.scrollHeight;
   },
   computed: {
-    ...mapState(["selected_contact", "profile"]),
-    ...mapGetters(["getSelectedContactConversation"])
+    ...mapState(["selected_conversation", "profile"]),
+    ...mapGetters(["getSelectedConversation"])
   },
   components: {
     "conversation-message": ConversationMessage
