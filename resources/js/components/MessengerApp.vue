@@ -6,12 +6,12 @@
           <b-row class="heading">
             <div class="col-3 heading-avatar">
               <div class="heading-avatar-icon">
-                <img @click="showProfile" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+                <img @click="showProfile" :src="avatarPath" />
               </div>
             </div>
 
             <div class="col-5 heading-name">
-              <a class="heading-name-meta">{{ profile.alias }}</a>
+              <a class="heading-name-meta">{{ appUser.alias }}</a>
             </div>
 
             <div class="col-4 heading-compose">
@@ -42,14 +42,11 @@
         <div class="row heading">
           <div class="col-4 heading-avatar">
             <div class="heading-avatar-icon">
-              <img
-                @click="showContactProfile"
-                src="https://bootdey.com/img/Content/avatar/avatar6.png"
-              />
+              <img @click="showContactProfile" :src="avatarPath" />
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a @click="showContactProfile" class="heading-name-meta">{{ selected_contact.name }}</a>
+            <a @click="showContactProfile" class="heading-name-meta">{{ selectedContact.name }}</a>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
@@ -91,7 +88,7 @@ export default {
     },
     init() {
       // Peticion al servidor de los datos necesarios para inicializar la app
-      this.$store.dispatch("fetchData");
+      this.$store.dispatch("fetch");
 
       // Timer para enviar peticiones al servidor en busca de mensajes nuevos
       window.setInterval(() => {
@@ -100,8 +97,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(["profile", "selected_contact"]),
-    ...mapActions(["fetchData"])
+    ...mapState(["appUser", "selectedContact"]),
+    ...mapActions(["fetchData"]),
+    avatarPath: function() {
+      // return "/images/" + this.profile.avatar;
+    }
   },
   components: {
     profile: UserProfile,

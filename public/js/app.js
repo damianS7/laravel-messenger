@@ -1912,9 +1912,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
@@ -1945,14 +1942,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       // Peticion al servidor de los datos necesarios para inicializar la app
-      this.$store.dispatch("fetchData"); // Timer para enviar peticiones al servidor en busca de mensajes nuevos
+      this.$store.dispatch("fetch"); // Timer para enviar peticiones al servidor en busca de mensajes nuevos
 
       window.setInterval(function () {
         _this.$store.dispatch("fetchLastMessages");
       }, 2000);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["profile", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["appUser", "selectedContact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"]), {
+    avatarPath: function avatarPath() {// return "/images/" + this.profile.avatar;
+    }
+  }),
   components: {
     profile: _profile_UserProfile__WEBPACK_IMPORTED_MODULE_0__["default"],
     contacts: _contact_ContactList__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -2026,6 +2026,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2037,7 +2038,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     selectContact: function selectContact(contact) {
-      this.$store.commit("setSelectedContact", contact);
+      this.$store.commit("setSelectedContact", contact); // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
+
+      this.$store.commit("selectConversationById", {
+        conversation_id: contact.conversation_id
+      });
     },
     hide: function hide() {
       var div = document.getElementsByClassName("side-contacts")[0];
@@ -2103,7 +2108,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name", "id", "index", "alias", "contact_id"],
+  props: ["name", "id", "index", "alias", "contact_id", "avatar"],
   methods: {},
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     lastMessageDate: function lastMessageDate() {
@@ -2210,7 +2215,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     isSender: function isSender(author_id) {
-      if (author_id == this.profile.user_id) {
+      if (author_id == this.appUser.id) {
         return true;
       }
 
@@ -2223,7 +2228,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } // Ningun usuario seleccionado
 
 
-      if (typeof this.selected_conversation.conversation_id !== "undefined") {
+      if (typeof this.selectedConversation.id !== "undefined") {
         this.$store.dispatch("postMessage", this.input);
       } // Borrar texto del input
 
@@ -2235,7 +2240,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selected_conversation", "profile"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedConversation"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedConversation", "getSelectedConversationMessages"])),
   components: {
     "conversation-message": _ConversationMessage__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -2284,15 +2289,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     selectConversation: function selectConversation(conversation) {
-      this.$store.commit("setSelectedConversation", conversation);
+      this.$store.commit("setSelectedConversation", conversation); // this.$store.commit("setSelectedContact", conversation);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
     filterConversations: function filterConversations() {
-      var _this = this;
-
-      return this.contacts.filter(function (contact) {
-        return contact.name.toLowerCase().includes(_this.keyword.toLowerCase());
+      return this.conversations.filter(function (conversation) {
+        return conversation.messages.length > 0;
       });
     }
   }),
@@ -2347,6 +2350,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id"],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts"]), {
+    avatarPath: function avatarPath() {
+      return "";
+    },
     contactName: function contactName() {
       // Get contactBy??s
       var _iteratorNormalCompletion = true;
@@ -2360,7 +2366,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (typeof conversation !== "undefined") {
             if (contact.conversation_id == this.id) {
               return contact.name;
-            }
+            } else {}
           }
         }
       } catch (err) {
@@ -2390,7 +2396,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var conversation = _step2.value;
 
           if (conversation.messages.length > 0) {
-            if (conversation.conversation_id == this.id) {
+            if (conversation.id == this.id) {
               return conversation.messages[conversation.messages.length - 1].sent_at;
             }
           }
@@ -2463,6 +2469,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -2575,7 +2582,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PeopleListItem",
-  props: ["name", "index", "user_id"],
+  props: ["name", "index", "user_id", "avatar"],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["addContact"])),
   methods: {
     peopleToContact: function peopleToContact() {
@@ -2660,7 +2667,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {};
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selected_contact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getContactIndex"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["removeContact", "setSelectedContact"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selectedContact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getContactIndex"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["removeContact", "setSelectedContact"])),
   methods: {
     hideProfile: function hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
@@ -2743,7 +2750,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {};
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["profile"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["appUser"])),
   methods: {
     hideProfile: function hideProfile(event) {
       var div = document.getElementsByClassName("side-profile")[0];
@@ -35987,7 +35994,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background: url(\"http://shurl.esy.es/y\") no-repeat fixed center;\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  /*background: url(\"w.jpg\") no-repeat fixed center;*/\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
+exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
 
 // exports
 
@@ -68139,10 +68146,7 @@ var render = function() {
                 _c("div", { staticClass: "col-3 heading-avatar" }, [
                   _c("div", { staticClass: "heading-avatar-icon" }, [
                     _c("img", {
-                      attrs: {
-                        src:
-                          "https://bootdey.com/img/Content/avatar/avatar1.png"
-                      },
+                      attrs: { src: _vm.avatarPath },
                       on: { click: _vm.showProfile }
                     })
                   ])
@@ -68150,7 +68154,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-5 heading-name" }, [
                   _c("a", { staticClass: "heading-name-meta" }, [
-                    _vm._v(_vm._s(_vm.profile.alias))
+                    _vm._v(_vm._s(_vm.appUser.alias))
                   ])
                 ]),
                 _vm._v(" "),
@@ -68194,9 +68198,7 @@ var render = function() {
               _c("div", { staticClass: "col-4 heading-avatar" }, [
                 _c("div", { staticClass: "heading-avatar-icon" }, [
                   _c("img", {
-                    attrs: {
-                      src: "https://bootdey.com/img/Content/avatar/avatar6.png"
-                    },
+                    attrs: { src: _vm.avatarPath },
                     on: { click: _vm.showContactProfile }
                   })
                 ])
@@ -68209,7 +68211,7 @@ var render = function() {
                     staticClass: "heading-name-meta",
                     on: { click: _vm.showContactProfile }
                   },
-                  [_vm._v(_vm._s(_vm.selected_contact.name))]
+                  [_vm._v(_vm._s(_vm.selectedContact.name))]
                 ),
                 _vm._v(" "),
                 _c("span", { staticClass: "heading-online" }, [
@@ -68328,6 +68330,7 @@ var render = function() {
             attrs: {
               contact_id: contact.user_id,
               name: contact.name,
+              avatar: contact.avatar,
               alias: contact.alias,
               phone: contact.phone
             },
@@ -68367,7 +68370,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row sideBar-body" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "col-3 sideBar-avatar" }, [
+      _c("div", { staticClass: "avatar-icon" }, [
+        _c("img", { attrs: { src: _vm.avatar } })
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-9 sideBar-main" }, [
       _c("div", { staticClass: "row h-auto" }, [
@@ -68392,20 +68399,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 sideBar-avatar" }, [
-      _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", {
-          attrs: { src: "https://bootdey.com/img/Content/avatar/avatar4.png" }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68431,14 +68425,14 @@ var render = function() {
     _c(
       "div",
       { staticClass: "message", attrs: { id: "conversation" } },
-      _vm._l(_vm.getSelectedConversation.messages, function(message, index) {
+      _vm._l(_vm.getSelectedConversationMessages, function(message, index) {
         return _c("conversation-message", {
           key: index,
           attrs: {
-            alias: message.alias,
             author_id: message.author_id,
+            alias: message.author_alias,
             message: message.content,
-            name: message.name,
+            name: message.author_name,
             sent_at: message.sent_at,
             isSender: _vm.isSender(message.author_id)
           }
@@ -68528,7 +68522,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "sideBar-conversations myhc" },
-      _vm._l(_vm.conversations, function(conversation) {
+      _vm._l(_vm.filterConversations, function(conversation) {
         return _c("conversation-list-item", {
           key: conversation.conversation_id,
           attrs: { id: conversation.conversation_id },
@@ -68566,7 +68560,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row sideBar-body" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "col-3 sideBar-avatar" }, [
+      _c("div", { staticClass: "avatar-icon" }, [
+        _c("img", { attrs: { src: _vm.avatarPath } })
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-9 sideBar-main" }, [
       _c("div", { staticClass: "row h-auto" }, [
@@ -68587,20 +68585,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 sideBar-avatar" }, [
-      _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", {
-          attrs: { src: "https://bootdey.com/img/Content/avatar/avatar4.png" }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68735,7 +68720,7 @@ var render = function() {
       _vm._l(_vm.filterPeople, function(user) {
         return _c("user-list-item", {
           key: user.id,
-          attrs: { user_id: user.id, name: user.name }
+          attrs: { user_id: user.id, avatar: user.avatar, name: user.name }
         })
       }),
       1
@@ -68765,7 +68750,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row sideBar-body" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "col-3 sideBar-avatar" }, [
+      _c("div", { staticClass: "avatar-icon" }, [
+        _c("img", { staticClass: "img-fluid", attrs: { src: _vm.avatar } })
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-9 sideBar-main" }, [
       _c("div", { staticClass: "row h-auto" }, [
@@ -68791,21 +68780,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 sideBar-avatar" }, [
-      _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", {
-          staticClass: "img-fluid",
-          attrs: { src: "https://bootdey.com/img/Content/avatar/avatar5.png" }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68863,9 +68838,7 @@ var render = function() {
           _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
             _c("img", {
               staticClass: "img-fluid",
-              attrs: {
-                src: "https://bootdey.com/img/Content/avatar/avatar1.png"
-              }
+              attrs: { src: _vm.selectedContact.avatar }
             })
           ])
         ]
@@ -68883,20 +68856,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.selected_contact.alias,
-                  expression: "selected_contact.alias"
+                  value: _vm.selectedContact.alias,
+                  expression: "selectedContact.alias"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text" },
-              domProps: { value: _vm.selected_contact.alias },
+              domProps: { value: _vm.selectedContact.alias },
               on: {
                 change: _vm.updateProfile,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.selected_contact, "alias", $event.target.value)
+                  _vm.$set(_vm.selectedContact, "alias", $event.target.value)
                 }
               }
             })
@@ -68910,20 +68883,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.selected_contact.info,
-                  expression: "selected_contact.info"
+                  value: _vm.selectedContact.info,
+                  expression: "selectedContact.info"
                 }
               ],
               staticClass: "form-control",
               attrs: { rows: "4" },
-              domProps: { value: _vm.selected_contact.info },
+              domProps: { value: _vm.selectedContact.info },
               on: {
                 change: _vm.updateProfile,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.selected_contact, "info", $event.target.value)
+                  _vm.$set(_vm.selectedContact, "info", $event.target.value)
                 }
               }
             })
@@ -68980,9 +68953,7 @@ var render = function() {
           _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
             _c("img", {
               staticClass: "img-fluid",
-              attrs: {
-                src: "https://bootdey.com/img/Content/avatar/avatar1.png"
-              }
+              attrs: { src: _vm.appUser.avatar }
             })
           ])
         ]
@@ -69000,20 +68971,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.profile.alias,
-                  expression: "profile.alias"
+                  value: _vm.appUser.alias,
+                  expression: "appUser.alias"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text" },
-              domProps: { value: _vm.profile.alias },
+              domProps: { value: _vm.appUser.alias },
               on: {
                 change: _vm.updateProfile,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.profile, "alias", $event.target.value)
+                  _vm.$set(_vm.appUser, "alias", $event.target.value)
                 }
               }
             })
@@ -69027,20 +68998,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.profile.info,
-                  expression: "profile.info"
+                  value: _vm.appUser.info,
+                  expression: "appUser.info"
                 }
               ],
               staticClass: "form-control",
               attrs: { rows: "4" },
-              domProps: { value: _vm.profile.info },
+              domProps: { value: _vm.appUser.info },
               on: {
                 change: _vm.updateProfile,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.profile, "info", $event.target.value)
+                  _vm.$set(_vm.appUser, "info", $event.target.value)
                 }
               }
             })
@@ -83152,16 +83123,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     // Datos de usuario y perfil
-    user: {},
-    // Perfil del usuario logeado en la app
-    profile: {
-      id: '',
-      user_id: '',
-      name: '',
-      alias: '',
-      avatar: '',
-      info: ''
-    },
+    appUser: {},
     // Gente disponible en la app para "conectar"
     people: [],
     // Contactos del usuarios
@@ -83169,28 +83131,38 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     // Conversaciones entre el usuario y cada contacto        
     conversations: [],
     // Contacto seleccionado actualmente
-    selected_contact: {},
-    selected_conversation: {}
+    selectedContact: {},
+    // Conversacion seleccionada
+    selectedConversation: {}
   },
   getters: {
     getSelectedContactConversation: function getSelectedContactConversation(state, getters) {
-      if (typeof state.selected_contact.conversation_id === 'undefined') {
+      if (typeof state.selectedContact.conversation_id === 'undefined') {
         return [];
       }
 
-      return getters.getConversationById(state.selected_contact.conversation_id);
+      return getters.getConversationById(state.selectedContact.conversation_id);
     },
     getSelectedConversation: function getSelectedConversation(state, getters) {
-      if (typeof state.selected_conversation.conversation_id === 'undefined') {
-        return {};
+      if (typeof state.selectedConversation.id === 'undefined') {
+        return null;
       }
 
-      return state.selected_conversation;
+      return state.selectedConversation;
+    },
+    getSelectedConversationMessages: function getSelectedConversationMessages(state, getters) {
+      var conversation = getters.getSelectedConversation;
+
+      if (conversation == null) {
+        return;
+      }
+
+      return conversation.messages;
     },
     getConversationById: function getConversationById(state, getters) {
-      return function (id) {
+      return function (conversationId) {
         return state.conversations.find(function (conversation) {
-          return conversation.conversation_id === id;
+          return conversation.id === conversationId;
         });
       };
     },
@@ -83221,20 +83193,26 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     setContacts: function setContacts(state, contacts) {
       state.contacts = contacts;
     },
-    setProfile: function setProfile(state, profile) {
-      state.profile = profile;
+    setUser: function setUser(state, appUser) {
+      state.appUser = appUser;
     },
     setSelectedContact: function setSelectedContact(state, contact) {
-      state.selected_contact = contact;
+      state.selectedContact = contact;
     },
     setSelectedConversation: function setSelectedConversation(state, conversation) {
-      state.selected_conversation = conversation;
+      state.selectedConversation = conversation;
     },
     setPeople: function setPeople(state, people) {
       state.people = people;
     },
     setConversations: function setConversations(state, conversations) {
       state.conversations = conversations;
+    },
+    selectConversationById: function selectConversationById(state, data) {
+      var conversationIndex = state.conversations.findIndex(function (conversation) {
+        return conversation.conversation_id === data.conversation_id;
+      });
+      state.selectedConversation = state.conversations[conversationIndex];
     },
     removeContact: function removeContact(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);
@@ -83251,16 +83229,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     addConversation: function addConversation(state, conversation) {
       state.conversations.push(conversation);
     },
-    // ==================
     pushMessageToConversation: function pushMessageToConversation(state, payload) {
       // Agregamos el mensaje a la conversacion
-      payload.conversation.messages.push(payload.message); // Actualizamos la fecha del ultimo mensaje recibidos
+      payload.conversation.messages.push(payload.message);
     }
   },
   actions: {
     // Envia los datos del perfil actualizado a la base de datos
     saveProfile: function saveProfile(context) {
-      var profile = this.state.profile;
+      var profile = this.state.appUser;
       axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
         profile: profile,
         _method: "put"
@@ -83268,7 +83245,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     // Envio de mensajes al servidor
     postMessage: function postMessage(context, message) {
-      var conversation_id = context.state.selected_conversation.conversation_id;
+      var conversation_id = context.state.selectedConversation.id;
       axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
         message: message
       });
@@ -83323,7 +83300,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
             if (typeof conversation === 'undefined') {
               conversation = {
-                conversation_id: message.conversation_id,
+                id: message.conversation_id,
                 messages: []
               };
               context.commit('addConversation', conversation);
@@ -83338,37 +83315,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       });
     },
     // ---------------------
-    fetchData: function fetchData(context) {
-      // People
-      axios.get("http://127.0.0.1:8000/people/").then(function (response) {
+    fetch: function fetch(context) {
+      axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
-          // Agregamos las notas al array
-          context.commit('setPeople', response['data']['people']);
-        }
-      }); // Contactos (con los perfiles)
+          var data = response["data"]; // Userdata
 
-      axios.get("http://127.0.0.1:8000/contacts/").then(function (response) {
-        // Si el request tuvo exito (codigo 200)
-        if (response.status == 200) {
-          // Agregamos las notas al array
-          context.commit('setContacts', response['data']['contacts']);
-        }
-      }); // Contact Conversations
+          context.commit('setUser', data['app_user']); // People
 
-      axios.get("http://127.0.0.1:8000/conversations/").then(function (response) {
-        // Si el request tuvo exito (codigo 200)
-        if (response.status == 200) {
-          // Agregamos las notas al array
-          context.commit('setConversations', response['data']['conversations']);
-        }
-      }); // Datos de usuario y perfil
+          context.commit('setPeople', data['people']); // Contacts
 
-      axios.get("http://127.0.0.1:8000/profile/").then(function (response) {
-        // Si el request tuvo exito (codigo 200)
-        if (response.status == 200) {
-          // Agregamos las notas al array
-          context.commit('setProfile', response["data"]['profile'][0]);
+          context.commit('setContacts', data['contacts']); // Conversations
+
+          context.commit('setConversations', data['conversations']);
         }
       });
     }

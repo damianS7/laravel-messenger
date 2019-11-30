@@ -2,7 +2,7 @@
   <b-col class="side">
     <div class="sideBar-conversations myhc">
       <conversation-list-item
-        v-for="conversation of conversations"
+        v-for="conversation of filterConversations"
         v-bind:key="conversation.conversation_id"
         :id="conversation.conversation_id"
         @click.native="selectConversation(conversation)"
@@ -25,14 +25,16 @@ export default {
   methods: {
     selectConversation(conversation) {
       this.$store.commit("setSelectedConversation", conversation);
+
+      // this.$store.commit("setSelectedContact", conversation);
     }
   },
   computed: {
     ...mapState(["conversations"]),
     filterConversations: function() {
-      return this.contacts.filter(contact =>
-        contact.name.toLowerCase().includes(this.keyword.toLowerCase())
-      );
+      return this.conversations.filter(conversation => {
+        return conversation.messages.length > 0;
+      });
     }
   },
   components: { "conversation-list-item": ConversationListItem }

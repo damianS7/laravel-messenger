@@ -15,7 +15,7 @@
     <div class="row composeBox h-auto">
       <div class="col-12 composeBox-inner heading-avatar h-auto">
         <div class="profile-avatar-icon h-auto">
-          <img class="img-fluid" :src="selected_contact.avatar" />
+          <img class="img-fluid" :src="selectedContact.avatar" />
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="selected_contact.alias"
+              v-model="selectedContact.alias"
               @change="updateProfile"
             />
           </div>
@@ -37,7 +37,7 @@
             <textarea
               class="form-control"
               rows="4"
-              v-model="selected_contact.info"
+              v-model="selectedContact.info"
               @change="updateProfile"
             ></textarea>
           </div>
@@ -56,7 +56,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["contacts", "selected_contact"]),
+    ...mapState(["contacts", "selectedContact"]),
     ...mapGetters(["getContactIndex"]),
     ...mapMutations(["removeContact", "setSelectedContact"])
   },

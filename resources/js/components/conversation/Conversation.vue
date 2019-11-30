@@ -2,12 +2,12 @@
   <div class="side">
     <div class="message" id="conversation">
       <conversation-message
-        v-for="(message, index) of getSelectedConversation.messages"
+        v-for="(message, index) of getSelectedConversationMessages"
         v-bind:key="index"
-        :alias="message.alias"
         :author_id="message.author_id"
+        :alias="message.author_alias"
         :message="message.content"
-        :name="message.name"
+        :name="message.author_name"
         :sent_at="message.sent_at"
         :isSender="isSender(message.author_id)"
       ></conversation-message>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     isSender(author_id) {
-      if (author_id == this.profile.user_id) {
+      if (author_id == this.appUser.id) {
         return true;
       }
       return false;
@@ -58,7 +58,7 @@ export default {
       }
 
       // Ningun usuario seleccionado
-      if (typeof this.selected_conversation.conversation_id !== "undefined") {
+      if (typeof this.selectedConversation.id !== "undefined") {
         this.$store.dispatch("postMessage", this.input);
       }
 
@@ -71,8 +71,11 @@ export default {
     div.scrollTop = div.scrollHeight;
   },
   computed: {
-    ...mapState(["selected_conversation", "profile"]),
-    ...mapGetters(["getSelectedConversation"])
+    ...mapState(["selectedConversation", "appUser"]),
+    ...mapGetters([
+      "getSelectedConversation",
+      "getSelectedConversationMessages"
+    ])
   },
   components: {
     "conversation-message": ConversationMessage

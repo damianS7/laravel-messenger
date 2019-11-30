@@ -6,9 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         // Datos de usuario y perfil
-        user: {},
-        // Perfil del usuario logeado en la app
-        profile: { id: '', user_id: '', name: '', alias: '', avatar: '', info: '' },
+        appUser: {},
         // Gente disponible en la app para "conectar"
         people: [],
         // Contactos del usuarios
@@ -16,24 +14,33 @@ export default new Vuex.Store({
         // Conversaciones entre el usuario y cada contacto        
         conversations: [],
         // Contacto seleccionado actualmente
-        selected_contact: {},
-        selected_conversation: {}
+        selectedContact: {},
+        // Conversacion seleccionada
+        selectedConversation: {}
     },
     getters: {
         getSelectedContactConversation: (state, getters) => {
-            if (typeof state.selected_contact.conversation_id === 'undefined') {
+            if (typeof state.selectedContact.conversation_id === 'undefined') {
                 return [];
             }
-            return getters.getConversationById(state.selected_contact.conversation_id);
+            return getters.getConversationById(state.selectedContact.conversation_id);
         },
         getSelectedConversation: (state, getters) => {
-            if (typeof state.selected_conversation.conversation_id === 'undefined') {
-                return {};
+            if (typeof state.selectedConversation.id === 'undefined') {
+                return null;
             }
-            return state.selected_conversation;
+            return state.selectedConversation;
         },
-        getConversationById: (state, getters) => (id) => {
-            return state.conversations.find(conversation => conversation.conversation_id === id);
+        getSelectedConversationMessages: (state, getters) => {
+            var conversation = getters.getSelectedConversation;
+            if (conversation == null) {
+                return;
+            }
+
+            return conversation.messages;
+        },
+        getConversationById: (state, getters) => (conversationId) => {
+            return state.conversations.find(conversation => conversation.id === conversationId);
         },
         getContactIndex: (state, getters) => (user_id) => {
             for (var index in state.contacts) {
@@ -56,20 +63,26 @@ export default new Vuex.Store({
         setContacts(state, contacts) {
             state.contacts = contacts
         },
-        setProfile(state, profile) {
-            state.profile = profile
+        setUser(state, appUser) {
+            state.appUser = appUser
         },
         setSelectedContact(state, contact) {
-            state.selected_contact = contact;
+            state.selectedContact = contact;
         },
         setSelectedConversation(state, conversation) {
-            state.selected_conversation = conversation;
+            state.selectedConversation = conversation;
         },
         setPeople(state, people) {
             state.people = people
         },
         setConversations(state, conversations) {
             state.conversations = conversations;
+        },
+        selectConversationById(state, data) {
+            var conversationIndex = state.conversations.findIndex(conversation =>
+                conversation.conversation_id === data.conversation_id
+            );
+            state.selectedConversation = state.conversations[conversationIndex];
         },
         removeContact(state, index) {
             Vue.delete(state.contacts, index);
@@ -84,17 +97,15 @@ export default new Vuex.Store({
         addConversation(state, conversation) {
             state.conversations.push(conversation);
         },
-        // ==================
         pushMessageToConversation(state, payload) {
             // Agregamos el mensaje a la conversacion
             payload.conversation.messages.push(payload.message);
-            // Actualizamos la fecha del ultimo mensaje recibidos
         },
     },
     actions: {
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
-            var profile = this.state.profile;
+            var profile = this.state.appUser;
             axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
                 profile: profile,
                 _method: "put"
@@ -102,7 +113,7 @@ export default new Vuex.Store({
         },
         // Envio de mensajes al servidor
         postMessage(context, message) {
-            var conversation_id = context.state.selected_conversation.conversation_id;
+            var conversation_id = context.state.selectedConversation.id;
             axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
                 message: message
             });
@@ -158,7 +169,7 @@ export default new Vuex.Store({
                             message.conversation_id);
 
                         if (typeof conversation === 'undefined') {
-                            conversation = { conversation_id: message.conversation_id, messages: [] };
+                            conversation = { id: message.conversation_id, messages: [] };
                             context.commit('addConversation', conversation);
                         }
 
@@ -170,37 +181,19 @@ export default new Vuex.Store({
             });
         },
         // ---------------------
-        fetchData(context) {
-            // People
-            axios.get("http://127.0.0.1:8000/people/").then(function (response) {
+        fetch(context) {
+            axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
-                    // Agregamos las notas al array
-                    context.commit('setPeople', response['data']['people']);
-                }
-            });
-            // Contactos (con los perfiles)
-            axios.get("http://127.0.0.1:8000/contacts/").then(function (response) {
-                // Si el request tuvo exito (codigo 200)
-                if (response.status == 200) {
-                    // Agregamos las notas al array
-                    context.commit('setContacts', response['data']['contacts']);
-                }
-            });
-            // Contact Conversations
-            axios.get("http://127.0.0.1:8000/conversations/").then(function (response) {
-                // Si el request tuvo exito (codigo 200)
-                if (response.status == 200) {
-                    // Agregamos las notas al array
-                    context.commit('setConversations', response['data']['conversations']);
-                }
-            });
-            // Datos de usuario y perfil
-            axios.get("http://127.0.0.1:8000/profile/").then(function (response) {
-                // Si el request tuvo exito (codigo 200)
-                if (response.status == 200) {
-                    // Agregamos las notas al array
-                    context.commit('setProfile', response["data"]['profile'][0]);
+                    var data = response["data"];
+                    // Userdata
+                    context.commit('setUser', data['app_user']);
+                    // People
+                    context.commit('setPeople', data['people']);
+                    // Contacts
+                    context.commit('setContacts', data['contacts']);
+                    // Conversations
+                    context.commit('setConversations', data['conversations']);
                 }
             });
         },

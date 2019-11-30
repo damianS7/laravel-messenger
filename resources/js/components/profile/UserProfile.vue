@@ -12,7 +12,7 @@
     <div class="row composeBox h-auto">
       <div class="col-12 composeBox-inner heading-avatar h-auto">
         <div class="profile-avatar-icon h-auto">
-          <img class="img-fluid" :src="profile.avatar" />
+          <img class="img-fluid" :src="appUser.avatar" />
         </div>
       </div>
     </div>
@@ -22,11 +22,11 @@
         <div class="row sideBar-profile">
           <div class="col-12">Alias:</div>
           <div class="col-12">
-            <input type="text" class="form-control" v-model="profile.alias" @change="updateProfile" />
+            <input type="text" class="form-control" v-model="appUser.alias" @change="updateProfile" />
           </div>
           <div class="col-12">About you:</div>
           <div class="col-12">
-            <textarea class="form-control" rows="4" v-model="profile.info" @change="updateProfile"></textarea>
+            <textarea class="form-control" rows="4" v-model="appUser.info" @change="updateProfile"></textarea>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["profile"])
+    ...mapState(["appUser"])
   },
   methods: {
     hideProfile(event) {

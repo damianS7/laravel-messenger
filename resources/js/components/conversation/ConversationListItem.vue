@@ -2,7 +2,7 @@
   <div class="row sideBar-body">
     <div class="col-3 sideBar-avatar">
       <div class="avatar-icon">
-        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
+        <img :src="avatarPath" />
       </div>
     </div>
     <div class="col-9 sideBar-main">
@@ -28,12 +28,16 @@ export default {
   props: ["id"],
   computed: {
     ...mapState(["conversations", "contacts"]),
+    avatarPath: function() {
+      return "";
+    },
     contactName: function() {
       // Get contactBy??s
       for (var contact of this.contacts) {
         if (typeof conversation !== "undefined") {
           if (contact.conversation_id == this.id) {
             return contact.name;
+          } else {
           }
         }
       }
@@ -42,7 +46,7 @@ export default {
     lastMessageDate: function() {
       for (var conversation of this.conversations) {
         if (conversation.messages.length > 0) {
-          if (conversation.conversation_id == this.id) {
+          if (conversation.id == this.id) {
             return conversation.messages[conversation.messages.length - 1]
               .sent_at;
           }
