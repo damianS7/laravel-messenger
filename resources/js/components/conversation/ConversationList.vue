@@ -1,22 +1,6 @@
 <template>
   <b-col class="side">
-    <b-row class="searchBox">
-      <div class="col-12 searchBox-inner">
-        <div class="form-group has-feedback">
-          <input
-            id="searchText"
-            type="text"
-            class="form-control"
-            name="searchText"
-            placeholder="Search"
-            v-model="keyword"
-          />
-          <span class="glyphicon glyphicon-search form-control-feedback"></span>
-        </div>
-      </div>
-    </b-row>
-
-    <div class="sideBar myhc">
+    <div class="sideBar-conversations myhc">
       <conversation-list-item
         v-for="conversation of conversations"
         v-bind:key="conversation.id"
