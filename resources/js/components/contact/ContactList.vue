@@ -35,12 +35,6 @@
         :phone="contact.phone"
         @click.native="selectContact(contact)"
       ></contact-list-item>
-
-      <conversation-list-item
-        v-for="conversation of conversations"
-        v-bind:key="conversation.id"
-        :conversation_id="conversation.id"
-      ></conversation-list-item>
     </div>
   </b-col>
 </template>
@@ -48,7 +42,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import ContactListItem from "./ContactListItem";
-import ConversationListItem from "../conversation/ConversationListItem";
 
 export default {
   name: "ContactList",
@@ -75,8 +68,7 @@ export default {
     }
   },
   components: {
-    "contact-list-item": ContactListItem,
-    "conversation-list-item": ConversationListItem
+    "contact-list-item": ContactListItem
   }
 };
 </script>
