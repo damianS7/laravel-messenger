@@ -8,7 +8,7 @@
     <div class="col-9 sideBar-main">
       <div class="row h-auto">
         <div class="col-12 sideBar-name">
-          <span class="name-meta">Unkown</span>
+          <span class="name-meta">{{ contactName }}</span>
         </div>
       </div>
       <div class="row">
@@ -27,7 +27,18 @@ import { mapState } from "vuex";
 export default {
   props: ["id"],
   computed: {
-    ...mapState(["conversations"]),
+    ...mapState(["conversations", "contacts"]),
+    contactName: function() {
+      // Get contactBy??s
+      for (var contact of this.contacts) {
+        if (typeof conversation !== "undefined") {
+          if (contact.conversation_id == this.id) {
+            return contact.name;
+          }
+        }
+      }
+      return "-";
+    },
     lastMessageDate: function() {
       for (var conversation of this.conversations) {
         if (typeof conversation !== "undefined") {

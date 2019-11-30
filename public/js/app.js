@@ -2346,21 +2346,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
-    lastMessageDate: function lastMessageDate() {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts"]), {
+    contactName: function contactName() {
+      // Get contactBy??s
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.conversations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var conversation = _step.value;
+        for (var _iterator = this.contacts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var contact = _step.value;
 
           if (typeof conversation !== "undefined") {
-            if (conversation.messages.length > 0) {
-              if (conversation.conversation_id == this.id) {
-                return conversation.messages[conversation.messages.length - 1].sent_at;
-              }
+            if (contact.conversation_id == this.id) {
+              return contact.name;
             }
           }
         }
@@ -2375,6 +2374,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } finally {
           if (_didIteratorError) {
             throw _iteratorError;
+          }
+        }
+      }
+
+      return "-";
+    },
+    lastMessageDate: function lastMessageDate() {
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.conversations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var conversation = _step2.value;
+
+          if (typeof conversation !== "undefined") {
+            if (conversation.messages.length > 0) {
+              if (conversation.conversation_id == this.id) {
+                return conversation.messages[conversation.messages.length - 1].sent_at;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
           }
         }
       }
@@ -68538,7 +68571,13 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "col-9 sideBar-main" }, [
-      _vm._m(1),
+      _c("div", { staticClass: "row h-auto" }, [
+        _c("div", { staticClass: "col-12 sideBar-name" }, [
+          _c("span", { staticClass: "name-meta" }, [
+            _vm._v(_vm._s(_vm.contactName))
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-12 sideBar-time" }, [
@@ -68560,16 +68599,6 @@ var staticRenderFns = [
         _c("img", {
           attrs: { src: "https://bootdey.com/img/Content/avatar/avatar4.png" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row h-auto" }, [
-      _c("div", { staticClass: "col-12 sideBar-name" }, [
-        _c("span", { staticClass: "name-meta" }, [_vm._v("Unkown")])
       ])
     ])
   }
