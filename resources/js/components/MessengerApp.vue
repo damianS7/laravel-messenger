@@ -4,25 +4,25 @@
       <div class="col-12 col-sm-4 side">
         <div class="side-left">
           <b-row class="heading">
-            <div class="col-4 heading-avatar">
+            <div class="col-3 heading-avatar">
               <div class="heading-avatar-icon">
                 <img @click="showProfile" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
               </div>
             </div>
 
-            <div class="col-4 heading-name">
+            <div class="col-5 heading-name">
               <a class="heading-name-meta">{{ profile.alias }}</a>
-              <span class="heading-online">Online</span>
             </div>
 
-            <div class="col-3 heading-compose">
-              <i @click="showPeople" class="fa fa-comments fa-2x float-right" aria-hidden="true"></i>
-            </div>
-            <div class="col-1 heading-dot">
-              <i class="fa fa-ellipsis-v fa-2x float-right" aria-hidden="true"></i>
+            <div class="col-4 heading-compose">
+              <i @click="showContacts" class="fa fa-comments fa-2x float-right"></i>
+              <i @click="showPeople" class="fa fa-user-plus fa-2x float-right"></i>
             </div>
           </b-row>
+          <conversation-list></conversation-list>
+        </div>
 
+        <div class="side-contacts">
           <contacts></contacts>
         </div>
 
@@ -68,12 +68,17 @@ import ContactProfile from "./profile/ContactProfile";
 import ContactList from "./contact/ContactList";
 import Conversation from "./conversation/Conversation";
 import PeopleList from "./people/PeopleList";
+import ConversationList from "./conversation/ConversationList";
 import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   name: "MessengerApp",
   methods: {
     showPeople() {
       var div = document.getElementsByClassName("side-people")[0];
+      div.style.left = "0%";
+    },
+    showContacts() {
+      var div = document.getElementsByClassName("side-contacts")[0];
       div.style.left = "0%";
     },
     showProfile() {
@@ -102,6 +107,7 @@ export default {
     profile: UserProfile,
     contacts: ContactList,
     conversation: Conversation,
+    "conversation-list": ConversationList,
     "contact-profile": ContactProfile,
     "people-finder": PeopleList
   },

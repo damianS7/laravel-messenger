@@ -1,5 +1,14 @@
 <template>
   <b-col class="side">
+    <div class="row newMessage-heading">
+      <div class="row newMessage-main">
+        <div class="col-sm-2 col-xs-2 newMessage-back">
+          <i @click="hide" class="fa fa-arrow-left" aria-hidden="true"></i>
+        </div>
+        <div class="col-sm-10 col-xs-10 newMessage-title">New Chat</div>
+      </div>
+    </div>
+
     <b-row class="searchBox">
       <div class="col-12 searchBox-inner">
         <div class="form-group has-feedback">
@@ -26,6 +35,12 @@
         :phone="contact.phone"
         @click.native="selectContact(contact)"
       ></contact-list-item>
+
+      <conversation-list-item
+        v-for="conversation of conversations"
+        v-bind:key="conversation.id"
+        :conversation_id="conversation.id"
+      ></conversation-list-item>
     </div>
   </b-col>
 </template>
@@ -33,6 +48,7 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import ContactListItem from "./ContactListItem";
+import ConversationListItem from "../conversation/ConversationListItem";
 
 export default {
   name: "ContactList",
@@ -44,17 +60,24 @@ export default {
   methods: {
     selectContact(contact) {
       this.$store.commit("setSelectedContact", contact);
+    },
+    hide() {
+      var div = document.getElementsByClassName("side-contacts")[0];
+      div.style.left = "-100%";
     }
   },
   computed: {
-    ...mapState(["contacts"]),
+    ...mapState(["contacts", "conversations"]),
     filterContacts: function() {
       return this.contacts.filter(contact =>
         contact.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     }
   },
-  components: { "contact-list-item": ContactListItem }
+  components: {
+    "contact-list-item": ContactListItem,
+    "conversation-list-item": ConversationListItem
+  }
 };
 </script>
 <style>
