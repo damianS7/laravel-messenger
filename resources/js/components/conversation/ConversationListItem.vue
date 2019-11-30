@@ -41,12 +41,10 @@ export default {
     },
     lastMessageDate: function() {
       for (var conversation of this.conversations) {
-        if (typeof conversation !== "undefined") {
-          if (conversation.messages.length > 0) {
-            if (conversation.conversation_id == this.id) {
-              return conversation.messages[conversation.messages.length - 1]
-                .sent_at;
-            }
+        if (conversation.messages.length > 0) {
+          if (conversation.conversation_id == this.id) {
+            return conversation.messages[conversation.messages.length - 1]
+              .sent_at;
           }
         }
       }

@@ -2389,11 +2389,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         for (var _iterator2 = this.conversations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var conversation = _step2.value;
 
-          if (typeof conversation !== "undefined") {
-            if (conversation.messages.length > 0) {
-              if (conversation.conversation_id == this.id) {
-                return conversation.messages[conversation.messages.length - 1].sent_at;
-              }
+          if (conversation.messages.length > 0) {
+            if (conversation.conversation_id == this.id) {
+              return conversation.messages[conversation.messages.length - 1].sent_at;
             }
           }
         }
@@ -83312,16 +83310,25 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
-          var data = response['data']['messages']; // Si no hay datos ...
+          var messages = response['data']['messages']; // Si no hay datos ...
 
-          if (data.length == 0) {
+          if (messages.length == 0) {
             return;
           } // Iteramos sobre los datos
 
 
-          for (var index in data) {
-            var conversation = context.getters.getConversationById(data[index].conversation_id);
-            var message = data[index];
+          for (var index in messages) {
+            var message = messages[index];
+            var conversation = context.getters.getConversationById(message.conversation_id);
+
+            if (typeof conversation === 'undefined') {
+              conversation = {
+                conversation_id: message.conversation_id,
+                messages: []
+              };
+              context.commit('addConversation', conversation);
+            }
+
             context.commit('pushMessageToConversation', {
               message: message,
               conversation: conversation

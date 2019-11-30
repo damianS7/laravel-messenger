@@ -149,15 +149,15 @@ class ConversationController extends Controller
     public function fetchLastMessages(Request $request)
     {
         $user_id = Auth::user()->id;
-        
-        $messages = Message::select(['messages.*', 'users.name', 'profiles.alias'])
+        $messages = Message::select(['messages.*', 'users.name AS author_name',
+        'profiles.alias AS author_alias', 'users.phone'])
         ->join('messages_queue', 'messages.id', '=', 'messages_queue.message_id')
         ->join('users', 'users.id', '=', 'messages.author_id')
         ->join('profiles', 'users.id', '=', 'profiles.user_id')
         ->where('messages_queue.to_user_id', $user_id)
         ->orderBy('messages.sent_at', 'ASC')
         ->get();
-        
+
         MessageQueue::where('to_user_id', $user_id)->delete();
         return response()->json(['messages' => $messages], 200);
     }

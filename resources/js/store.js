@@ -144,17 +144,24 @@ export default new Vuex.Store({
             axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
-                    var data = response['data']['messages'];
+                    var messages = response['data']['messages'];
                     // Si no hay datos ...
-                    if (data.length == 0) {
+                    if (messages.length == 0) {
                         return;
                     }
 
                     // Iteramos sobre los datos
-                    for (var index in data) {
+                    for (var index in messages) {
+                        var message = messages[index];
+
                         var conversation = context.getters.getConversationById(
-                            data[index].conversation_id);
-                        var message = data[index];
+                            message.conversation_id);
+
+                        if (typeof conversation === 'undefined') {
+                            conversation = { conversation_id: message.conversation_id, messages: [] };
+                            context.commit('addConversation', conversation);
+                        }
+
                         context.commit('pushMessageToConversation',
                             { message, conversation });
                     }
