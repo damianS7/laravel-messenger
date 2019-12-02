@@ -7,7 +7,8 @@ use App\Contact;
 use App\User;
 use Auth;
 use DB;
-use App\Http\Controllers\ConversationController;
+
+use App\Conversation;
 
 class ContactController extends Controller
 {
@@ -59,7 +60,7 @@ class ContactController extends Controller
         );
 
         // Obtenemos los contactos del usuario junto con sus perfiles
-        $data_contact = Contact::contactInfo($contact->contact_id);
+        $data_contact = Contact::contactInfo($contact->contact_id)->first();
 
         // Devolvemos el json con los datos del nuevo contacto
         return response()->json(['contact' => $data_contact], 200);

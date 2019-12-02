@@ -5,9 +5,7 @@
         v-for="conversation of filterConversations"
         v-bind:key="conversation.id"
         :id="conversation.id"
-        :avatar="avatarPath"
-        :name="contactName"
-        @click.native="selectConversation(conversation.id)"
+        @click.native="selectConversation(conversation)"
       ></conversation-list-item>
     </div>
   </b-col>
@@ -25,28 +23,28 @@ export default {
     };
   },
   methods: {
-    selectConversation(conversationId) {
-      this.$store.commit("selectConversationById", { conversationId });
+    selectConversation(conversation) {
+      // Seleccionamos la conversacion para que se carguen los mensajes.
+      this.$store.commit("selectConversationById", {
+        conversationId: conversation.id
+      });
+      console.log("Selected conver id: " + conversation.user_a_id);
 
-      var conversation = this.$store.getters.getConversationById(
-        conversationId
-      );
+      // Buscamos el usuario al otro lado de la conversacion
+      // if user_a_id == appUser.id userId = user_b_id
+      // conversation.user_a_id findPeople
+      // conversation.user_a_id findContacts
+      // Seleccionamos el usuario para poder cargar el perfil
 
-      var user = this.$store.getters.getPeopleById(
-        conversation.messages[0].author_id
-      );
+      //var user = this.$store.getters.getPeopleById(
+      //        conversation.messages[0].author_id
+      //);
 
       // this.$store.commit("selectContact", conversation);
     }
   },
   computed: {
     ...mapState(["conversations"]),
-    contactName: function() {
-      // var user = this.$store.getters.getPeopleById();
-    },
-    avatarPath: function() {
-      // var user = this.$store.getters.getPeopleById();
-    },
     filterConversations: function() {
       return this.conversations.filter(conversation => {
         return conversation.messages.length > 0;

@@ -46,6 +46,7 @@ export default new Vuex.Store({
             return state.people.find(people => people.id === userId);
         },
         getContactById: (state, getters) => (userId) => {
+            console.log('finding userId ' + userId);
             return state.contacts.find(contact => contact.user_id === userId);
         },
         getContactIndex: (state, getters) => (user_id) => {
@@ -128,6 +129,17 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        messageToConversation(context, message) {
+            var conversation = context.getters.getConversationById(
+                message.conversation_id);
+
+            if (typeof conversation === 'undefined') {
+                conversation = { id: message.conversation_id, messages: [] };
+                context.commit('addConversation', conversation);
+            }
+
+            context.commit('addMessage', { message, conversation });
+        },
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
             var profile = this.state.appUser;
@@ -141,6 +153,17 @@ export default new Vuex.Store({
             var conversation_id = context.state.selectedConversation.id;
             axios.post("http://127.0.0.1:8000/conversation/" + conversation_id, {
                 message: message
+            }).then(function (response) {
+                // Si el request tuvo exito (codigo 200)
+                if (response.status == 200) {
+                    var message = response['data'];
+                    // Si no hay datos ...
+                    if (message.length == 0) {
+                        return;
+                    }
+
+                    context.dispatch('messageToConversation', message);
+                }
             });
         },
         // Peticion para borrar un contacto
@@ -162,16 +185,17 @@ export default new Vuex.Store({
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
-                    var conversation = response['data']['conversation'];
-                    // Agregamos el nuevo contacto usando los datos recibidos
-                    context.commit("addContact", response['data']['contact']);
-
+                    var contact = response['data']['contact'];
                     // Agregamos una nueva conversacion si existe el objeto
-                    if (conversation.length != 0) {
-                        context.commit("addConversation", conversation);
+                    if (contact.length == 0) {
+                        return;
                     }
+
+                    // Agregamos el nuevo contacto usando los datos recibidos
+                    context.commit("addContact", contact);
+
                     // Borramos a la persona que hemos agregado de People
-                    context.commit("removePeopleById", data.user_id);
+                    context.commit("removePeopleById", contact.user_id);
                 }
             });
         },
@@ -189,16 +213,7 @@ export default new Vuex.Store({
                     // Iteramos sobre los datos
                     for (var index in messages) {
                         var message = messages[index];
-
-                        var conversation = context.getters.getConversationById(
-                            message.conversation_id);
-
-                        if (typeof conversation === 'undefined') {
-                            conversation = { id: message.conversation_id, messages: [] };
-                            context.commit('addConversation', conversation);
-                        }
-
-                        context.commit('addMessage', { message, conversation });
+                        context.dispatch('messageToConversation', message);
                     }
                 }
 

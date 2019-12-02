@@ -25,31 +25,46 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["id", "avatarPath"],
+  props: ["id"],
   computed: {
-    ...mapState(["conversations", "contacts"]),
+    ...mapState(["conversations", "contacts", "appUser"]),
     avatarPath: function() {
       var conversation = this.$store.getters.getConversationById(this.id);
-      var user = this.$store.getters.getPeopleById(
-        conversation.messages[0].author_id
-      );
+
+      var userId = -1;
+      if (conversation.user_a_id == this.appUser.id) {
+        userId = conversation.user_b_id;
+      } else {
+        userId = conversation.user_a_id;
+      }
+
+      var user = this.$store.getters.getPeopleById(userId);
+
+      // Usuario no encontrado
+      if (typeof user === "undefined") {
+        user = this.$store.getters.getContactById(userId);
+      }
+
       return "/images/" + user.avatar;
     },
     contactName: function() {
-      // Get contactBy??s
-      for (var contact of this.contacts) {
-        if (typeof conversation !== "undefined") {
-          if (contact.conversation_id == this.id) {
-            return contact.name;
-          }
-        }
+      var conversation = this.$store.getters.getConversationById(this.id);
+
+      var userId = -1;
+      if (conversation.user_a_id == this.appUser.id) {
+        userId = conversation.user_b_id;
+      } else {
+        userId = conversation.user_a_id;
       }
 
-      var conversation = this.$store.getters.getConversationById(this.id);
-      var user = this.$store.getters.getPeopleById(
-        conversation.messages[0].author_id
-      );
-      return user.phone;
+      var user = this.$store.getters.getPeopleById(userId);
+
+      if (typeof user !== "undefined") {
+        return user.phone;
+      }
+
+      user = this.$store.getters.getContactById(userId);
+      return user.name;
     },
     lastMessageDate: function() {
       for (var conversation of this.conversations) {

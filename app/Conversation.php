@@ -9,6 +9,10 @@ class Conversation extends Model
     public $timestamps = false;
     protected $table = "conversations";
 
+    protected $fillable = [
+        'user_a_id', 'user_b_id'
+    ];
+
     // Devuelve los datos de una conversacion entre dos usuarios o null
     public function scopeUsersConversation($query, $user_id_a, $user_id_b)
     {

@@ -29,7 +29,14 @@ class MessageController extends Controller
 
         $messageData = Message::messageInfo($message->id)->first();
         $conversation = Conversation::find($conversationId);
-        MessageQueueController::messageToQueue($message, $conversation);
+
+        if ($conversation->user_a_id == $user_id) {
+            $to_user_id = $conversation->user_b_id;
+        } else {
+            $to_user_id = $conversation->user_a_id;
+        }
+        //MessageQueueController::messageToQueue($message, $conversation);
+        MessageQueueController::toQueue($message, $to_user_id);
         return response()->json($messageData, 200);
     }
 
