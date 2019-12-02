@@ -16,21 +16,6 @@ class ContactController extends Controller
         // Se necesita esta autentificado para usar este controlador
         $this->middleware('auth');
     }
-
-    public static function getContacts()
-    {
-        $user_id = Auth::user()->id;
-        return Contact::select(['users.id AS user_id', 'users.name',
-            'users.phone','users.email', 'users.created_at AS member_since',
-            'conversations.id AS conversation_id',
-            'profiles.alias', 'profiles.info', 'profiles.avatar'])
-            ->from('users')
-            ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
-            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
-            ->leftJoin('conversations', 'conversations.user_a_id', '=', DB::raw('LEAST(contacts.user_id, contacts.contact_id) AND conversations.user_b_id = GREATEST(contacts.user_id, contacts.contact_id)'))
-            ->where('contacts.user_id', $user_id)
-            ->get();
-    }
     
     /**
      * Display a listing of the resource.
@@ -43,7 +28,7 @@ class ContactController extends Controller
         $user_id = Auth::user()->id;
     
         // Obtenemos los contactos del usuario junto con sus perfiles
-        $user_contacts = self::getContacts();
+        $user_contacts = Contact::userContacts($user_id)->get();
 
         // Devolvemos el json con las notas y codigo 200
         return response()->json(['contacts' => $user_contacts], 200);
@@ -66,32 +51,18 @@ class ContactController extends Controller
         $contact->contact_id = $request['user_id'];
         $contact->save();
 
-        $conversation = '';
-
-        // Comprobamos si existe una conversacion previa entre estos dos usuarios
-        if (ConversationController::getConversation($user_id, $contact->contact_id) === null) {
-            $conversation_id = ConversationController::createConversation(
-                $user_id,
-                $contact->contact_id
-            );
-            $conversation = ConversationController::getConversationJson($conversation_id);
-        }
+        // firstOrCreate
+        $conversation = Conversation::firstOrCreate(
+            [
+            'user_a_id' => min($contact->user_id, $contact->contact_id),
+            'user_b_id' => max($contact->user_id, $contact->contact_id)]
+        );
 
         // Obtenemos los contactos del usuario junto con sus perfiles
-        $data_contact = Contact::select(['users.id AS user_id', 'users.name',
-            'users.phone','users.email', 'users.created_at AS member_since',
-            'conversations.id AS conversation_id',
-            'profiles.alias', 'profiles.info', 'profiles.avatar'])
-            ->from('users')
-            ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
-            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
-            ->leftJoin('conversations', 'conversations.user_a_id', '=', DB::raw('LEAST(contacts.user_id, contacts.contact_id) AND conversations.user_b_id = GREATEST(contacts.user_id, contacts.contact_id)'))
-            ->where('users.id', $contact->contact_id)
-            ->first();
+        $data_contact = Contact::contactInfo($contact->contact_id);
 
         // Devolvemos el json con los datos del nuevo contacto
-        return response()->json(['contact' => $data_contact,
-            'conversation' => $conversation], 200);
+        return response()->json(['contact' => $data_contact], 200);
     }
 
     /**

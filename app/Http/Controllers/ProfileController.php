@@ -14,18 +14,6 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    public static function getProfile()
-    {
-        $user_id = Auth::user()->id;
-        return Profile::select(['users.id', 'users.name',
-        'profiles.alias', 'profiles.avatar', 'profiles.info',
-        'users.phone', 'users.email', 'users.created_at AS member_since'])
-        ->from('users')
-        ->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
-        ->where('users.id', $user_id)
-        ->first();
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +21,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::user()->id;
-        $profile = Profile::where('user_id', $user_id)->get();
-
+        $currentUserId = Auth::user()->id;
+        $profile = Profile::fullProfile($currentUserId);
         // Devolvemos el json con el perfil y codigo 200
         return response()->json(['profile' => $profile], 200);
     }
@@ -50,7 +37,7 @@ class ProfileController extends Controller
     public function update(Request $request, $profile_id)
     {
         $user_id = Auth::user()->id;
-        $profile = Profile::where(['id' => $profile_id ,'user_id' => $user_id])->first();
+        $profile = Profile::where(['id' => $profile_id , 'user_id' => $user_id])->first();
         $profile->alias = $request['profile']['alias'];
         $profile->info = $request['profile']['info'];
         $profile->save();

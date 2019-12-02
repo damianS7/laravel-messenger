@@ -32,13 +32,13 @@ Route::put('/profile/{profile_id}', 'ProfileController@update');
 Route::get('/profile', 'ProfileController@index');
 
 // Ruta para postear nuevos mensajes
-Route::post('/conversation/{conversation_id}', 'ConversationController@storeMessage');
+Route::post('/conversation/{conversation_id}', 'MessageController@store');
 
 // Conversaciones de usuario
 Route::get('/conversations', 'ConversationController@index');
 
 // Ruta para recuperar los nuevos mensajes recibidos.
-Route::get('/conversations/update', 'ConversationController@fetchLastMessages');
+Route::get('/conversations/update', 'MessageQueueController@index');
 
 // Ruta para la carga inicial de la app
 Route::get('/messenger/fetch', 'MessengerController@index');
