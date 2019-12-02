@@ -2042,10 +2042,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     selectContact: function selectContact(contact) {
-      this.$store.commit("setSelectedContact", contact); // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
+      this.$store.commit("selectContactById", {
+        userId: contact.user_id
+      }); // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
 
       this.$store.commit("selectConversationById", {
-        conversation_id: contact.conversation_id
+        conversationId: contact.conversation_id
       });
     },
     hide: function hide() {
@@ -2366,22 +2368,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts"]), {
     avatarPath: function avatarPath() {
       var conversation = this.$store.getters.getConversationById(this.id);
-      var user = this.$store.getters.getPeopleById(conversation.messages[0].author_id);
+      var userId = conversation.messages[0].author_id;
+      var user = this.$store.getters.getPeopleById(userId); // Usuario no encontrado
+
+      if (typeof user === "undefined") {
+        user = this.$store.getters.getContactById({
+          userId: userId
+        });
+      }
+
       return "/images/" + user.avatar;
     },
     contactName: function contactName() {
-      // Get contactBy??s
+      var conversation = this.$store.getters.getConversationById(this.id);
+      var userId = conversation.messages[0].author_id;
+      var user = this.$store.getters.getPeopleById(userId);
+      console.log(userId);
+
+      if (typeof user !== "undefined") {
+        return user.phone;
+      }
+
+      user = this.$store.getters.getContactById({
+        userId: userId
+      });
+      return user.name;
+    },
+    lastMessageDate: function lastMessageDate() {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = this.contacts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var contact = _step.value;
+        for (var _iterator = this.conversations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var conversation = _step.value;
 
-          if (typeof conversation !== "undefined") {
-            if (contact.conversation_id == this.id) {
-              return contact.name;
+          if (conversation.messages.length > 0) {
+            if (conversation.id == this.id) {
+              return conversation.messages[conversation.messages.length - 1].sent_at;
             }
           }
         }
@@ -2396,40 +2420,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } finally {
           if (_didIteratorError) {
             throw _iteratorError;
-          }
-        }
-      }
-
-      var conversation = this.$store.getters.getConversationById(this.id);
-      var user = this.$store.getters.getPeopleById(conversation.messages[0].author_id);
-      return user.phone;
-    },
-    lastMessageDate: function lastMessageDate() {
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = this.conversations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var conversation = _step2.value;
-
-          if (conversation.messages.length > 0) {
-            if (conversation.id == this.id) {
-              return conversation.messages[conversation.messages.length - 1].sent_at;
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
           }
         }
       }
@@ -83199,6 +83189,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       };
     },
+    getContactById: function getContactById(state, getters) {
+      return function (userId) {
+        return state.contacts.find(function (contact) {
+          return contact.user_id === userId;
+        });
+      };
+    },
     getContactIndex: function getContactIndex(state, getters) {
       return function (user_id) {
         for (var index in state.contacts) {
@@ -83231,6 +83228,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     setSelectedContact: function setSelectedContact(state, contact) {
       state.selectedContact = contact;
+    },
+    selectContactById: function selectContactById(state, payload) {
+      var contactIndex = state.contacts.findIndex(function (contact) {
+        return contact.user_id === payload.userId;
+      });
+      state.selectedContact = state.contacts[contactIndex];
     },
     setSelectedConversation: function setSelectedConversation(state, conversation) {
       state.selectedConversation = conversation;

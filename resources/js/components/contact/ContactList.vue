@@ -53,10 +53,10 @@ export default {
   },
   methods: {
     selectContact(contact) {
-      this.$store.commit("setSelectedContact", contact);
+      this.$store.commit("selectContactById", { userId: contact.user_id });
       // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
       this.$store.commit("selectConversationById", {
-        conversation_id: contact.conversation_id
+        conversationId: contact.conversation_id
       });
     },
     hide() {
