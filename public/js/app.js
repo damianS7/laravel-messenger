@@ -2225,6 +2225,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2261,7 +2268,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedConversation", "getSelectedConversationMessages"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getSelectedConversation", "getSelectedConversationMessages"]), {
+    userSelected: function userSelected() {
+      if (typeof this.selectedUser.id === "undefined") {
+        return false;
+      }
+
+      return true;
+    },
+    emptyChat: function emptyChat() {
+      if (typeof this.selectedUser.id === "undefined") {
+        return false;
+      }
+
+      if (this.getSelectedConversationMessages.length > 0) {
+        return false;
+      }
+
+      return true;
+    }
+  }),
   components: {
     "conversation-message": _ConversationMessage__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -68419,20 +68445,41 @@ var render = function() {
     _c(
       "div",
       { staticClass: "message", attrs: { id: "conversation" } },
-      _vm._l(_vm.getSelectedConversationMessages, function(message, index) {
-        return _c("conversation-message", {
-          key: index,
-          attrs: {
-            author_id: message.author_id,
-            alias: message.author_alias,
-            message: message.content,
-            name: message.author_name,
-            sent_at: message.sent_at,
-            isSender: _vm.isSender(message.author_id)
-          }
+      [
+        !_vm.userSelected
+          ? _c("div", { staticClass: "row message-previous" }, [
+              _c("div", { staticClass: "col-sm-12 previous" }, [
+                _vm._v("Select a conversation to load some messages")
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.emptyChat
+          ? _c("div", { staticClass: "row message-previous" }, [
+              _c("div", { staticClass: "col-sm-12 previous" }, [
+                _vm._v(
+                  "Don't be shy! Say something to " +
+                    _vm._s(_vm.selectedUser.name)
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.getSelectedConversationMessages, function(message, index) {
+          return _c("conversation-message", {
+            key: index,
+            attrs: {
+              author_id: message.author_id,
+              alias: message.author_alias,
+              message: message.content,
+              name: message.author_name,
+              sent_at: message.sent_at,
+              isSender: _vm.isSender(message.author_id)
+            }
+          })
         })
-      }),
-      1
+      ],
+      2
     ),
     _vm._v(" "),
     _c("div", { staticClass: "row reply" }, [

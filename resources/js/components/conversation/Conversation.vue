@@ -1,6 +1,13 @@
 <template>
   <div class="side">
     <div class="message" id="conversation">
+      <div v-if="!userSelected" class="row message-previous">
+        <div class="col-sm-12 previous">Select a conversation to load some messages</div>
+      </div>
+
+      <div v-if="emptyChat" class="row message-previous">
+        <div class="col-sm-12 previous">Don't be shy! Say something to {{ selectedUser.name }}</div>
+      </div>
       <conversation-message
         v-for="(message, index) of getSelectedConversationMessages"
         v-bind:key="index"
@@ -71,11 +78,28 @@ export default {
     div.scrollTop = div.scrollHeight;
   },
   computed: {
-    ...mapState(["selectedConversation", "appUser"]),
+    ...mapState(["selectedConversation", "appUser", "selectedUser"]),
     ...mapGetters([
       "getSelectedConversation",
       "getSelectedConversationMessages"
-    ])
+    ]),
+    userSelected: function() {
+      if (typeof this.selectedUser.id === "undefined") {
+        return false;
+      }
+      return true;
+    },
+    emptyChat: function() {
+      if (typeof this.selectedUser.id === "undefined") {
+        return false;
+      }
+
+      if (this.getSelectedConversationMessages.length > 0) {
+        return false;
+      }
+
+      return true;
+    }
   },
   components: {
     "conversation-message": ConversationMessage
