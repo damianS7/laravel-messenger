@@ -54,16 +54,17 @@ class ContactController extends Controller
 
         // firstOrCreate
         $conversation = Conversation::firstOrCreate(
-            [
-            'user_a_id' => min($contact->user_id, $contact->contact_id),
+            ['user_a_id' => min($contact->user_id, $contact->contact_id),
             'user_b_id' => max($contact->user_id, $contact->contact_id)]
         );
 
         // Obtenemos los contactos del usuario junto con sus perfiles
-        $data_contact = Contact::contactInfo($contact->contact_id)->first();
-
+        $data_contact = Contact::contactInfo($user_id, $contact->contact_id)->first();
+        $conversation['messages'] = array();
+        
         // Devolvemos el json con los datos del nuevo contacto
-        return response()->json(['contact' => $data_contact], 200);
+        return response()->json(['contact' => $data_contact,
+            'conversation' => $conversation], 200);
     }
 
     /**

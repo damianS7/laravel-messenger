@@ -26,7 +26,7 @@ class Contact extends Model
     }
 
     // Devuelve la informacion de usuario de un contacto
-    public function scopeContactInfo($query, $contact_id)
+    public function scopeContactInfo($query, $userId, $contactId)
     {
         return $query->select(['users.id AS user_id', 'users.name',
             'users.phone','users.email', 'users.created_at AS member_since',
@@ -39,10 +39,10 @@ class Contact extends Model
                 'conversations',
                 'conversations.user_a_id',
                 '=',
-                DB::raw('LEAST(contacts.user_id, contacts.contact_id) 
+                DB::raw("LEAST('$userId', '$contactId') 
                 AND conversations.user_b_id = 
-                GREATEST(contacts.user_id, contacts.contact_id)')
+                GREATEST('$userId', '$contactId')")
             )
-            ->where('users.id', $contact_id);
+            ->where('users.id', $contactId);
     }
 }

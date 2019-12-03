@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\User;
+use App\People;
 use Illuminate\Http\Request;
 
 class PeopleController extends Controller
@@ -14,8 +15,6 @@ class PeopleController extends Controller
         $this->middleware('auth');
     }
 
-    
-
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +22,9 @@ class PeopleController extends Controller
      */
     public function index()
     {
+        $currentUserId = Auth::user()->id;
         // Obtenemos toda la gente de la app que no esten en nuestros contactos
-        $people = self::getContacts();
+        $people = People::appPeople($currentUserId)->get();
         return response()->json(['people' => $people], 200);
     }
 }
