@@ -2,7 +2,7 @@
   <div class="row sideBar-body">
     <div class="col-3 sideBar-avatar">
       <div class="avatar-icon">
-        <img class="img-fluid" :src="avatar" />
+        <img class="img-fluid" :src="avatarPath" />
       </div>
     </div>
     <div class="col-9 sideBar-main">
@@ -29,7 +29,10 @@ export default {
   props: ["name", "index", "user_id", "avatar"],
   computed: {
     ...mapState(["people"]),
-    ...mapMutations(["addContact"])
+    ...mapMutations(["addContact"]),
+    avatarPath: function() {
+      return "/images/" + this.avatar;
+    }
   },
   methods: {
     peopleToContact() {

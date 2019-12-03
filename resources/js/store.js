@@ -13,8 +13,8 @@ export default new Vuex.Store({
         contacts: [],
         // Conversaciones entre el usuario y cada contacto        
         conversations: [],
-        // Contacto seleccionado actualmente
-        selectedContact: {},
+        // Usuario seleccionado actualmente, ya sea contacto o no
+        selectedUser: {},
         // Conversacion seleccionada
         selectedConversation: {}
     },
@@ -46,8 +46,20 @@ export default new Vuex.Store({
             return state.people.find(people => people.id === userId);
         },
         getContactById: (state, getters) => (userId) => {
-            console.log('finding userId ' + userId);
             return state.contacts.find(contact => contact.user_id === userId);
+        },
+        getUserById: (state, getters) => (userId) => {
+            var user = getters.getContactById(userId);
+            if (typeof user === 'undefined') {
+                return getters.getPeopleById(userId);
+            }
+            return user;
+        },
+        isContact: (state, getters) => (userId) => {
+            if (typeof getters.getContactById(userId) === 'undefined') {
+                return false;
+            }
+            return true;
         },
         getContactIndex: (state, getters) => (user_id) => {
             for (var index in state.contacts) {
@@ -64,7 +76,14 @@ export default new Vuex.Store({
                     return index;
                 }
             }
-        }
+        },
+        getUserIdFromSelectedConversation: (state, getters) => (userId) => {
+            if (state.selectedConversation.user_a_id == state.appUser.id) {
+                return state.selectedConversation.user_b_id;
+            }
+
+            return state.selectedConversation.user_a_id;
+        },
     },
     mutations: {
         // Asigna el usuario de la app
@@ -83,9 +102,9 @@ export default new Vuex.Store({
         setConversations(state, conversations) {
             state.conversations = conversations;
         },
-        // Selecciona un contacto
-        selectContact(state, contact) {
-            state.selectedContact = contact;
+        // Selecciona un usuario
+        selectUser(state, user) {
+            state.selectedUser = user;
         },
         // Selecciona un contacto basado en su id
         selectContactById(state, payload) {
@@ -129,6 +148,14 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        selectUserById(context, data) {
+            var user = context.getters.getUserById(data.userId);
+            context.commit('selectUser', user);
+        },
+        selectConversationById(context, data) {
+            var conversation = context.getters.getConversationById(data.conversationId);
+            context.commit('selectConversation', conversation);
+        },
         messageToConversation(context, message) {
             var conversation = context.getters.getConversationById(
                 message.conversation_id);
@@ -185,12 +212,15 @@ export default new Vuex.Store({
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
-                    var contact = response['data']['contact'];
                     // Agregamos una nueva conversacion si existe el objeto
-                    if (contact.length == 0) {
+                    if (response['data'].length == 0) {
                         return;
                     }
 
+                    var contact = response['data']['contact'];
+                    var conversation = response['data']['conversation'];
+
+                    context.commit('addConversation', conversation);
                     // Agregamos el nuevo contacto usando los datos recibidos
                     context.commit("addContact", contact);
 

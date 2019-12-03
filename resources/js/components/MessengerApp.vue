@@ -14,8 +14,10 @@
               <a class="heading-name-meta">{{ appUser.alias }}</a>
             </div>
 
-            <div class="col-4 heading-compose">
+            <div class="col-2 heading-compose">
               <i @click="showContacts" class="fa fa-comments fa-2x float-right"></i>
+            </div>
+            <div class="col-2 heading-compose">
               <i @click="showPeople" class="fa fa-user-plus fa-2x float-right"></i>
             </div>
           </b-row>
@@ -42,11 +44,11 @@
         <div class="row heading">
           <div class="col-4 heading-avatar">
             <div class="heading-avatar-icon">
-              <img @click="showContactProfile" :src="conversationUserAvatarPath" />
+              <img @click="showContactProfile" :src="selectedUserAvatarPath" />
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a @click="showContactProfile" class="heading-name-meta">{{ selectedContact.name }}</a>
+            <a @click="showContactProfile" class="heading-name-meta">{{ selectedUser.name }}</a>
             <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
@@ -97,13 +99,22 @@ export default {
     }
   },
   computed: {
-    ...mapState(["appUser", "selectedContact"]),
+    ...mapState(["appUser", "selectedContact", "selectedUser"]),
     ...mapActions(["fetchData"]),
     appUserAvatarPath: function() {
       return "/images/" + this.appUser.avatar;
     },
-    conversationUserAvatarPath: function() {
-      return "/images/" + this.appUser.avatar;
+    selectedUserAvatarPath: function() {
+      if (typeof this.selectedUser.avatar === "undefined") {
+        return "/images/" + this.appUser.avatar;
+      }
+      return "/images/" + this.selectedUser.avatar;
+    },
+    selectedUserName: function() {
+      if (typeof this.selectedUser.name === "undefined") {
+        return "";
+      }
+      return this.selectedUser.name;
     }
   },
   components: {

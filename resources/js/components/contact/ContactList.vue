@@ -53,11 +53,11 @@ export default {
   },
   methods: {
     selectContact(contact) {
-      this.$store.commit("selectContactById", { userId: contact.user_id });
-      // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
-      this.$store.commit("selectConversationById", {
+      this.$store.dispatch("selectConversationById", {
         conversationId: contact.conversation_id
       });
+
+      this.$store.dispatch("selectUserById", { userId: contact.user_id });
     },
     hide() {
       var div = document.getElementsByClassName("side-contacts")[0];

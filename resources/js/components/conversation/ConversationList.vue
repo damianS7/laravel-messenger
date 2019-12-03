@@ -5,6 +5,7 @@
         v-for="conversation of filterConversations"
         v-bind:key="conversation.id"
         :id="conversation.id"
+        :conversation="conversation"
         @click.native="selectConversation(conversation)"
       ></conversation-list-item>
     </div>
@@ -28,19 +29,11 @@ export default {
       this.$store.commit("selectConversationById", {
         conversationId: conversation.id
       });
-      console.log("Selected conver id: " + conversation.user_a_id);
 
-      // Buscamos el usuario al otro lado de la conversacion
-      // if user_a_id == appUser.id userId = user_b_id
-      // conversation.user_a_id findPeople
-      // conversation.user_a_id findContacts
-      // Seleccionamos el usuario para poder cargar el perfil
-
-      //var user = this.$store.getters.getPeopleById(
-      //        conversation.messages[0].author_id
-      //);
-
-      // this.$store.commit("selectContact", conversation);
+      var userId = this.$store.getters.getUserIdFromSelectedConversation({});
+      var user = this.$store.getters.getUserById(userId);
+      this.$store.state.selectedUser = user;
+      //this.$store.commit("selectContact", userId);
     }
   },
   computed: {

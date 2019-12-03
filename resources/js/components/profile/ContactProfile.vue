@@ -15,7 +15,7 @@
     <div class="row composeBox h-auto">
       <div class="col-12 composeBox-inner heading-avatar h-auto">
         <div class="profile-avatar-icon h-auto">
-          <img class="img-fluid" :src="selectedContact.avatar" />
+          <img class="img-fluid" :src="'/images/' + selectedUser.avatar" />
         </div>
       </div>
     </div>
@@ -25,21 +25,11 @@
         <div class="row sideBar-profile">
           <div class="col-12">Alias:</div>
           <div class="col-12">
-            <input
-              type="text"
-              class="form-control"
-              v-model="selectedContact.alias"
-              @change="updateProfile"
-            />
+            <input type="text" class="form-control" :value="selectedUser.alias" readonly />
           </div>
           <div class="col-12">About you:</div>
           <div class="col-12">
-            <textarea
-              class="form-control"
-              rows="4"
-              v-model="selectedContact.info"
-              @change="updateProfile"
-            ></textarea>
+            <textarea class="form-control" rows="4" :value="selectedUser.info" readonly></textarea>
           </div>
         </div>
       </div>
@@ -56,7 +46,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["contacts", "selectedContact"]),
+    ...mapState(["contacts", "selectedUser"]),
     ...mapGetters(["getContactIndex"]),
     ...mapMutations(["removeContact", "setSelectedContact"])
   },
@@ -66,14 +56,14 @@ export default {
       div.style.right = "-100%";
     },
     deleteContact() {
-      if (typeof this.selected_contact.user_id === "undefined") {
+      if (typeof this.selectedUser.user_id === "undefined") {
         return;
       }
 
-      var contact_id = this.selected_contact.user_id;
-      var index = this.getContactIndex(contact_id);
+      //var contact_id = this.selectedUser.user_id;
+      //var index = this.getContactIndex(contact_id);
       //this.$store.commit("removeContactById", index);
-      this.$store.dispatch("deleteContact", { contact_id, index });
+      //this.$store.dispatch("deleteContact", { contact_id, index });
     },
     updateProfile() {}
   }

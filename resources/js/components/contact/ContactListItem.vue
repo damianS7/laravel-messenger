@@ -2,7 +2,7 @@
   <div class="row sideBar-body">
     <div class="col-3 sideBar-avatar">
       <div class="avatar-icon">
-        <img :src="avatar" />
+        <img :src="avatarPath" />
       </div>
     </div>
     <div class="col-9 sideBar-main">
@@ -30,6 +30,9 @@ export default {
   methods: {},
   computed: {
     ...mapState(["contacts"]),
+    avatarPath: function() {
+      return "/images/" + this.avatar;
+    },
     lastMessageDate: function() {
       for (var contact of this.contacts) {
         var conversation = this.$store.getters.getConversationById(

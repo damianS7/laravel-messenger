@@ -1912,6 +1912,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -1949,12 +1951,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 2000);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["appUser", "selectedContact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["appUser", "selectedContact", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"]), {
     appUserAvatarPath: function appUserAvatarPath() {
       return "/images/" + this.appUser.avatar;
     },
-    conversationUserAvatarPath: function conversationUserAvatarPath() {
-      return "/images/" + this.appUser.avatar;
+    selectedUserAvatarPath: function selectedUserAvatarPath() {
+      if (typeof this.selectedUser.avatar === "undefined") {
+        return "/images/" + this.appUser.avatar;
+      }
+
+      return "/images/" + this.selectedUser.avatar;
+    },
+    selectedUserName: function selectedUserName() {
+      if (typeof this.selectedUser.name === "undefined") {
+        return "";
+      }
+
+      return this.selectedUser.name;
     }
   }),
   components: {
@@ -2042,12 +2055,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     selectContact: function selectContact(contact) {
-      this.$store.commit("selectContactById", {
-        userId: contact.user_id
-      }); // var conversation = this.$store.getters.getConversationById(contact.conversation_id);
-
-      this.$store.commit("selectConversationById", {
+      this.$store.dispatch("selectConversationById", {
         conversationId: contact.conversation_id
+      });
+      this.$store.dispatch("selectUserById", {
+        userId: contact.user_id
       });
     },
     hide: function hide() {
@@ -2117,6 +2129,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ["name", "id", "index", "alias", "contact_id", "avatar"],
   methods: {},
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
+    avatarPath: function avatarPath() {
+      return "/images/" + this.avatar;
+    },
     lastMessageDate: function lastMessageDate() {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -2284,6 +2299,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2299,15 +2315,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.commit("selectConversationById", {
         conversationId: conversation.id
       });
-      console.log("Selected conver id: " + conversation.user_a_id); // Buscamos el usuario al otro lado de la conversacion
-      // if user_a_id == appUser.id userId = user_b_id
-      // conversation.user_a_id findPeople
-      // conversation.user_a_id findContacts
-      // Seleccionamos el usuario para poder cargar el perfil
-      //var user = this.$store.getters.getPeopleById(
-      //        conversation.messages[0].author_id
-      //);
-      // this.$store.commit("selectContact", conversation);
+      var userId = this.$store.getters.getUserIdFromSelectedConversation({});
+      var user = this.$store.getters.getUserById(userId);
+      this.$store.state.selectedUser = user; //this.$store.commit("selectContact", userId);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
@@ -2366,73 +2376,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["id"],
+  name: "ConversationListItem",
+  props: ["id", "conversation"],
+  data: function data() {
+    return {};
+  },
+  methods: {
+    getUserConversation: function getUserConversation() {
+      if (this.conversation.user_a_id == this.appUser.id) {
+        return this.conversation.user_b_id;
+      }
+
+      return this.conversation.user_a_id;
+    }
+  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts", "appUser"]), {
     avatarPath: function avatarPath() {
-      var conversation = this.$store.getters.getConversationById(this.id);
-      var userId = -1;
-
-      if (conversation.user_a_id == this.appUser.id) {
-        userId = conversation.user_b_id;
-      } else {
-        userId = conversation.user_a_id;
-      }
-
-      var user = this.$store.getters.getPeopleById(userId); // Usuario no encontrado
-
-      if (typeof user === "undefined") {
-        user = this.$store.getters.getContactById(userId);
-      }
-
+      var userId = this.getUserConversation();
+      var user = this.$store.getters.getUserById(userId);
       return "/images/" + user.avatar;
     },
     contactName: function contactName() {
-      var conversation = this.$store.getters.getConversationById(this.id);
-      var userId = -1;
+      var userId = this.getUserConversation();
+      var user = this.$store.getters.getUserById(userId); // Si la conversacion es de un usuario, mostramos el nombre
 
-      if (conversation.user_a_id == this.appUser.id) {
-        userId = conversation.user_b_id;
-      } else {
-        userId = conversation.user_a_id;
-      }
+      if (this.$store.getters.isContact(userId)) {
+        return user.name;
+      } // Si no es contacto mostramos el telefono
 
-      var user = this.$store.getters.getPeopleById(userId);
 
-      if (typeof user !== "undefined") {
-        return user.phone;
-      }
-
-      user = this.$store.getters.getContactById(userId);
-      return user.name;
+      return user.phone;
     },
     lastMessageDate: function lastMessageDate() {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = this.conversations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var conversation = _step.value;
-
-          if (conversation.messages.length > 0) {
-            if (conversation.id == this.id) {
-              return conversation.messages[conversation.messages.length - 1].sent_at;
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+      if (this.conversation.messages.length > 0) {
+        return this.conversation.messages[this.conversation.messages.length - 1].sent_at;
       }
 
       return "Never";
@@ -2602,7 +2579,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PeopleListItem",
   props: ["name", "index", "user_id", "avatar"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["addContact"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["addContact"]), {
+    avatarPath: function avatarPath() {
+      return "/images/" + this.avatar;
+    }
+  }),
   methods: {
     peopleToContact: function peopleToContact() {
       var user_id = this.user_id;
@@ -2670,40 +2651,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ContactProfile",
   data: function data() {
     return {};
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selectedContact"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getContactIndex"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["removeContact", "setSelectedContact"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getContactIndex"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["removeContact", "setSelectedContact"])),
   methods: {
     hideProfile: function hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
     },
     deleteContact: function deleteContact() {
-      if (typeof this.selected_contact.user_id === "undefined") {
+      if (typeof this.selectedUser.user_id === "undefined") {
         return;
-      }
+      } //var contact_id = this.selectedUser.user_id;
+      //var index = this.getContactIndex(contact_id);
+      //this.$store.commit("removeContactById", index);
+      //this.$store.dispatch("deleteContact", { contact_id, index });
 
-      var contact_id = this.selected_contact.user_id;
-      var index = this.getContactIndex(contact_id); //this.$store.commit("removeContactById", index);
-
-      this.$store.dispatch("deleteContact", {
-        contact_id: contact_id,
-        index: index
-      });
     },
     updateProfile: function updateProfile() {}
   }
@@ -36017,7 +35984,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 16px 10px 15px !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 700px) {\n.heading {\r\n    height: 70px;\r\n    background-color: #009688;\n}\n.fa-2x {\r\n    font-size: 2.3em !important;\n}\n.heading-avatar {\r\n    padding: 0 !important;\n}\n.heading-avatar-icon img {\r\n    height: 50px;\r\n    width: 50px;\n}\n.heading-compose {\r\n    padding: 5px !important;\n}\n.heading-compose i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.heading-dot {\r\n    padding: 5px !important;\r\n    /*margin-left: 10px !important;*/\n}\n.heading-dot i {\r\n    color: #fff;\r\n    cursor: pointer;\n}\n.sideBar {\r\n    height: calc(100% - 130px);\n}\n.sideBar-body {\r\n    height: 80px;\n}\n.sideBar-avatar {\r\n    text-align: left;\r\n    padding: 0 8px !important;\n}\n.avatar-icon img {\r\n    height: 55px;\r\n    width: 55px;\n}\n.sideBar-main {\r\n    padding: 0 !important;\n}\n.sideBar-main .row {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\n}\n.sideBar-name {\r\n    padding: 0 5px !important;\n}\n.name-meta {\r\n    font-size: 16px;\r\n    padding: 5% !important;\n}\n.sideBar-time {\r\n    padding: 10px !important;\n}\n.time-meta {\r\n    text-align: right;\r\n    font-size: 14px;\r\n    padding: 4% !important;\r\n    color: rgba(0, 0, 0, 0.4);\r\n    vertical-align: baseline;\n}\r\n  /*Conversation*/\n.conversation {\r\n    padding: 0 !important;\r\n    margin: 0 !important;\r\n    height: 100%;\r\n    /*width: 100%;*/\r\n    border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n    /*overflow-y: auto;*/\n}\n.message {\r\n    height: calc(100% - 140px);\n}\n.reply {\r\n    height: 70px;\n}\n.reply-emojis {\r\n    padding: 5px 0 !important;\n}\n.reply-emojis i {\r\n    padding: 5px 2px !important;\r\n    font-size: 1.8em !important;\n}\n.reply-main {\r\n    padding: 2px 8px !important;\n}\n.reply-main textarea {\r\n    padding: 8px !important;\r\n    font-size: 18px;\n}\n.reply-recording {\r\n    padding: 5px 0 !important;\n}\n.reply-recording i {\r\n    padding: 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n.reply-send {\r\n    padding: 5px 0 !important;\n}\n.reply-send i {\r\n    padding: 5px 2px 5px 0 !important;\r\n    font-size: 1.8em !important;\n}\n}", ""]);
+exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 0 !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 500px) {\nhtml,\r\n  body {\r\n    height: auto;\r\n    overflow: auto;\n}\n.conversation {\r\n    height: 400px;\n}\n.app-one .side-left .heading .side {\r\n    height: calc(100% - 60px);\n}\n}", ""]);
 
 // exports
 
@@ -68181,12 +68148,14 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-4 heading-compose" }, [
+                _c("div", { staticClass: "col-2 heading-compose" }, [
                   _c("i", {
                     staticClass: "fa fa-comments fa-2x float-right",
                     on: { click: _vm.showContacts }
-                  }),
-                  _vm._v(" "),
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-2 heading-compose" }, [
                   _c("i", {
                     staticClass: "fa fa-user-plus fa-2x float-right",
                     on: { click: _vm.showPeople }
@@ -68221,7 +68190,7 @@ var render = function() {
               _c("div", { staticClass: "col-4 heading-avatar" }, [
                 _c("div", { staticClass: "heading-avatar-icon" }, [
                   _c("img", {
-                    attrs: { src: _vm.conversationUserAvatarPath },
+                    attrs: { src: _vm.selectedUserAvatarPath },
                     on: { click: _vm.showContactProfile }
                   })
                 ])
@@ -68234,7 +68203,7 @@ var render = function() {
                     staticClass: "heading-name-meta",
                     on: { click: _vm.showContactProfile }
                   },
-                  [_vm._v(_vm._s(_vm.selectedContact.name))]
+                  [_vm._v(_vm._s(_vm.selectedUser.name))]
                 ),
                 _vm._v(" "),
                 _c("span", { staticClass: "heading-online" }, [
@@ -68395,7 +68364,7 @@ var render = function() {
   return _c("div", { staticClass: "row sideBar-body" }, [
     _c("div", { staticClass: "col-3 sideBar-avatar" }, [
       _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", { attrs: { src: _vm.avatar } })
+        _c("img", { attrs: { src: _vm.avatarPath } })
       ])
     ]),
     _vm._v(" "),
@@ -68548,7 +68517,7 @@ var render = function() {
       _vm._l(_vm.filterConversations, function(conversation) {
         return _c("conversation-list-item", {
           key: conversation.id,
-          attrs: { id: conversation.id },
+          attrs: { id: conversation.id, conversation: conversation },
           nativeOn: {
             click: function($event) {
               return _vm.selectConversation(conversation)
@@ -68775,7 +68744,7 @@ var render = function() {
   return _c("div", { staticClass: "row sideBar-body" }, [
     _c("div", { staticClass: "col-3 sideBar-avatar" }, [
       _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", { staticClass: "img-fluid", attrs: { src: _vm.avatar } })
+        _c("img", { staticClass: "img-fluid", attrs: { src: _vm.avatarPath } })
       ])
     ]),
     _vm._v(" "),
@@ -68861,7 +68830,7 @@ var render = function() {
           _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
             _c("img", {
               staticClass: "img-fluid",
-              attrs: { src: _vm.selectedContact.avatar }
+              attrs: { src: "/images/" + _vm.selectedUser.avatar }
             })
           ])
         ]
@@ -68875,26 +68844,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-12" }, [
             _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selectedContact.alias,
-                  expression: "selectedContact.alias"
-                }
-              ],
               staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.selectedContact.alias },
-              on: {
-                change: _vm.updateProfile,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.selectedContact, "alias", $event.target.value)
-                }
-              }
+              attrs: { type: "text", readonly: "" },
+              domProps: { value: _vm.selectedUser.alias }
             })
           ]),
           _vm._v(" "),
@@ -68902,26 +68854,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-12" }, [
             _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selectedContact.info,
-                  expression: "selectedContact.info"
-                }
-              ],
               staticClass: "form-control",
-              attrs: { rows: "4" },
-              domProps: { value: _vm.selectedContact.info },
-              on: {
-                change: _vm.updateProfile,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.selectedContact, "info", $event.target.value)
-                }
-              }
+              attrs: { rows: "4", readonly: "" },
+              domProps: { value: _vm.selectedUser.info }
             })
           ])
         ])
@@ -83153,8 +83088,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     contacts: [],
     // Conversaciones entre el usuario y cada contacto        
     conversations: [],
-    // Contacto seleccionado actualmente
-    selectedContact: {},
+    // Usuario seleccionado actualmente, ya sea contacto o no
+    selectedUser: {},
     // Conversacion seleccionada
     selectedConversation: {}
   },
@@ -83198,10 +83133,29 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     getContactById: function getContactById(state, getters) {
       return function (userId) {
-        console.log('finding userId ' + userId);
         return state.contacts.find(function (contact) {
           return contact.user_id === userId;
         });
+      };
+    },
+    getUserById: function getUserById(state, getters) {
+      return function (userId) {
+        var user = getters.getContactById(userId);
+
+        if (typeof user === 'undefined') {
+          return getters.getPeopleById(userId);
+        }
+
+        return user;
+      };
+    },
+    isContact: function isContact(state, getters) {
+      return function (userId) {
+        if (typeof getters.getContactById(userId) === 'undefined') {
+          return false;
+        }
+
+        return true;
       };
     },
     getContactIndex: function getContactIndex(state, getters) {
@@ -83225,6 +83179,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           }
         }
       };
+    },
+    getUserIdFromSelectedConversation: function getUserIdFromSelectedConversation(state, getters) {
+      return function (userId) {
+        if (state.selectedConversation.user_a_id == state.appUser.id) {
+          return state.selectedConversation.user_b_id;
+        }
+
+        return state.selectedConversation.user_a_id;
+      };
     }
   },
   mutations: {
@@ -83244,9 +83207,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     setConversations: function setConversations(state, conversations) {
       state.conversations = conversations;
     },
-    // Selecciona un contacto
-    selectContact: function selectContact(state, contact) {
-      state.selectedContact = contact;
+    // Selecciona un usuario
+    selectUser: function selectUser(state, user) {
+      state.selectedUser = user;
     },
     // Selecciona un contacto basado en su id
     selectContactById: function selectContactById(state, payload) {
@@ -83293,6 +83256,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     }
   },
   actions: {
+    selectUserById: function selectUserById(context, data) {
+      var user = context.getters.getUserById(data.userId);
+      context.commit('selectUser', user);
+    },
+    selectConversationById: function selectConversationById(context, data) {
+      var conversation = context.getters.getConversationById(data.conversationId);
+      context.commit('selectConversation', conversation);
+    },
     messageToConversation: function messageToConversation(context, message) {
       var conversation = context.getters.getConversationById(message.conversation_id);
 
@@ -83354,12 +83325,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       }).then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
-          var contact = response['data']['contact']; // Agregamos una nueva conversacion si existe el objeto
-
-          if (contact.length == 0) {
+          // Agregamos una nueva conversacion si existe el objeto
+          if (response['data'].length == 0) {
             return;
-          } // Agregamos el nuevo contacto usando los datos recibidos
+          }
 
+          var contact = response['data']['contact'];
+          var conversation = response['data']['conversation'];
+          context.commit('addConversation', conversation); // Agregamos el nuevo contacto usando los datos recibidos
 
           context.commit("addContact", contact); // Borramos a la persona que hemos agregado de People
 

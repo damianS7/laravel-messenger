@@ -25,55 +25,43 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["id"],
+  name: "ConversationListItem",
+  props: ["id", "conversation"],
+  data: function() {
+    return {};
+  },
+  methods: {
+    getUserConversation() {
+      if (this.conversation.user_a_id == this.appUser.id) {
+        return this.conversation.user_b_id;
+      }
+
+      return this.conversation.user_a_id;
+    }
+  },
   computed: {
     ...mapState(["conversations", "contacts", "appUser"]),
     avatarPath: function() {
-      var conversation = this.$store.getters.getConversationById(this.id);
-
-      var userId = -1;
-      if (conversation.user_a_id == this.appUser.id) {
-        userId = conversation.user_b_id;
-      } else {
-        userId = conversation.user_a_id;
-      }
-
-      var user = this.$store.getters.getPeopleById(userId);
-
-      // Usuario no encontrado
-      if (typeof user === "undefined") {
-        user = this.$store.getters.getContactById(userId);
-      }
-
+      var userId = this.getUserConversation();
+      var user = this.$store.getters.getUserById(userId);
       return "/images/" + user.avatar;
     },
     contactName: function() {
-      var conversation = this.$store.getters.getConversationById(this.id);
+      var userId = this.getUserConversation();
+      var user = this.$store.getters.getUserById(userId);
 
-      var userId = -1;
-      if (conversation.user_a_id == this.appUser.id) {
-        userId = conversation.user_b_id;
-      } else {
-        userId = conversation.user_a_id;
+      // Si la conversacion es de un usuario, mostramos el nombre
+      if (this.$store.getters.isContact(userId)) {
+        return user.name;
       }
 
-      var user = this.$store.getters.getPeopleById(userId);
-
-      if (typeof user !== "undefined") {
-        return user.phone;
-      }
-
-      user = this.$store.getters.getContactById(userId);
-      return user.name;
+      // Si no es contacto mostramos el telefono
+      return user.phone;
     },
     lastMessageDate: function() {
-      for (var conversation of this.conversations) {
-        if (conversation.messages.length > 0) {
-          if (conversation.id == this.id) {
-            return conversation.messages[conversation.messages.length - 1]
-              .sent_at;
-          }
-        }
+      if (this.conversation.messages.length > 0) {
+        return this.conversation.messages[this.conversation.messages.length - 1]
+          .sent_at;
       }
       return "Never";
     }
