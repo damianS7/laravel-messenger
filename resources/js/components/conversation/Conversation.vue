@@ -6,7 +6,10 @@
       </div>
 
       <div v-if="emptyChat" class="row message-previous">
-        <div class="col-sm-12 previous">Don't be shy! Say something to {{ selectedUser.name }}</div>
+        <div class="col-sm-12 previous">
+          Don't be shy! Say something to
+          <strong>{{ selectedUser.name }}</strong>
+        </div>
       </div>
       <conversation-message
         v-for="(message, index) of getSelectedConversationMessages"
