@@ -41,7 +41,7 @@ export default {
 
         if (typeof conversation !== "undefined") {
           if (conversation.messages.length > 0) {
-            if (contact.user_id == this.contact_id) {
+            if (contact.id == this.contact_id) {
               return conversation.messages[conversation.messages.length - 1]
                 .sent_at;
             }

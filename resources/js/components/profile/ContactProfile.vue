@@ -6,17 +6,16 @@
           <i @click="hideProfile" class="fa fa-arrow-left" aria-hidden="true"></i>
         </div>
         <div class="col-5 newMessage-title">Profile</div>
-        <div class="col-5 newMessage-title">
-          <button @click="deleteContact" class="btn btn-sm btn-danger">DELETE CONTACT</button>
-        </div>
       </div>
     </div>
 
-    <div class="row composeBox h-auto">
-      <div class="col-12 composeBox-inner heading-avatar h-auto">
-        <div class="profile-avatar-icon h-auto">
-          <img class="img-fluid" :src="'/images/' + selectedUser.avatar" />
-        </div>
+    <div class="row composeBox composeBox-inner h-auto">
+      <div class="col-6 profile-avatar-icon h-auto">
+        <img class="img-fluid" :src="'/images/' + selectedUser.avatar" />
+      </div>
+      <div class="col-6">
+        <button v-if="!isContact" @click="addContact" class="btn btn-sm btn-success">ADD CONTACT</button>
+        <button v-if="isContact" @click="deleteContact" class="btn btn-sm btn-danger">DELETE CONTACT</button>
       </div>
     </div>
 
@@ -27,7 +26,7 @@
           <div class="col-12">
             <input type="text" class="form-control" :value="selectedUser.alias" readonly />
           </div>
-          <div class="col-12">About you:</div>
+          <div class="col-12">About me:</div>
           <div class="col-12">
             <textarea class="form-control" rows="4" :value="selectedUser.info" readonly></textarea>
           </div>
@@ -38,7 +37,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "ContactProfile",
@@ -47,25 +46,22 @@ export default {
   },
   computed: {
     ...mapState(["contacts", "selectedUser"]),
-    ...mapGetters(["getContactIndex"]),
-    ...mapMutations(["removeContact", "setSelectedContact"])
+    ...mapMutations(["removeContact", "setSelectedContact"]),
+    isContact: function() {
+      return this.$store.getters.isContact(this.selectedUser.id);
+    }
   },
   methods: {
     hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
     },
-    deleteContact() {
-      if (typeof this.selectedUser.user_id === "undefined") {
-        return;
-      }
-
-      //var contact_id = this.selectedUser.user_id;
-      //var index = this.getContactIndex(contact_id);
-      //this.$store.commit("removeContactById", index);
-      //this.$store.dispatch("deleteContact", { contact_id, index });
+    addContact() {
+      this.$store.dispatch("saveContact", { userId: this.selectedUser.id });
     },
-    updateProfile() {}
+    deleteContact() {
+      this.$store.dispatch("deleteContact", { userId: this.selectedUser.id });
+    }
   }
 };
 </script>

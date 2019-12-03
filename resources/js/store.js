@@ -46,7 +46,7 @@ export default new Vuex.Store({
             return state.people.find(people => people.id === userId);
         },
         getContactById: (state, getters) => (userId) => {
-            return state.contacts.find(contact => contact.user_id === userId);
+            return state.contacts.find(contact => contact.id === userId);
         },
         getUserById: (state, getters) => (userId) => {
             var user = getters.getContactById(userId);
@@ -61,18 +61,18 @@ export default new Vuex.Store({
             }
             return true;
         },
-        getContactIndex: (state, getters) => (user_id) => {
+        getContactIndex: (state, getters) => (userId) => {
             for (var index in state.contacts) {
                 var contact = state.contacts[index];
-                if (contact.user_id === user_id) {
+                if (contact.userId === userId) {
                     return index;
                 }
             }
         },
-        getPeopleIndex: (state, getters) => (user_id) => {
+        getPeopleIndex: (state, getters) => (userId) => {
             for (var index in state.people) {
                 var contact = state.people[index];
-                if (contact.user_id === user_id) {
+                if (contact.userId === userId) {
                     return index;
                 }
             }
@@ -109,7 +109,7 @@ export default new Vuex.Store({
         // Selecciona un contacto basado en su id
         selectContactById(state, payload) {
             var contactIndex = state.contacts.findIndex(contact =>
-                contact.user_id === payload.userId
+                contact.userId === payload.userId
             );
             state.selectedContact = state.contacts[contactIndex];
         },
@@ -129,7 +129,7 @@ export default new Vuex.Store({
         },
         removeContactById(state, payload) {
             var contactIndex = state.contacts.findIndex(
-                contact => contact.user_id === payload.userId);
+                contact => contact.id === payload.userId);
             Vue.delete(state.contacts, contactIndex);
         },
         removePeopleById(state, peopleId) {
@@ -145,6 +145,9 @@ export default new Vuex.Store({
         addMessage(state, payload) {
             // Agregamos el mensaje a la conversacion
             payload.conversation.messages.push(payload.message);
+        },
+        addPeople(state, payload) {
+            state.people.push(payload.people);
         },
     },
     actions: {
@@ -195,20 +198,25 @@ export default new Vuex.Store({
         },
         // Peticion para borrar un contacto
         deleteContact(context, data) {
-            axios.post("http://127.0.0.1:8000/contacts/" + data.contact_id, {
+            axios.post("http://127.0.0.1:8000/contacts/" + data.userId, {
                 _method: "delete"
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 204) {
-                    context.commit("removeContact", data.index);
-                    context.commit("setSelectedContact", {});
+                    var user = context.getters.getUserById(data.userId);
+
+                    // Borramos el usuario de contactos
+                    context.commit("removeContactById", { userId: data.userId });
+
+                    // Movemos el contacto a people
+                    context.commit('addPeople', { people: user });
                 }
             });
         },
         // Peticion para borrar un contacto
         saveContact(context, data) {
             axios.post("http://127.0.0.1:8000/contacts/", {
-                user_id: data.user_id
+                user_id: data.userId
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
@@ -220,12 +228,13 @@ export default new Vuex.Store({
                     var contact = response['data']['contact'];
                     var conversation = response['data']['conversation'];
 
-                    context.commit('addConversation', conversation);
+                    // Borramos a la persona que hemos agregado de People
+                    context.commit("removePeopleById", contact.id);
+
                     // Agregamos el nuevo contacto usando los datos recibidos
                     context.commit("addContact", contact);
+                    context.commit('addConversation', conversation);
 
-                    // Borramos a la persona que hemos agregado de People
-                    context.commit("removePeopleById", contact.user_id);
                 }
             });
         },

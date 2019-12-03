@@ -36,8 +36,7 @@ export default {
   },
   methods: {
     peopleToContact() {
-      var user_id = this.user_id;
-      this.$store.dispatch("saveContact", { user_id });
+      this.$store.dispatch("saveContact", { userId: this.user_id });
     }
   }
 };
