@@ -43,13 +43,12 @@
         </div>
         <div class="row heading">
           <div class="col-4 heading-avatar">
-            <div class="heading-avatar-icon">
+            <div v-if="selectedUserAvatarPath" class="heading-avatar-icon">
               <img @click="showContactProfile" :src="selectedUserAvatarPath" />
             </div>
           </div>
           <div class="col-6 heading-name">
             <a @click="showContactProfile" class="heading-name-meta">{{ selectedUser.name }}</a>
-            <span class="heading-online">Online</span>
           </div>
           <div class="col-2 heading-dot float-right">
             <i class="fa fa-ellipsis-v fa-2x float-right" aria-hidden="true"></i>
@@ -106,7 +105,7 @@ export default {
     },
     selectedUserAvatarPath: function() {
       if (typeof this.selectedUser.avatar === "undefined") {
-        return "/images/" + this.appUser.avatar;
+        return false;
       }
       return "/images/" + this.selectedUser.avatar;
     },
