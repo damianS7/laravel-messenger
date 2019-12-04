@@ -48,7 +48,11 @@
             </div>
           </div>
           <div class="col-6 heading-name">
-            <a @click="showContactProfile" class="heading-name-meta">{{ selectedUser.name }}</a>
+            <a
+              v-if="selectedUserName"
+              @click="showContactProfile"
+              class="heading-name-meta"
+            >{{ selectedUser.name }}</a>
           </div>
           <div class="col-2 heading-dot float-right">
             <i class="fa fa-ellipsis-v fa-2x float-right" aria-hidden="true"></i>
@@ -111,7 +115,7 @@ export default {
     },
     selectedUserName: function() {
       if (typeof this.selectedUser.name === "undefined") {
-        return "";
+        return false;
       }
       return this.selectedUser.name;
     }

@@ -1,5 +1,8 @@
 <template>
   <div class="side">
+    <b-col class="icon-menu">
+      <a @click="insertIcon" href="#" v-bind:key="index" v-for="(icon, index) of icons">{{ icon }}</a>
+    </b-col>
     <div class="message" id="conversation">
       <div v-if="!userSelected" class="row message-previous">
         <div class="col-sm-12 previous">Select a conversation to load some messages</div>
@@ -25,7 +28,7 @@
 
     <div class="row reply">
       <div class="col-1 reply-emojis">
-        <i class="fa fa-smile-o fa-2x"></i>
+        <i @click="iconMenu" class="fa fa-smile-o fa-2x"></i>
       </div>
       <div class="col-10 reply-main">
         <textarea
@@ -51,10 +54,26 @@ export default {
   name: "Conversation",
   data: function() {
     return {
-      input: ""
+      icons: ["😀", "😁", "😂", "😅", "😈", "😇", "😍", "😎", 
+        "😘", "😥", "😭", "😱", "😷", "😰"],
+      input: "",
+      iconMenuVisible: false,
     };
   },
   methods: {
+    iconMenu() {
+      var div = document.getElementsByClassName("icon-menu")[0];
+      if (!this.iconMenuVisible) {
+        div.style.bottom = "5%";
+        this.iconMenuVisible = true;
+      } else {
+        this.iconMenuVisible = false;
+        div.style.bottom = "-100%";
+      }
+    },
+    insertIcon(event) {
+      this.input += event.target.innerHTML;
+    },
     isSender(author_id) {
       if (author_id == this.appUser.id) {
         return true;
@@ -109,5 +128,18 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.icon-menu {
+  position: absolute;
+  bottom: -100%;
+  left: 35px;
+  width: 300px;
+  z-index: 3;
+  background-color: antiquewhite;
+  border-radius: 4px;
+  padding: 5px;
+  border: 2px solid black;
+  -webkit-transition: bottom 1s ease;
+  transition: bottom 1s ease;
+}
 </style>
