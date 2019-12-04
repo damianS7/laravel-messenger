@@ -1,11 +1,11 @@
 <template>
   <b-row class="sideBar-body">
-    <b-col cols="3" class="sideBar-avatar">
+    <b-col cols="5" sm="4" class="sideBar-avatar">
       <div class="avatar-icon">
         <img :src="avatarPath" />
       </div>
     </b-col>
-    <b-col cols="9" class="sideBar-main">
+    <b-col cols="7" sm="8" class="sideBar-main">
       <b-row class="h-auto">
         <b-col cols="12" class="sideBar-name">
           <span v-if="alias !== null" class="name-meta">{{ alias }}</span>

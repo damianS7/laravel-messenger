@@ -68653,15 +68653,19 @@ var render = function() {
     "b-row",
     { staticClass: "sideBar-body" },
     [
-      _c("b-col", { staticClass: "sideBar-avatar", attrs: { cols: "3" } }, [
-        _c("div", { staticClass: "avatar-icon" }, [
-          _c("img", { attrs: { src: _vm.avatarPath } })
-        ])
-      ]),
+      _c(
+        "b-col",
+        { staticClass: "sideBar-avatar", attrs: { cols: "5", sm: "4" } },
+        [
+          _c("div", { staticClass: "avatar-icon" }, [
+            _c("img", { attrs: { src: _vm.avatarPath } })
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "b-col",
-        { staticClass: "sideBar-main", attrs: { cols: "9" } },
+        { staticClass: "sideBar-main", attrs: { cols: "7", sm: "8" } },
         [
           _c(
             "b-row",
