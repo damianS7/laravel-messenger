@@ -27,10 +27,10 @@
     </div>
 
     <div class="row reply">
-      <div class="col-1 reply-emojis">
+      <div class="col-3 col-sm-2 col-lg-1 reply-emojis">
         <i @click="iconMenu" class="fa fa-smile-o fa-2x"></i>
       </div>
-      <div class="col-10 reply-main">
+      <div class="col-6 col-sm-8 col-lg-10 reply-main">
         <textarea
           v-on:keyup.enter="sendMessage"
           v-model="input"
@@ -40,7 +40,7 @@
         ></textarea>
       </div>
 
-      <div class="col-1 reply-send">
+      <div class="col-3 col-sm-2 col-lg-1 reply-send">
         <i class="fa fa-send fa-2x" aria-hidden="true" @click="sendMessage"></i>
       </div>
     </div>

@@ -1,11 +1,11 @@
 <template>
   <div class="row sideBar-body">
-    <div class="col-3 sideBar-avatar">
+    <div class="col-5 col-sm-4 sideBar-avatar">
       <div class="avatar-icon">
         <img :src="avatarPath" />
       </div>
     </div>
-    <div class="col-9 sideBar-main">
+    <div class="col-7 col-sm-8 sideBar-main">
       <div class="row h-auto">
         <div class="col-12 sideBar-name">
           <span class="name-meta">{{ contactName }}</span>

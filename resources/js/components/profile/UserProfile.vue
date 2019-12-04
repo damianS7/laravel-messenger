@@ -93,7 +93,7 @@ export default {
 .avatar-menu {
   position: absolute;
   bottom: -100%;
-  left: 35px;
+  left: -100%;
   width: 100%;
   z-index: 3;
   background-color: antiquewhite;

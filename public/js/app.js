@@ -36080,7 +36080,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.avatar-menu[data-v-fda4c446] {\r\n  position: absolute;\r\n  bottom: -100%;\r\n  left: 35px;\r\n  width: 100%;\r\n  z-index: 3;\r\n  background-color: antiquewhite;\r\n  border-radius: 4px;\r\n  border: 2px solid black;\r\n  height: auto;\r\n  -webkit-transition: bottom 1s ease;\r\n  transition: bottom 1s ease;\n}\n.avatar-menu-inner[data-v-fda4c446] {\r\n  padding: 5px;\r\n  text-align: center;\n}\n.avatar-menu-inner img[data-v-fda4c446] {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\r\n", ""]);
+exports.push([module.i, "\n.avatar-menu[data-v-fda4c446] {\r\n  position: absolute;\r\n  bottom: -100%;\r\n  left: -100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  background-color: antiquewhite;\r\n  border-radius: 4px;\r\n  border: 2px solid black;\r\n  height: auto;\r\n  -webkit-transition: bottom 1s ease;\r\n  transition: bottom 1s ease;\n}\n.avatar-menu-inner[data-v-fda4c446] {\r\n  padding: 5px;\r\n  text-align: center;\n}\n.avatar-menu-inner img[data-v-fda4c446] {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -36099,7 +36099,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  height: 72px;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 0 !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 500px) {\nhtml,\r\n  body {\r\n    height: auto;\r\n    overflow: auto;\n}\n.conversation {\r\n    height: 400px;\n}\n.app-one .side-left .heading .side {\r\n    height: calc(100% - 60px);\n}\n}", ""]);
+exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  /*height: 72px;*/\r\n  height: auto;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 0 !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 500px) {\nhtml,\r\n  body {\r\n    height: 100%;\r\n    overflow: auto;\n}\n.conversation {\r\n    height: auto;\n}\n.sideBar-conversations .sideBar-body {\r\n    height: auto;\n}\n.heading {\r\n    height: 82px;\n}\n.app {\r\n    height: calc(100% - 60px);\n}\n.sideBar, .sideBar-conversations {\r\n    height: calc(100% - 80px);\n}\n.message {    \r\n    height: calc(100% - 140px);\n}\n}", ""]);
 
 // exports
 
@@ -68302,13 +68302,13 @@ var render = function() {
     { staticClass: "container app", attrs: { id: "app-wrap" } },
     [
       _c("div", { staticClass: "row app-one" }, [
-        _c("div", { staticClass: "col-12 col-sm-4 side" }, [
+        _c("div", { staticClass: "col-5 col-sm-5 col-md-5 col-lg-3 side" }, [
           _c(
             "div",
             { staticClass: "side-left" },
             [
               _c("b-row", { staticClass: "heading" }, [
-                _c("div", { staticClass: "col-3 heading-avatar" }, [
+                _c("div", { staticClass: "col-5 col-sm-3 heading-avatar" }, [
                   _c("div", { staticClass: "heading-avatar-icon" }, [
                     _c("img", {
                       attrs: { src: _vm.appUserAvatarPath },
@@ -68317,20 +68317,20 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-5 heading-name" }, [
+                _c("div", { staticClass: "col-7 col-sm-5 heading-name" }, [
                   _c("a", { staticClass: "heading-name-meta" }, [
                     _vm._v(_vm._s(_vm.appUser.alias))
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-2 heading-compose" }, [
+                _c("div", { staticClass: "col-3 col-sm-2 heading-compose" }, [
                   _c("i", {
                     staticClass: "fa fa-comments fa-2x float-right",
                     on: { click: _vm.showContacts }
                   })
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-2 heading-compose" }, [
+                _c("div", { staticClass: "col-3 col-sm-2 heading-compose" }, [
                   _c("i", {
                     staticClass: "fa fa-user-plus fa-2x float-right",
                     on: { click: _vm.showPeople }
@@ -68352,7 +68352,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-12 col-sm-8 conversation" },
+          { staticClass: "col-7 col-sm-7 col-md-7 col-lg-9 conversation" },
           [
             _c(
               "div",
@@ -68362,29 +68362,41 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "row heading" }, [
-              _c("div", { staticClass: "col-4 heading-avatar" }, [
-                _vm.selectedUserAvatarPath
-                  ? _c("div", { staticClass: "heading-avatar-icon" }, [
-                      _c("img", {
-                        attrs: { src: _vm.selectedUserAvatarPath },
-                        on: { click: _vm.showContactProfile }
-                      })
-                    ])
-                  : _vm._e()
-              ]),
+              _c(
+                "div",
+                {
+                  staticClass: "col-5 col-sm-3 col-md-3 col-lg-1 heading-avatar"
+                },
+                [
+                  _vm.selectedUserAvatarPath
+                    ? _c("div", { staticClass: "heading-avatar-icon" }, [
+                        _c("img", {
+                          attrs: { src: _vm.selectedUserAvatarPath },
+                          on: { click: _vm.showContactProfile }
+                        })
+                      ])
+                    : _vm._e()
+                ]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "col-6 heading-name" }, [
-                _vm.selectedUserName
-                  ? _c(
-                      "a",
-                      {
-                        staticClass: "heading-name-meta",
-                        on: { click: _vm.showContactProfile }
-                      },
-                      [_vm._v(_vm._s(_vm.selectedUser.name))]
-                    )
-                  : _vm._e()
-              ]),
+              _c(
+                "div",
+                {
+                  staticClass: "col-5 col-sm-8 col-md-8 col-lg-10 heading-name"
+                },
+                [
+                  _vm.selectedUserName
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "heading-name-meta",
+                          on: { click: _vm.showContactProfile }
+                        },
+                        [_vm._v(_vm._s(_vm.selectedUser.name))]
+                      )
+                    : _vm._e()
+                ]
+              ),
               _vm._v(" "),
               _vm._m(0)
             ]),
@@ -68402,12 +68414,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2 heading-dot float-right" }, [
-      _c("i", {
-        staticClass: "fa fa-ellipsis-v fa-2x float-right",
-        attrs: { "aria-hidden": "true" }
-      })
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "col-2 col-sm-1 col-md-1 col-lg-1 heading-dot float-right"
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-ellipsis-v fa-2x float-right",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -68644,14 +68662,14 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "row reply" }, [
-        _c("div", { staticClass: "col-1 reply-emojis" }, [
+        _c("div", { staticClass: "col-3 col-sm-2 col-lg-1 reply-emojis" }, [
           _c("i", {
             staticClass: "fa fa-smile-o fa-2x",
             on: { click: _vm.iconMenu }
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-10 reply-main" }, [
+        _c("div", { staticClass: "col-6 col-sm-8 col-lg-10 reply-main" }, [
           _c("textarea", {
             directives: [
               {
@@ -68684,7 +68702,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-1 reply-send" }, [
+        _c("div", { staticClass: "col-3 col-sm-2 col-lg-1 reply-send" }, [
           _c("i", {
             staticClass: "fa fa-send fa-2x",
             attrs: { "aria-hidden": "true" },
@@ -68760,13 +68778,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row sideBar-body" }, [
-    _c("div", { staticClass: "col-3 sideBar-avatar" }, [
+    _c("div", { staticClass: "col-5 col-sm-4 sideBar-avatar" }, [
       _c("div", { staticClass: "avatar-icon" }, [
         _c("img", { attrs: { src: _vm.avatarPath } })
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-9 sideBar-main" }, [
+    _c("div", { staticClass: "col-7 col-sm-8 sideBar-main" }, [
       _c("div", { staticClass: "row h-auto" }, [
         _c("div", { staticClass: "col-12 sideBar-name" }, [
           _c("span", { staticClass: "name-meta" }, [
