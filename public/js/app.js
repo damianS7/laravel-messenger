@@ -2126,7 +2126,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["name", "id", "index", "alias", "contact_id", "avatar"],
@@ -2789,6 +2788,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserProfile",
@@ -2809,9 +2815,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (!this.avatarMenuVisible) {
         div.style.bottom = "50%";
+        div.style.left = "10%";
         this.avatarMenuVisible = true;
       } else {
         this.avatarMenuVisible = false;
+        div.style.left = "-100%";
         div.style.bottom = "-100%";
       }
     },
@@ -36099,7 +36107,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  /*height: 72px;*/\r\n  height: auto;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 0 !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  margin-top: 30px !important;\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 500px) {\nhtml,\r\n  body {\r\n    height: 100%;\r\n    overflow: auto;\n}\n.conversation {\r\n    height: auto;\n}\n.sideBar-conversations .sideBar-body {\r\n    height: auto;\n}\n.heading {\r\n    height: 82px;\n}\n.app {\r\n    height: calc(100% - 60px);\n}\n.sideBar, .sideBar-conversations {\r\n    height: calc(100% - 80px);\n}\n.message {    \r\n    height: calc(100% - 140px);\n}\n}", ""]);
+exports.push([module.i, "html,\r\nbody {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\n.myhc {\r\n  height: 100%;\r\n  width: 100%;\r\n  overflow: hidden;\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\n}\nbody {\r\n  background-size: cover;\n}\n.fa-2x {\r\n  font-size: 1.5em;\n}\n.app {\r\n  position: relative;\r\n  overflow: hidden;\r\n  height: calc(100% - 52px);\r\n  margin: auto;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.app-one {\r\n  background-color: #f7f7f7;\r\n  height: 100%;\r\n  overflow: hidden;\r\n  margin: 0;\r\n  padding: 0;\r\n  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);\n}\n.side {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\n}\n.side-left {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 1;\r\n  position: relative;\r\n  display: block;\r\n  top: 0;\n}\n.side-profile, .side-contacts, .side-people {\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 3;\r\n  position: absolute;\r\n  top: 0%;\r\n  left: -100%;\r\n  -webkit-transition: left 1s ease;\r\n  transition: left 1s ease;\n}\n.side-contact-profile{\r\n  padding: 0;\r\n  margin: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  z-index: 2;\r\n  position: absolute;\r\n  top: 0%;\r\n  right: -100%;\r\n  -webkit-transition: right 1s ease;\r\n  transition: right 1s ease;\n}\n.heading {\r\n  padding: 10px 16px 10px 15px;\r\n  margin: 0;\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #eee;\r\n  z-index: 1000;\n}\n.heading-avatar {\r\n  padding: 0;\r\n  cursor: pointer;\n}\n.profile-avatar-icon img {\r\n  height: 200px;\r\n  width: 100%;\n}\n.heading-avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 40px;\r\n  width: 40px;\n}\n.heading-name {\r\n  padding: 0 !important;\r\n  cursor: pointer;\n}\n.heading-name-meta {\r\n  font-weight: 700;\r\n  font-size: 100%;\r\n  padding: 5px;\r\n  padding-bottom: 0;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\r\n  display: block;\n}\n.heading-online {\r\n  display: none;\r\n  padding: 0 5px;\r\n  font-size: 12px;\r\n  color: #93918f;\n}\n.heading-compose {\r\n  padding: 0;\n}\n.heading-compose i {\r\n  text-align: center;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.heading-dot {\r\n  padding: 0;\r\n  /*margin-left: 10px;*/\n}\n.heading-dot i {\r\n  text-align: right;\r\n  padding: 5px;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.searchBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.searchBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\r\n\r\n/*#searchBox-inner input {\r\n  box-shadow: none;\r\n}*/\n.searchBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.sideBar, .sideBar-conversations {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.sideBar-conversations {\r\n  height: calc(100% - 60px);\n}\n.sideBar-profile {\r\n  padding: 10px !important;\r\n  margin: 0 !important;\n}\n.sideBar-body {\r\n  position: relative;\r\n  padding: 10px !important;\r\n  border-bottom: 1px solid #f7f7f7;\r\n  /*height: 72px;*/\r\n  height: auto;\r\n  margin: 0 !important;\r\n  cursor: pointer;\n}\n.sideBar-body:hover {\r\n  background-color: #f2f2f2;\n}\n.sideBar-avatar {\r\n  text-align: center;\r\n  padding: 0 !important;\n}\n.avatar-icon img {\r\n  border-radius: 50%;\r\n  height: 49px;\r\n  width: 49px;\n}\n.sideBar-main {\r\n  padding: 0 !important;\n}\n.sideBar-main .row {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\n}\n.sideBar-name {\r\n  padding: 0 5px !important;\n}\n.name-meta {\r\n  font-size: 100%;\r\n  padding: 1% !important;\r\n  text-align: left;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\r\n  color: #000;\n}\n.sideBar-time {\r\n  padding: 0 10px !important;\n}\n.sideBar-time .btn-sm {\r\n  padding: 0 5px;\n}\n.time-meta {\r\n  text-align: right;\r\n  font-size: 12px;\r\n  padding: 1% !important;\r\n  color: rgba(0, 0, 0, 0.4);\r\n  vertical-align: baseline;\n}\r\n\r\n/*New Message*/\n.newMessage {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  position: relative;\r\n  left: -100%;\n}\n.newMessage-heading {\r\n  padding: 10px 0 !important;\r\n  margin: 0 !important;\r\n  height: 100px;\r\n  width: 100%;\r\n  background-color: #00bfa5;\r\n  z-index: 1001;\n}\n.newMessage-main {\r\n  padding: 10px 16px 0 15px !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  /*margin-top: 30px !important;*/\r\n  width: 100%;\r\n  z-index: 1001;\r\n  color: #fff;\n}\n.newMessage-title {\r\n  font-size: 18px;\r\n  font-weight: 700;\r\n  padding: 10px 5px !important;\n}\n.newMessage-back {\r\n  text-align: center;\r\n  vertical-align: baseline;\r\n  padding: 12px 5px !important;\r\n  display: block;\r\n  cursor: pointer;\n}\n.newMessage-back i {\r\n  margin: auto !important;\n}\n.composeBox {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 60px;\r\n  width: 100%;\n}\n.composeBox-inner {\r\n  height: 100%;\r\n  width: 100%;\r\n  padding: 10px !important;\r\n  background-color: #fbfbfb;\n}\n.composeBox-inner input:focus {\r\n  outline: none;\r\n  border: none;\r\n  box-shadow: none;\n}\n.compose-sideBar {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-color: #fff;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 160px);\n}\r\n\r\n/*Conversation*/\n.conversation {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  height: 100%;\r\n  /*width: 100%;*/\r\n  border-left: 1px solid rgba(0, 0, 0, 0.08);\r\n  /*overflow-y: auto;*/\n}\n.message {\r\n  padding: 0 !important;\r\n  margin: 0 !important;\r\n  background-size: cover;\r\n  overflow-y: auto;\r\n  border: 1px solid #f7f7f7;\r\n  height: calc(100% - 120px);\n}\n.message-previous {\r\n  margin: 0 !important;\r\n  padding: 0 !important;\r\n  height: auto;\r\n  width: 100%;\n}\n.previous {\r\n  font-size: 15px;\r\n  text-align: center;\r\n  padding: 10px !important;\r\n  cursor: pointer;\n}\n.previous a {\r\n  text-decoration: none;\r\n  font-weight: 700;\n}\n.message-body {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  width: auto;\r\n  height: auto;\n}\n.message-main-receiver {\r\n  /*padding: 10px 20px;*/\r\n  max-width: 60%;\n}\n.message-main-sender {\r\n  padding: 3px 20px !important;\r\n  margin-left: 40% !important;\r\n  max-width: 60%;\n}\n.message-text {\r\n  margin: 0 !important;\r\n  padding: 5px !important;\r\n  word-wrap: break-word;\r\n  font-weight: 200;\r\n  font-size: 14px;\r\n  padding-bottom: 0 !important;\n}\n.message-time {\r\n  margin: 0 !important;\r\n  margin-left: 50px !important;\r\n  font-size: 12px;\r\n  text-align: right;\r\n  color: #9a9a9a;\n}\n.receiver {\r\n  width: auto !important;\r\n  padding: 4px 10px 7px !important;\r\n  border-radius: 10px 10px 10px 0;\r\n  background: #ffffff;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  word-wrap: break-word;\r\n  display: inline-block;\n}\n.sender {\r\n  float: right;\r\n  width: auto !important;\r\n  background: #dcf8c6;\r\n  border-radius: 10px 10px 0 10px;\r\n  padding: 4px 10px 7px !important;\r\n  font-size: 12px;\r\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);\r\n  display: inline-block;\r\n  word-wrap: break-word;\n}\r\n\r\n/*Reply*/\n.reply {\r\n  height: 60px;\r\n  width: 100%;\r\n  background-color: #f5f1ee;\r\n  padding: 10px 5px 10px 5px !important;\r\n  margin: 0 !important;\r\n  z-index: 1000;\n}\n.reply-emojis {\r\n  padding: 5px !important;\n}\n.reply-emojis i {\r\n  text-align: center;\r\n  padding: 5px 5px 5px 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-recording {\r\n  padding: 5px !important;\n}\n.reply-recording i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-send {\r\n  padding: 5px !important;\n}\n.reply-send i {\r\n  text-align: center;\r\n  padding: 5px !important;\r\n  color: #93918f;\r\n  cursor: pointer;\n}\n.reply-main {\r\n  padding: 2px 5px !important;\n}\n.reply-main textarea {\r\n  width: 100%;\r\n  resize: none;\r\n  overflow: hidden;\r\n  padding: 5px !important;\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\r\n  height: 100%;\r\n  font-size: 16px;\n}\n.reply-main textarea:focus {\r\n  outline: none;\r\n  border: none;\r\n  text-indent: 5px;\r\n  box-shadow: none;\n}\n@media screen and (max-width: 500px) {\nhtml,\r\n  body {\r\n    height: 100%;\r\n    overflow: auto;\n}\n.conversation {\r\n    height: auto;\n}\n.sideBar-conversations .sideBar-body {\r\n    height: auto;\n}\n.heading {\r\n    height: 82px;\n}\n.app {\r\n    height: calc(100% - 60px);\n}\n.sideBar, .sideBar-conversations {\r\n    height: calc(100% - 80px);\n}\n.message {    \r\n    height: calc(100% - 140px);\n}\n}", ""]);
 
 // exports
 
@@ -68298,136 +68306,191 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "container app", attrs: { id: "app-wrap" } },
+    "b-container",
+    { staticClass: "app", attrs: { id: "app-wrap" } },
     [
-      _c("div", { staticClass: "row app-one" }, [
-        _c("div", { staticClass: "col-5 col-sm-5 col-md-5 col-lg-3 side" }, [
+      _c(
+        "b-row",
+        { staticClass: "app-one" },
+        [
           _c(
-            "div",
-            { staticClass: "side-left" },
+            "b-col",
+            {
+              staticClass: "side",
+              attrs: { cols: "5", sm: "5", md: "5", lg: "3" }
+            },
             [
-              _c("b-row", { staticClass: "heading" }, [
-                _c("div", { staticClass: "col-5 col-sm-3 heading-avatar" }, [
-                  _c("div", { staticClass: "heading-avatar-icon" }, [
-                    _c("img", {
-                      attrs: { src: _vm.appUserAvatarPath },
-                      on: { click: _vm.showProfile }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-7 col-sm-5 heading-name" }, [
-                  _c("a", { staticClass: "heading-name-meta" }, [
-                    _vm._v(_vm._s(_vm.appUser.alias))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-3 col-sm-2 heading-compose" }, [
-                  _c("i", {
-                    staticClass: "fa fa-comments fa-2x float-right",
-                    on: { click: _vm.showContacts }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-3 col-sm-2 heading-compose" }, [
-                  _c("i", {
-                    staticClass: "fa fa-user-plus fa-2x float-right",
-                    on: { click: _vm.showPeople }
-                  })
-                ])
-              ]),
+              _c(
+                "div",
+                { staticClass: "side-left" },
+                [
+                  _c(
+                    "b-row",
+                    { staticClass: "heading" },
+                    [
+                      _c(
+                        "b-col",
+                        {
+                          staticClass: "heading-avatar",
+                          attrs: { cols: "5", sm: "3" }
+                        },
+                        [
+                          _c("div", { staticClass: "heading-avatar-icon" }, [
+                            _c("img", {
+                              attrs: { src: _vm.appUserAvatarPath },
+                              on: { click: _vm.showProfile }
+                            })
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-col",
+                        {
+                          staticClass: "heading-name",
+                          attrs: { cols: "7", sm: "5" }
+                        },
+                        [
+                          _c("a", { staticClass: "heading-name-meta" }, [
+                            _vm._v(_vm._s(_vm.appUser.alias))
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-col",
+                        {
+                          staticClass: "heading-compose",
+                          attrs: { cols: "3", sm: "2" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-comments fa-2x float-right",
+                            on: { click: _vm.showContacts }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-col",
+                        {
+                          staticClass: "heading-compose",
+                          attrs: { cols: "3", sm: "2" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-user-plus fa-2x float-right",
+                            on: { click: _vm.showPeople }
+                          })
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("conversation-list")
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("conversation-list")
-            ],
-            1
+              _c("div", { staticClass: "side-contacts" }, [_c("contacts")], 1),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "side-people" },
+                [_c("people-finder")],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "side-profile" }, [_c("profile")], 1)
+            ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "side-contacts" }, [_c("contacts")], 1),
-          _vm._v(" "),
-          _c("div", { staticClass: "side-people" }, [_c("people-finder")], 1),
-          _vm._v(" "),
-          _c("div", { staticClass: "side-profile" }, [_c("profile")], 1)
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-7 col-sm-7 col-md-7 col-lg-9 conversation" },
-          [
-            _c(
-              "div",
-              { staticClass: "side-contact-profile" },
-              [_c("contact-profile")],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "row heading" }, [
+          _c(
+            "b-col",
+            {
+              staticClass: "conversation",
+              attrs: { cols: "7", sm: "7", md: "7", lg: "9" }
+            },
+            [
               _c(
                 "div",
-                {
-                  staticClass: "col-5 col-sm-3 col-md-3 col-lg-1 heading-avatar"
-                },
-                [
-                  _vm.selectedUserAvatarPath
-                    ? _c("div", { staticClass: "heading-avatar-icon" }, [
-                        _c("img", {
-                          attrs: { src: _vm.selectedUserAvatarPath },
-                          on: { click: _vm.showContactProfile }
-                        })
-                      ])
-                    : _vm._e()
-                ]
+                { staticClass: "side-contact-profile" },
+                [_c("contact-profile")],
+                1
               ),
               _vm._v(" "),
               _c(
-                "div",
-                {
-                  staticClass: "col-5 col-sm-8 col-md-8 col-lg-10 heading-name"
-                },
+                "b-row",
+                { staticClass: "heading" },
                 [
-                  _vm.selectedUserName
-                    ? _c(
-                        "a",
-                        {
-                          staticClass: "heading-name-meta",
-                          on: { click: _vm.showContactProfile }
-                        },
-                        [_vm._v(_vm._s(_vm.selectedUser.name))]
-                      )
-                    : _vm._e()
-                ]
+                  _c(
+                    "b-col",
+                    {
+                      staticClass: "heading-avatar",
+                      attrs: { cols: "5", sm: "3", md: "3", lg: "1" }
+                    },
+                    [
+                      _vm.selectedUserAvatarPath
+                        ? _c("div", { staticClass: "heading-avatar-icon" }, [
+                            _c("img", {
+                              attrs: { src: _vm.selectedUserAvatarPath },
+                              on: { click: _vm.showContactProfile }
+                            })
+                          ])
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    {
+                      staticClass: "heading-name",
+                      attrs: { cols: "5", sm: "8", md: "8", lg: "10" }
+                    },
+                    [
+                      _vm.selectedUserName
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "heading-name-meta",
+                              on: { click: _vm.showContactProfile }
+                            },
+                            [_vm._v(_vm._s(_vm.selectedUser.name))]
+                          )
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    {
+                      staticClass: "heading-dot float-right",
+                      attrs: { cols: "2", sm: "1", md: "1", lg: "1" }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-ellipsis-v fa-2x float-right",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
+                  )
+                ],
+                1
               ),
               _vm._v(" "),
-              _vm._m(0)
-            ]),
-            _vm._v(" "),
-            _c("conversation")
-          ],
-          1
-        )
-      ])
-    ]
+              _c("conversation")
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "col-2 col-sm-1 col-md-1 col-lg-1 heading-dot float-right"
-      },
-      [
-        _c("i", {
-          staticClass: "fa fa-ellipsis-v fa-2x float-right",
-          attrs: { "aria-hidden": "true" }
-        })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68453,58 +68516,90 @@ var render = function() {
     "b-col",
     { staticClass: "side" },
     [
-      _c("div", { staticClass: "row newMessage-heading" }, [
-        _c("div", { staticClass: "row newMessage-main" }, [
-          _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
-            _c("i", {
-              staticClass: "fa fa-arrow-left",
-              attrs: { "aria-hidden": "true" },
-              on: { click: _vm.hide }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-10 col-xs-10 newMessage-title" }, [
-            _vm._v("New Chat")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("b-row", { staticClass: "searchBox" }, [
-        _c("div", { staticClass: "col-12 searchBox-inner" }, [
-          _c("div", { staticClass: "form-group has-feedback" }, [
-            _c("input", {
-              directives: [
+      _c(
+        "b-row",
+        { staticClass: "newMessage-heading" },
+        [
+          _c(
+            "b-row",
+            { staticClass: "newMessage-main" },
+            [
+              _c(
+                "b-col",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.keyword,
-                  expression: "keyword"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                id: "searchText",
-                type: "text",
-                name: "searchText",
-                placeholder: "Search"
-              },
-              domProps: { value: _vm.keyword },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  staticClass: "newMessage-back",
+                  attrs: { cols: "2", sm: "2" }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-arrow-left",
+                    attrs: { "aria-hidden": "true" },
+                    on: { click: _vm.hide }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                {
+                  staticClass: "newMessage-title",
+                  attrs: { cols: "10", sm: "10" }
+                },
+                [_vm._v("New Chat")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-row",
+        { staticClass: "searchBox" },
+        [
+          _c(
+            "b-col",
+            { staticClass: "searchBox-inner", attrs: { cols: "12" } },
+            [
+              _c("div", { staticClass: "form-group has-feedback" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.keyword,
+                      expression: "keyword"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "searchText",
+                    type: "text",
+                    name: "searchText",
+                    placeholder: "Search"
+                  },
+                  domProps: { value: _vm.keyword },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.keyword = $event.target.value
+                    }
                   }
-                  _vm.keyword = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", {
-              staticClass: "glyphicon glyphicon-search form-control-feedback"
-            })
-          ])
-        ])
-      ]),
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass:
+                    "glyphicon glyphicon-search form-control-feedback"
+                })
+              ])
+            ]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -68554,35 +68649,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row sideBar-body" }, [
-    _c("div", { staticClass: "col-3 sideBar-avatar" }, [
-      _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", { attrs: { src: _vm.avatarPath } })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-9 sideBar-main" }, [
-      _c("div", { staticClass: "row h-auto" }, [
-        _c("div", { staticClass: "col-12 sideBar-name" }, [
-          _vm.alias !== null
-            ? _c("span", { staticClass: "name-meta" }, [
-                _vm._v(_vm._s(_vm.alias))
-              ])
-            : _c("span", { staticClass: "name-meta" }, [
-                _vm._v(_vm._s(_vm.name))
-              ])
+  return _c(
+    "b-row",
+    { staticClass: "sideBar-body" },
+    [
+      _c("b-col", { staticClass: "sideBar-avatar", attrs: { cols: "3" } }, [
+        _c("div", { staticClass: "avatar-icon" }, [
+          _c("img", { attrs: { src: _vm.avatarPath } })
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 sideBar-time" }, [
-          _c("span", { staticClass: "time-meta" }, [
-            _c("i", [_vm._v(_vm._s(_vm.lastMessageDate))])
-          ])
-        ])
-      ])
-    ])
-  ])
+      _c(
+        "b-col",
+        { staticClass: "sideBar-main", attrs: { cols: "9" } },
+        [
+          _c(
+            "b-row",
+            { staticClass: "h-auto" },
+            [
+              _c(
+                "b-col",
+                { staticClass: "sideBar-name", attrs: { cols: "12" } },
+                [
+                  _vm.alias !== null
+                    ? _c("span", { staticClass: "name-meta" }, [
+                        _vm._v(_vm._s(_vm.alias))
+                      ])
+                    : _c("span", { staticClass: "name-meta" }, [
+                        _vm._v(_vm._s(_vm.name))
+                      ])
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            [
+              _c(
+                "b-col",
+                { staticClass: "sideBar-time", attrs: { cols: "12" } },
+                [
+                  _c("span", { staticClass: "time-meta" }, [
+                    _c("i", [_vm._v(_vm._s(_vm.lastMessageDate))])
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68628,20 +68750,38 @@ var render = function() {
         { staticClass: "message", attrs: { id: "conversation" } },
         [
           !_vm.userSelected
-            ? _c("div", { staticClass: "row message-previous" }, [
-                _c("div", { staticClass: "col-sm-12 previous" }, [
-                  _vm._v("Select a conversation to load some messages")
-                ])
-              ])
+            ? _c(
+                "b-row",
+                { staticClass: "message-previous" },
+                [
+                  _c(
+                    "b-col",
+                    { staticClass: "previous", attrs: { cols: "12" } },
+                    [_vm._v("Select a conversation to load some messages")]
+                  )
+                ],
+                1
+              )
             : _vm._e(),
           _vm._v(" "),
           _vm.emptyChat
-            ? _c("div", { staticClass: "row message-previous" }, [
-                _c("div", { staticClass: "col-sm-12 previous" }, [
-                  _vm._v("\n        Don't be shy! Say something to\n        "),
-                  _c("strong", [_vm._v(_vm._s(_vm.selectedUser.name))])
-                ])
-              ])
+            ? _c(
+                "div",
+                { staticClass: "row message-previous" },
+                [
+                  _c(
+                    "b-col",
+                    { staticClass: "previous", attrs: { sm: "12" } },
+                    [
+                      _vm._v(
+                        "\n        Don't be shy! Say something to\n        "
+                      ),
+                      _c("strong", [_vm._v(_vm._s(_vm.selectedUser.name))])
+                    ]
+                  )
+                ],
+                1
+              )
             : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.getSelectedConversationMessages, function(message, index) {
@@ -68661,55 +68801,81 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "row reply" }, [
-        _c("div", { staticClass: "col-3 col-sm-2 col-lg-1 reply-emojis" }, [
-          _c("i", {
-            staticClass: "fa fa-smile-o fa-2x",
-            on: { click: _vm.iconMenu }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6 col-sm-8 col-lg-10 reply-main" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.input,
-                expression: "input"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { rows: "1", id: "comment" },
-            domProps: { value: _vm.input },
-            on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
+      _c(
+        "b-row",
+        { staticClass: "reply" },
+        [
+          _c(
+            "b-col",
+            {
+              staticClass: "reply-emojis",
+              attrs: { cols: "3", sm: "2", lg: "1" }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-smile-o fa-2x",
+                on: { click: _vm.iconMenu }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            {
+              staticClass: "reply-main",
+              attrs: { cols: "6", sm: "8", lg: "10" }
+            },
+            [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.input,
+                    expression: "input"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "1", id: "comment" },
+                domProps: { value: _vm.input },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.sendMessage($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.input = $event.target.value
+                  }
                 }
-                return _vm.sendMessage($event)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.input = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-3 col-sm-2 col-lg-1 reply-send" }, [
-          _c("i", {
-            staticClass: "fa fa-send fa-2x",
-            attrs: { "aria-hidden": "true" },
-            on: { click: _vm.sendMessage }
-          })
-        ])
-      ])
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            {
+              staticClass: "reply-send",
+              attrs: { cols: "3", sm: "2", lg: "1" }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-send fa-2x",
+                attrs: { "aria-hidden": "true" },
+                on: { click: _vm.sendMessage }
+              })
+            ]
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -68777,31 +68943,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row sideBar-body" }, [
-    _c("div", { staticClass: "col-5 col-sm-4 sideBar-avatar" }, [
-      _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", { attrs: { src: _vm.avatarPath } })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-7 col-sm-8 sideBar-main" }, [
-      _c("div", { staticClass: "row h-auto" }, [
-        _c("div", { staticClass: "col-12 sideBar-name" }, [
-          _c("span", { staticClass: "name-meta" }, [
-            _vm._v(_vm._s(_vm.contactName))
+  return _c(
+    "b-row",
+    { staticClass: "sideBar-body" },
+    [
+      _c(
+        "b-col",
+        { staticClass: "sideBar-avatar", attrs: { cols: "5", sm: "4" } },
+        [
+          _c("div", { staticClass: "avatar-icon" }, [
+            _c("img", { attrs: { src: _vm.avatarPath } })
           ])
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 sideBar-time" }, [
-          _c("span", { staticClass: "time-meta" }, [
-            _c("i", [_vm._v(_vm._s(_vm.lastMessageDate))])
-          ])
-        ])
-      ])
-    ])
-  ])
+      _c(
+        "b-col",
+        { staticClass: "sideBar-main", attrs: { cols: "7", sm: "8" } },
+        [
+          _c(
+            "b-row",
+            { staticClass: "row h-auto" },
+            [
+              _c(
+                "b-col",
+                { staticClass: "sideBar-name", attrs: { cols: "12" } },
+                [
+                  _c("span", { staticClass: "name-meta" }, [
+                    _vm._v(_vm._s(_vm.contactName))
+                  ])
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            { staticClass: "row" },
+            [
+              _c(
+                "b-col",
+                { staticClass: "sideBar-time", attrs: { cols: "12" } },
+                [
+                  _c("span", { staticClass: "time-meta" }, [
+                    _c("i", [_vm._v(_vm._s(_vm.lastMessageDate))])
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68825,7 +69023,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row message-body" }, [
+  return _c("b-row", { staticClass: "message-body" }, [
     _c(
       "div",
       {
@@ -68878,72 +69076,113 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("b-col", { staticClass: "p-0 side" }, [
-    _c("div", { staticClass: "row newMessage-heading" }, [
-      _c("div", { staticClass: "row newMessage-main" }, [
-        _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
-          _c("i", {
-            staticClass: "fa fa-arrow-left",
-            attrs: { "aria-hidden": "true" },
-            on: { click: _vm.hide }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-10 col-xs-10 newMessage-title" }, [
-          _vm._v("Find new contacts")
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row composeBox" }, [
-      _c("div", { staticClass: "col-12 composeBox-inner" }, [
-        _c("div", { staticClass: "form-group has-feedback" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.keyword,
-                expression: "keyword"
-              }
+  return _c(
+    "b-col",
+    { staticClass: "p-0 side" },
+    [
+      _c(
+        "b-row",
+        { staticClass: "newMessage-heading" },
+        [
+          _c(
+            "b-row",
+            { staticClass: "newMessage-main" },
+            [
+              _c(
+                "b-col",
+                {
+                  staticClass: "newMessage-back",
+                  attrs: { cols: "2", sm: "2" }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-arrow-left",
+                    attrs: { "aria-hidden": "true" },
+                    on: { click: _vm.hide }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                {
+                  staticClass: "newMessage-title",
+                  attrs: { cols: "10", sm: "10" }
+                },
+                [_vm._v("Find new contacts")]
+              )
             ],
-            staticClass: "form-control",
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-row",
+        { staticClass: "composeBox" },
+        [
+          _c(
+            "b-col",
+            { staticClass: "composeBox-inner", attrs: { cols: "12" } },
+            [
+              _c("div", { staticClass: "form-group has-feedback" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.keyword,
+                      expression: "keyword"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "composeText",
+                    type: "text",
+                    name: "searchText",
+                    placeholder: "Search People"
+                  },
+                  domProps: { value: _vm.keyword },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.keyword = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass:
+                    "glyphicon glyphicon-search form-control-feedback"
+                })
+              ])
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "compose-sideBar myhc" },
+        _vm._l(_vm.filterPeople, function(user) {
+          return _c("user-list-item", {
+            key: user.user_id,
             attrs: {
-              id: "composeText",
-              type: "text",
-              name: "searchText",
-              placeholder: "Search People"
-            },
-            domProps: { value: _vm.keyword },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.keyword = $event.target.value
-              }
+              user_id: user.user_id,
+              avatar: user.avatar,
+              name: user.name
             }
-          }),
-          _vm._v(" "),
-          _c("span", {
-            staticClass: "glyphicon glyphicon-search form-control-feedback"
           })
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "compose-sideBar myhc" },
-      _vm._l(_vm.filterPeople, function(user) {
-        return _c("user-list-item", {
-          key: user.user_id,
-          attrs: { user_id: user.user_id, avatar: user.avatar, name: user.name }
-        })
-      }),
-      1
-    )
-  ])
+        }),
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68967,36 +69206,68 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row sideBar-body" }, [
-    _c("div", { staticClass: "col-3 sideBar-avatar" }, [
-      _c("div", { staticClass: "avatar-icon" }, [
-        _c("img", { staticClass: "img-fluid", attrs: { src: _vm.avatarPath } })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-9 sideBar-main" }, [
-      _c("div", { staticClass: "row h-auto" }, [
-        _c("div", { staticClass: "col-12 sideBar-name" }, [
-          _c("span", { staticClass: "name-meta" }, [_vm._v(_vm._s(_vm.name))])
+  return _c(
+    "b-row",
+    { staticClass: "sideBar-body" },
+    [
+      _c("b-col", { staticClass: "sideBar-avatar", attrs: { cols: "3" } }, [
+        _c("div", { staticClass: "avatar-icon" }, [
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.avatarPath }
+          })
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 sideBar-time" }, [
-          _c("span", { staticClass: "time-meta" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-primary",
-                on: { click: _vm.peopleToContact }
-              },
-              [_vm._v("ADD")]
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
+      _c(
+        "b-col",
+        { staticClass: "sideBar-main", attrs: { cols: "9" } },
+        [
+          _c(
+            "b-row",
+            { staticClass: "h-auto" },
+            [
+              _c(
+                "b-col",
+                { staticClass: "sideBar-name", attrs: { cols: "12" } },
+                [
+                  _c("span", { staticClass: "name-meta" }, [
+                    _vm._v(_vm._s(_vm.name))
+                  ])
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            [
+              _c(
+                "b-col",
+                { staticClass: "sideBar-time", attrs: { cols: "12" } },
+                [
+                  _c("span", { staticClass: "time-meta" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        on: { click: _vm.peopleToContact }
+                      },
+                      [_vm._v("ADD")]
+                    )
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -69020,82 +69291,122 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("b-col", { staticClass: "p-0 h-100" }, [
-    _c("div", { staticClass: "row newMessage-heading" }, [
-      _c("div", { staticClass: "row newMessage-main" }, [
-        _c("div", { staticClass: "col-2 newMessage-back" }, [
-          _c("i", {
-            staticClass: "fa fa-arrow-left",
-            attrs: { "aria-hidden": "true" },
-            on: { click: _vm.hideProfile }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-5 newMessage-title" }, [
-          _vm._v("Profile")
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row composeBox composeBox-inner h-auto" }, [
-      _c("div", { staticClass: "col-6 profile-avatar-icon h-auto" }, [
-        _c("img", {
-          staticClass: "img-fluid",
-          attrs: { src: "/images/" + _vm.selectedUser.avatar }
-        })
-      ]),
+  return _c(
+    "b-col",
+    { staticClass: "p-0 h-100" },
+    [
+      _c(
+        "b-row",
+        { staticClass: "newMessage-heading" },
+        [
+          _c(
+            "b-row",
+            { staticClass: "newMessage-main" },
+            [
+              _c(
+                "b-col",
+                { staticClass: "newMessage-back", attrs: { cols: "2" } },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-arrow-left",
+                    attrs: { "aria-hidden": "true" },
+                    on: { click: _vm.hideProfile }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { staticClass: "newMessage-title", attrs: { cols: "5" } },
+                [_vm._v("Profile")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
-        !_vm.isContact
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-success",
-                on: { click: _vm.addContact }
-              },
-              [_vm._v("ADD CONTACT")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.isContact
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-danger",
-                on: { click: _vm.deleteContact }
-              },
-              [_vm._v("DELETE CONTACT")]
-            )
-          : _vm._e()
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "compose-sideBar" }, [
-      _c("div", { staticClass: "compose-sideBar myhc" }, [
-        _c("div", { staticClass: "row sideBar-profile" }, [
-          _c("div", { staticClass: "col-12" }, [_vm._v("Alias:")]),
+      _c(
+        "b-row",
+        { staticClass: "composeBox composeBox-inner h-auto" },
+        [
+          _c(
+            "b-col",
+            { staticClass: "profile-avatar-icon h-auto", attrs: { cols: "6" } },
+            [
+              _c("img", {
+                staticClass: "img-fluid",
+                attrs: { src: "/images/" + _vm.selectedUser.avatar }
+              })
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-12" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", readonly: "" },
-              domProps: { value: _vm.selectedUser.alias }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12" }, [_vm._v("About me:")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12" }, [
-            _c("textarea", {
-              staticClass: "form-control",
-              attrs: { rows: "4", readonly: "" },
-              domProps: { value: _vm.selectedUser.info }
-            })
+          _c("b-col", { attrs: { cols: "6" } }, [
+            !_vm.isContact
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-success",
+                    on: { click: _vm.addContact }
+                  },
+                  [_vm._v("ADD CONTACT")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isContact
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-danger",
+                    on: { click: _vm.deleteContact }
+                  },
+                  [_vm._v("DELETE CONTACT")]
+                )
+              : _vm._e()
           ])
-        ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "compose-sideBar" }, [
+        _c(
+          "div",
+          { staticClass: "compose-sideBar myhc" },
+          [
+            _c(
+              "b-row",
+              { staticClass: "row sideBar-profile" },
+              [
+                _c("b-col", { attrs: { cols: "12" } }, [_vm._v("Alias:")]),
+                _vm._v(" "),
+                _c("b-col", { attrs: { cols: "12" } }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "text", readonly: "" },
+                    domProps: { value: _vm.selectedUser.alias }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("b-col", { attrs: { cols: "12" } }, [_vm._v("About me:")]),
+                _vm._v(" "),
+                _c("b-col", { attrs: { cols: "12" } }, [
+                  _c("textarea", {
+                    staticClass: "form-control",
+                    attrs: { rows: "4", readonly: "" },
+                    domProps: { value: _vm.selectedUser.info }
+                  })
+                ])
+              ],
+              1
+            )
+          ],
+          1
+        )
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -69125,121 +69436,179 @@ var render = function() {
     [
       _c(
         "b-row",
-        { staticClass: "avatar-menu" },
-        _vm._l(_vm.avatars, function(avatar, index) {
-          return _c(
-            "b-col",
-            {
-              key: index,
-              staticClass: "avatar-menu-inner",
-              attrs: { sm: "3" }
-            },
+        { staticClass: "newMessage-heading" },
+        [
+          _c(
+            "b-row",
+            { staticClass: "newMessage-main" },
             [
-              _c("img", {
-                attrs: { src: /images/ + avatar },
-                on: {
-                  click: function($event) {
-                    return _vm.selectAvatar(avatar)
-                  }
-                }
-              })
-            ]
+              _c(
+                "b-col",
+                {
+                  staticClass: "newMessage-back",
+                  attrs: { cols: "2", sm: "2" }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-arrow-left",
+                    attrs: { "aria-hidden": "true" },
+                    on: { click: _vm.hideProfile }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                {
+                  staticClass: "newMessage-title",
+                  attrs: { cols: "10", sm: "10" }
+                },
+                [_vm._v("Profile")]
+              )
+            ],
+            1
           )
-        }),
+        ],
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "row newMessage-heading" }, [
-        _c("div", { staticClass: "row newMessage-main" }, [
-          _c("div", { staticClass: "col-sm-2 col-xs-2 newMessage-back" }, [
-            _c("i", {
-              staticClass: "fa fa-arrow-left",
-              attrs: { "aria-hidden": "true" },
-              on: { click: _vm.hideProfile }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-10 col-xs-10 newMessage-title" }, [
-            _vm._v("Profile")
-          ])
-        ])
-      ]),
+      _c(
+        "b-row",
+        { staticClass: "composeBox h-auto" },
+        [
+          _c(
+            "b-col",
+            {
+              staticClass: "composeBox-inner heading-avatar h-auto",
+              attrs: { cols: "12" }
+            },
+            [
+              _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
+                _c("img", {
+                  directives: [
+                    {
+                      name: "b-modal",
+                      rawName: "v-b-modal.modal-center",
+                      modifiers: { "modal-center": true }
+                    }
+                  ],
+                  staticClass: "img-fluid",
+                  attrs: { src: _vm.avatarPath }
+                })
+              ])
+            ]
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "row composeBox h-auto" }, [
+      _c("div", { staticClass: "compose-sideBar" }, [
         _c(
           "div",
-          { staticClass: "col-12 composeBox-inner heading-avatar h-auto" },
+          { staticClass: "compose-sideBar myhc" },
           [
-            _c("div", { staticClass: "profile-avatar-icon h-auto" }, [
-              _c("img", {
-                staticClass: "img-fluid",
-                attrs: { src: _vm.avatarPath },
-                on: { click: _vm.avatarMenu }
-              })
-            ])
-          ]
+            _c(
+              "b-row",
+              { staticClass: "sideBar-profile" },
+              [
+                _c("b-col", { attrs: { cols: "12" } }, [_vm._v("Alias:")]),
+                _vm._v(" "),
+                _c("b-col", { attrs: { cols: "12" } }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.appUser.alias,
+                        expression: "appUser.alias"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.appUser.alias },
+                    on: {
+                      change: _vm.updateProfile,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.appUser, "alias", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("b-col", { attrs: { cols: "12" } }, [_vm._v("About you:")]),
+                _vm._v(" "),
+                _c("b-col", { attrs: { cols: "12" } }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.appUser.info,
+                        expression: "appUser.info"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { rows: "4" },
+                    domProps: { value: _vm.appUser.info },
+                    on: {
+                      change: _vm.updateProfile,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.appUser, "info", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ],
+              1
+            )
+          ],
+          1
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "compose-sideBar" }, [
-        _c("div", { staticClass: "compose-sideBar myhc" }, [
-          _c("div", { staticClass: "row sideBar-profile" }, [
-            _c("div", { staticClass: "col-12" }, [_vm._v("Alias:")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.appUser.alias,
-                    expression: "appUser.alias"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.appUser.alias },
-                on: {
-                  change: _vm.updateProfile,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            id: "modal-center",
+            centered: "",
+            title: "Select your new avatar"
+          }
+        },
+        [
+          _c(
+            "b-row",
+            _vm._l(_vm.avatars, function(avatar, index) {
+              return _c(
+                "b-col",
+                {
+                  key: index,
+                  staticClass: "avatar-menu-inner",
+                  attrs: { sm: "3" }
+                },
+                [
+                  _c("img", {
+                    attrs: { src: /images/ + avatar },
+                    on: {
+                      click: function($event) {
+                        return _vm.selectAvatar(avatar)
+                      }
                     }
-                    _vm.$set(_vm.appUser, "alias", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [_vm._v("About you:")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.appUser.info,
-                    expression: "appUser.info"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { rows: "4" },
-                domProps: { value: _vm.appUser.info },
-                on: {
-                  change: _vm.updateProfile,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.appUser, "info", $event.target.value)
-                  }
-                }
-              })
-            ])
-          ])
-        ])
-      ])
+                  })
+                ]
+              )
+            }),
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )

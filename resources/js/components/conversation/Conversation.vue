@@ -4,15 +4,15 @@
       <a @click="insertIcon" href="#" v-bind:key="index" v-for="(icon, index) of icons">{{ icon }}</a>
     </b-col>
     <div class="message" id="conversation">
-      <div v-if="!userSelected" class="row message-previous">
-        <div class="col-sm-12 previous">Select a conversation to load some messages</div>
-      </div>
+      <b-row v-if="!userSelected" class="message-previous">
+        <b-col cols="12" class="previous">Select a conversation to load some messages</b-col>
+      </b-row>
 
       <div v-if="emptyChat" class="row message-previous">
-        <div class="col-sm-12 previous">
+        <b-col sm="12" class="previous">
           Don't be shy! Say something to
           <strong>{{ selectedUser.name }}</strong>
-        </div>
+        </b-col>
       </div>
       <conversation-message
         v-for="(message, index) of getSelectedConversationMessages"
@@ -26,11 +26,11 @@
       ></conversation-message>
     </div>
 
-    <div class="row reply">
-      <div class="col-3 col-sm-2 col-lg-1 reply-emojis">
+    <b-row class="reply">
+      <b-col cols="3" sm="2" lg="1" class="reply-emojis">
         <i @click="iconMenu" class="fa fa-smile-o fa-2x"></i>
-      </div>
-      <div class="col-6 col-sm-8 col-lg-10 reply-main">
+      </b-col>
+      <b-col cols="6" sm="8" lg="10" class="reply-main">
         <textarea
           v-on:keyup.enter="sendMessage"
           v-model="input"
@@ -38,12 +38,12 @@
           rows="1"
           id="comment"
         ></textarea>
-      </div>
+      </b-col>
 
-      <div class="col-3 col-sm-2 col-lg-1 reply-send">
+      <b-col cols="3" sm="2" lg="1" class="reply-send">
         <i class="fa fa-send fa-2x" aria-hidden="true" @click="sendMessage"></i>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 

@@ -1,16 +1,16 @@
 <template>
   <b-col class="side">
-    <div class="row newMessage-heading">
-      <div class="row newMessage-main">
-        <div class="col-sm-2 col-xs-2 newMessage-back">
+    <b-row class="newMessage-heading">
+      <b-row class="newMessage-main">
+        <b-col cols="2" sm="2" class="newMessage-back">
           <i @click="hide" class="fa fa-arrow-left" aria-hidden="true"></i>
-        </div>
-        <div class="col-sm-10 col-xs-10 newMessage-title">New Chat</div>
-      </div>
-    </div>
+        </b-col>
+        <b-col cols="10" sm="10" class="newMessage-title">New Chat</b-col>
+      </b-row>
+    </b-row>
 
     <b-row class="searchBox">
-      <div class="col-12 searchBox-inner">
+      <b-col cols="12" class="searchBox-inner">
         <div class="form-group has-feedback">
           <input
             id="searchText"
@@ -22,7 +22,7 @@
           />
           <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
-      </div>
+      </b-col>
     </b-row>
 
     <div class="compose-sideBar myhc">

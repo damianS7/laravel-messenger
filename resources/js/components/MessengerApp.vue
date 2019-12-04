@@ -1,25 +1,26 @@
 <template>
-  <div id="app-wrap" class="container app">
-    <div class="row app-one">
-      <div class="col-5 col-sm-5 col-md-5 col-lg-3 side">
+  <b-container id="app-wrap" class="app">
+    <b-row class="app-one">
+      <b-col cols="5" sm="5" md="5" lg="3" class="side">
         <div class="side-left">
           <b-row class="heading">
-            <div class="col-5 col-sm-3 heading-avatar">
+            <b-col cols="5" sm="3" class="heading-avatar">
               <div class="heading-avatar-icon">
                 <img @click="showProfile" :src="appUserAvatarPath" />
               </div>
-            </div>
+            </b-col>
 
-            <div class="col-7 col-sm-5 heading-name">
+            <b-col cols="7" sm="5" class="heading-name">
               <a class="heading-name-meta">{{ appUser.alias }}</a>
-            </div>
+            </b-col>
 
-            <div class="col-3 col-sm-2 heading-compose">
+            <b-col cols="3" sm="2" class="heading-compose">
               <i @click="showContacts" class="fa fa-comments fa-2x float-right"></i>
-            </div>
-            <div class="col-3 col-sm-2 heading-compose">
+            </b-col>
+
+            <b-col cols="3" sm="2" class="heading-compose">
               <i @click="showPeople" class="fa fa-user-plus fa-2x float-right"></i>
-            </div>
+            </b-col>
           </b-row>
           <conversation-list></conversation-list>
         </div>
@@ -35,35 +36,34 @@
         <div class="side-profile">
           <profile></profile>
         </div>
-      </div>
+      </b-col>
 
-      <div class="col-7 col-sm-7 col-md-7 col-lg-9 conversation">
+      <b-col cols="7" sm="7" md="7" lg="9" class="conversation">
         <div class="side-contact-profile">
           <contact-profile></contact-profile>
         </div>
-        <div class="row heading">
-          <div class="col-5 col-sm-3 col-md-3 col-lg-1 heading-avatar">
+        <b-row class="heading">
+          <b-col cols="5" sm="3" md="3" lg="1" class="heading-avatar">
             <div v-if="selectedUserAvatarPath" class="heading-avatar-icon">
               <img @click="showContactProfile" :src="selectedUserAvatarPath" />
             </div>
-          </div>
-          <div class="col-5 col-sm-8 col-md-8 col-lg-10 heading-name">
+          </b-col>
+          <b-col cols="5" sm="8" md="8" lg="10" class="heading-name">
             <a
               v-if="selectedUserName"
               @click="showContactProfile"
               class="heading-name-meta"
             >{{ selectedUser.name }}</a>
-          </div>
-          <div class="col-2 col-sm-1 col-md-1 col-lg-1 heading-dot float-right">
+          </b-col>
+          <b-col cols="2" sm="1" md="1" lg="1" class="heading-dot float-right">
             <i class="fa fa-ellipsis-v fa-2x float-right" aria-hidden="true"></i>
-          </div>
-        </div>
+          </b-col>
+        </b-row>
         <conversation></conversation>
-      </div>
-    </div>
-  </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
-
 <script>
 import UserProfile from "./profile/UserProfile";
 import ContactProfile from "./profile/ContactProfile";

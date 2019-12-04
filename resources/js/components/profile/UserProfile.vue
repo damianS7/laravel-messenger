@@ -1,42 +1,49 @@
 <template>
   <b-col class="p-0 h-100">
-    <b-row class="avatar-menu">
-      <b-col v-for="(avatar,index) of avatars" v-bind:key="index" sm="3" class="avatar-menu-inner">
-        <img @click="selectAvatar(avatar)" :src="/images/ + avatar" />
+    <b-row class="newMessage-heading">
+      <b-row class="newMessage-main">
+        <b-col cols="2" sm="2" class="newMessage-back">
+          <i @click="hideProfile" class="fa fa-arrow-left" aria-hidden="true"></i>
+        </b-col>
+        <b-col cols="10" sm="10" class="newMessage-title">Profile</b-col>
+      </b-row>
+    </b-row>
+
+    <b-row class="composeBox h-auto">
+      <b-col cols="12" class="composeBox-inner heading-avatar h-auto">
+        <div class="profile-avatar-icon h-auto">
+          <img v-b-modal.modal-center class="img-fluid" :src="avatarPath" />
+        </div>
       </b-col>
     </b-row>
 
-    <div class="row newMessage-heading">
-      <div class="row newMessage-main">
-        <div class="col-sm-2 col-xs-2 newMessage-back">
-          <i @click="hideProfile" class="fa fa-arrow-left" aria-hidden="true"></i>
-        </div>
-        <div class="col-sm-10 col-xs-10 newMessage-title">Profile</div>
-      </div>
-    </div>
-
-    <div class="row composeBox h-auto">
-      <div class="col-12 composeBox-inner heading-avatar h-auto">
-        <div class="profile-avatar-icon h-auto">
-          <img @click="avatarMenu" class="img-fluid" :src="avatarPath" />
-        </div>
-      </div>
-    </div>
-
     <div class="compose-sideBar">
       <div class="compose-sideBar myhc">
-        <div class="row sideBar-profile">
-          <div class="col-12">Alias:</div>
-          <div class="col-12">
+        <b-row class="sideBar-profile">
+          <b-col cols="12">Alias:</b-col>
+          <b-col cols="12">
             <input type="text" class="form-control" v-model="appUser.alias" @change="updateProfile" />
-          </div>
-          <div class="col-12">About you:</div>
-          <div class="col-12">
+          </b-col>
+          <b-col cols="12">About you:</b-col>
+          <b-col cols="12">
             <textarea class="form-control" rows="4" v-model="appUser.info" @change="updateProfile"></textarea>
-          </div>
-        </div>
+          </b-col>
+        </b-row>
       </div>
     </div>
+
+    <b-modal id="modal-center" centered title="Select your new avatar">
+      <b-row>
+        <b-col
+          v-for="(avatar,index) of avatars"
+          v-bind:key="index"
+          sm="3"
+          class="avatar-menu-inner"
+        >
+          <img @click="selectAvatar(avatar)" :src="/images/ + avatar" />
+        </b-col>
+      </b-row>
+    </b-modal>
   </b-col>
 </template>
 
@@ -69,9 +76,11 @@ export default {
       var div = document.getElementsByClassName("avatar-menu")[0];
       if (!this.avatarMenuVisible) {
         div.style.bottom = "50%";
+        div.style.left = "10%";
         this.avatarMenuVisible = true;
       } else {
         this.avatarMenuVisible = false;
+        div.style.left = "-100%";
         div.style.bottom = "-100%";
       }
     },

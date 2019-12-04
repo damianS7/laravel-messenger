@@ -1,16 +1,16 @@
 <template>
   <b-col class="p-0 side">
-    <div class="row newMessage-heading">
-      <div class="row newMessage-main">
-        <div class="col-sm-2 col-xs-2 newMessage-back">
+    <b-row class="newMessage-heading">
+      <b-row class="newMessage-main">
+        <b-col cols="2" sm="2" class="newMessage-back">
           <i @click="hide" class="fa fa-arrow-left" aria-hidden="true"></i>
-        </div>
-        <div class="col-sm-10 col-xs-10 newMessage-title">Find new contacts</div>
-      </div>
-    </div>
+        </b-col>
+        <b-col cols="10" sm="10" class="newMessage-title">Find new contacts</b-col>
+      </b-row>
+    </b-row>
 
-    <div class="row composeBox">
-      <div class="col-12 composeBox-inner">
+    <b-row class="composeBox">
+      <b-col cols="12" class="composeBox-inner">
         <div class="form-group has-feedback">
           <input
             id="composeText"
@@ -22,8 +22,8 @@
           />
           <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
 
     <div class="compose-sideBar myhc">
       <user-list-item

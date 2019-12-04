@@ -1,36 +1,36 @@
 <template>
   <b-col class="p-0 h-100">
-    <div class="row newMessage-heading">
-      <div class="row newMessage-main">
-        <div class="col-2 newMessage-back">
+    <b-row class="newMessage-heading">
+      <b-row class="newMessage-main">
+        <b-col cols="2" class="newMessage-back">
           <i @click="hideProfile" class="fa fa-arrow-left" aria-hidden="true"></i>
-        </div>
-        <div class="col-5 newMessage-title">Profile</div>
-      </div>
-    </div>
+        </b-col>
+        <b-col cols="5" class="newMessage-title">Profile</b-col>
+      </b-row>
+    </b-row>
 
-    <div class="row composeBox composeBox-inner h-auto">
-      <div class="col-6 profile-avatar-icon h-auto">
+    <b-row class="composeBox composeBox-inner h-auto">
+      <b-col cols="6" class="profile-avatar-icon h-auto">
         <img class="img-fluid" :src="'/images/' + selectedUser.avatar" />
-      </div>
-      <div class="col-6">
+      </b-col>
+      <b-col cols="6">
         <button v-if="!isContact" @click="addContact" class="btn btn-sm btn-success">ADD CONTACT</button>
         <button v-if="isContact" @click="deleteContact" class="btn btn-sm btn-danger">DELETE CONTACT</button>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
 
     <div class="compose-sideBar">
       <div class="compose-sideBar myhc">
-        <div class="row sideBar-profile">
-          <div class="col-12">Alias:</div>
-          <div class="col-12">
+        <b-row class="row sideBar-profile">
+          <b-col cols="12">Alias:</b-col>
+          <b-col cols="12">
             <input type="text" class="form-control" :value="selectedUser.alias" readonly />
-          </div>
-          <div class="col-12">About me:</div>
-          <div class="col-12">
+          </b-col>
+          <b-col cols="12">About me:</b-col>
+          <b-col cols="12">
             <textarea class="form-control" rows="4" :value="selectedUser.info" readonly></textarea>
-          </div>
-        </div>
+          </b-col>
+        </b-row>
       </div>
     </div>
   </b-col>

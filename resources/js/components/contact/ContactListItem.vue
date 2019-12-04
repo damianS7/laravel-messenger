@@ -1,28 +1,27 @@
 <template>
-  <div class="row sideBar-body">
-    <div class="col-3 sideBar-avatar">
+  <b-row class="sideBar-body">
+    <b-col cols="3" class="sideBar-avatar">
       <div class="avatar-icon">
         <img :src="avatarPath" />
       </div>
-    </div>
-    <div class="col-9 sideBar-main">
-      <div class="row h-auto">
-        <div class="col-12 sideBar-name">
+    </b-col>
+    <b-col cols="9" class="sideBar-main">
+      <b-row class="h-auto">
+        <b-col cols="12" class="sideBar-name">
           <span v-if="alias !== null" class="name-meta">{{ alias }}</span>
           <span v-else class="name-meta">{{ name }}</span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 sideBar-time">
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" class="sideBar-time">
           <span class="time-meta">
             <i>{{ lastMessageDate }}</i>
           </span>
-        </div>
-      </div>
-    </div>
-  </div>
+        </b-col>
+      </b-row>
+    </b-col>
+  </b-row>
 </template>
-
 <script>
 import { mapState } from "vuex";
 export default {
