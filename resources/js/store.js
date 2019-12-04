@@ -167,7 +167,7 @@ export default new Vuex.Store({
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
             var profile = this.state.appUser;
-            axios.post("http://127.0.0.1:8000/profile/" + profile.user_id, {
+            axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
                 profile: profile,
                 _method: "put"
             });

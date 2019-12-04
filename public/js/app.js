@@ -83562,7 +83562,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     // Envia los datos del perfil actualizado a la base de datos
     saveProfile: function saveProfile(context) {
       var profile = this.state.appUser;
-      axios.post("http://127.0.0.1:8000/profile/" + profile.user_id, {
+      axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
         profile: profile,
         _method: "put"
       });
