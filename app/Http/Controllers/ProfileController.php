@@ -40,6 +40,7 @@ class ProfileController extends Controller
         $profile = Profile::where(['id' => $profile_id , 'user_id' => $user_id])->first();
         $profile->alias = $request['profile']['alias'];
         $profile->info = $request['profile']['info'];
+        $profile->avatar = $request['profile']['avatar'];
         $profile->save();
         
         // Devolvemos el json con el perfil y codigo 200
