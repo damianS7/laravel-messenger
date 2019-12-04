@@ -28,8 +28,8 @@
     <div class="compose-sideBar myhc">
       <user-list-item
         v-for="user of filterPeople"
-        v-bind:key="user.id"
-        :user_id="user.id"
+        v-bind:key="user.user_id"
+        :user_id="user.user_id"
         :avatar="user.avatar"
         :name="user.name"
       ></user-list-item>

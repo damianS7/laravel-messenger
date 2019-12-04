@@ -54,10 +54,24 @@ export default {
   name: "Conversation",
   data: function() {
     return {
-      icons: ["😀", "😁", "😂", "😅", "😈", "😇", "😍", "😎", 
-        "😘", "😥", "😭", "😱", "😷", "😰"],
+      icons: [
+        "😀",
+        "😁",
+        "😂",
+        "😅",
+        "😈",
+        "😇",
+        "😍",
+        "😎",
+        "😘",
+        "😥",
+        "😭",
+        "😱",
+        "😷",
+        "😰"
+      ],
       input: "",
-      iconMenuVisible: false,
+      iconMenuVisible: false
     };
   },
   methods: {
@@ -75,7 +89,7 @@ export default {
       this.input += event.target.innerHTML;
     },
     isSender(author_id) {
-      if (author_id == this.appUser.id) {
+      if (author_id == this.appUser.user_id) {
         return true;
       }
       return false;
@@ -106,13 +120,13 @@ export default {
       "getSelectedConversationMessages"
     ]),
     userSelected: function() {
-      if (typeof this.selectedUser.id === "undefined") {
+      if (typeof this.selectedUser.user_id === "undefined") {
         return false;
       }
       return true;
     },
     emptyChat: function() {
-      if (typeof this.selectedUser.id === "undefined") {
+      if (typeof this.selectedUser.user_id === "undefined") {
         return false;
       }
 

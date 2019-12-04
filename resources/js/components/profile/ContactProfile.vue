@@ -48,7 +48,7 @@ export default {
     ...mapState(["contacts", "selectedUser"]),
     ...mapMutations(["removeContact", "setSelectedContact"]),
     isContact: function() {
-      return this.$store.getters.isContact(this.selectedUser.id);
+      return this.$store.getters.isContact(this.selectedUser.user_id);
     }
   },
   methods: {
@@ -57,10 +57,14 @@ export default {
       div.style.right = "-100%";
     },
     addContact() {
-      this.$store.dispatch("saveContact", { userId: this.selectedUser.id });
+      this.$store.dispatch("saveContact", {
+        userId: this.selectedUser.user_id
+      });
     },
     deleteContact() {
-      this.$store.dispatch("deleteContact", { userId: this.selectedUser.id });
+      this.$store.dispatch("deleteContact", {
+        userId: this.selectedUser.user_id
+      });
     }
   }
 };

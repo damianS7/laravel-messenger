@@ -28,8 +28,8 @@
     <div class="compose-sideBar myhc">
       <contact-list-item
         v-for="contact of filterContacts"
-        v-bind:key="contact.id"
-        :contact_id="contact.id"
+        v-bind:key="contact.user_id"
+        :contact_id="contact.user_id"
         :name="contact.name"
         :avatar="contact.avatar"
         :alias="contact.alias"
@@ -57,7 +57,7 @@ export default {
         conversationId: contact.conversation_id
       });
 
-      this.$store.dispatch("selectUserById", { userId: contact.id });
+      this.$store.dispatch("selectUserById", { userId: contact.user_id });
     },
     hide() {
       var div = document.getElementsByClassName("side-contacts")[0];

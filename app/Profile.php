@@ -12,8 +12,8 @@ class Profile extends Model
     // Devuelve toda la informacion de un usuario
     public function scopeFullProfile($query, $userId)
     {
-        return $query->select(['users.id', 'users.name',
-        'profiles.alias', 'profiles.avatar', 'profiles.info',
+        return $query->select(['users.id AS user_id', 'users.name',
+        'profiles.id', 'profiles.alias', 'profiles.avatar', 'profiles.info',
         'users.phone', 'users.email', 'users.created_at AS member_since'])
         ->from('users')
         ->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')

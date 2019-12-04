@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     getUserConversation() {
-      if (this.conversation.user_a_id == this.appUser.id) {
+      if (this.conversation.user_a_id == this.appUser.user_id) {
         return this.conversation.user_b_id;
       }
 

@@ -13,7 +13,7 @@ class People extends Model
     // Gente disponible en la app para agregar a contactos
     public function scopeAppPeople($query, $currentUserId)
     {
-        return $query->select(['users.id', 'users.name', 'users.phone', 'users.email',
+        return $query->select(['users.id AS user_id', 'users.name', 'users.phone', 'users.email',
         'profiles.alias', 'profiles.info', 'profiles.avatar',
         'users.created_at AS member_since'])
         //->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id') // AND users.id = $currentUserId

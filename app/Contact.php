@@ -13,7 +13,7 @@ class Contact extends Model
     // Devuelve los contactos de un usuario
     public function scopeUserContacts($query, $user_id)
     {
-        $user_contacts = $query->select(['users.id', 'users.name',
+        $user_contacts = $query->select(['users.id AS user_id', 'users.name',
             'users.phone','users.email', 'users.created_at AS member_since',
             'conversations.id AS conversation_id',
             'profiles.alias', 'profiles.info', 'profiles.avatar'])
@@ -28,7 +28,7 @@ class Contact extends Model
     // Devuelve la informacion de usuario de un contacto
     public function scopeContactInfo($query, $userId, $contactId)
     {
-        return $query->select(['users.id', 'users.name',
+        return $query->select(['users.id AS user_id', 'users.name',
             'users.phone','users.email', 'users.created_at AS member_since',
             'conversations.id AS conversation_id',
             'profiles.alias', 'profiles.info', 'profiles.avatar'])

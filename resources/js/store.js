@@ -19,12 +19,6 @@ export default new Vuex.Store({
         selectedConversation: {}
     },
     getters: {
-        getSelectedContactConversation: (state, getters) => {
-            if (typeof state.selectedContact.conversation_id === 'undefined') {
-                return [];
-            }
-            return getters.getConversationById(state.selectedContact.conversation_id);
-        },
         getSelectedConversation: (state, getters) => {
             if (typeof state.selectedConversation.id === 'undefined') {
                 return null;
@@ -43,10 +37,10 @@ export default new Vuex.Store({
             return state.conversations.find(conversation => conversation.id === conversationId);
         },
         getPeopleById: (state, getters) => (userId) => {
-            return state.people.find(people => people.id === userId);
+            return state.people.find(people => people.user_id === userId);
         },
         getContactById: (state, getters) => (userId) => {
-            return state.contacts.find(contact => contact.id === userId);
+            return state.contacts.find(contact => contact.user_id === userId);
         },
         getUserById: (state, getters) => (userId) => {
             var user = getters.getContactById(userId);
@@ -78,7 +72,7 @@ export default new Vuex.Store({
             }
         },
         getUserIdFromSelectedConversation: (state, getters) => (userId) => {
-            if (state.selectedConversation.user_a_id == state.appUser.id) {
+            if (state.selectedConversation.user_a_id == state.appUser.user_id) {
                 return state.selectedConversation.user_b_id;
             }
 
@@ -109,7 +103,7 @@ export default new Vuex.Store({
         // Selecciona un contacto basado en su id
         selectContactById(state, payload) {
             var contactIndex = state.contacts.findIndex(contact =>
-                contact.userId === payload.userId
+                contact.user_id === payload.userId
             );
             state.selectedContact = state.contacts[contactIndex];
         },
@@ -129,11 +123,11 @@ export default new Vuex.Store({
         },
         removeContactById(state, payload) {
             var contactIndex = state.contacts.findIndex(
-                contact => contact.id === payload.userId);
+                contact => contact.user_id === payload.userId);
             Vue.delete(state.contacts, contactIndex);
         },
         removePeopleById(state, peopleId) {
-            var peopleIndex = state.people.findIndex(people => people.id === peopleId);
+            var peopleIndex = state.people.findIndex(people => people.user_id === peopleId);
             Vue.delete(state.people, peopleIndex);
         },
         addContact(state, contact) {
@@ -173,7 +167,7 @@ export default new Vuex.Store({
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
             var profile = this.state.appUser;
-            axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
+            axios.post("http://127.0.0.1:8000/profile/" + profile.user_id, {
                 profile: profile,
                 _method: "put"
             });
@@ -229,7 +223,7 @@ export default new Vuex.Store({
                     var conversation = response['data']['conversation'];
 
                     // Borramos a la persona que hemos agregado de People
-                    context.commit("removePeopleById", contact.id);
+                    context.commit("removePeopleById", contact.user_id);
 
                     // Agregamos el nuevo contacto usando los datos recibidos
                     context.commit("addContact", contact);
