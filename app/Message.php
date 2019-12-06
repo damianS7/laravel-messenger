@@ -51,4 +51,20 @@ class Message extends Model
         ->orderBy('messages.sent_at', 'ASC');
         return $messages;
     }
+
+    /**
+     * Los mensajes pertenecen a una conversacion
+     */
+    public function conversation()
+    {
+        return $this->belongsTo('App\Conversation');
+    }
+
+    /**
+     * Los mensajes pertenecen a un usuario
+     */
+    public function author()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

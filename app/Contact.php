@@ -45,4 +45,27 @@ class Contact extends Model
             )
             ->where('users.id', $contactId);
     }
+
+    /**
+     * Usuario propietario del contacto
+     */
+    public function owner()
+    {
+        return $this->belongsTo('App\User', 'user_id'); // user_id
+    }
+
+    /**
+     * Contacto (User)
+     */
+    public function contact()
+    {
+        return $this->hasOne('App\User', 'id', 'contact_id'); // user_id
+    }
+
+    /**
+     * La conversacion entre ambos usuarios
+     */
+    public function conversation()
+    {
+    }
 }

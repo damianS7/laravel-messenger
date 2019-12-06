@@ -9,26 +9,35 @@ class Conversation extends Model
     public $timestamps = false;
     protected $table = "conversations";
 
-    protected $fillable = [
-        'user_a_id', 'user_b_id'
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'laravel_through_key'
     ];
-
-    // Devuelve los datos de una conversacion entre dos usuarios o null
-    public function scopeUsersConversation($query, $user_id_a, $user_id_b)
+    
+    /**
+    * Mensajes de la conversation
+    */
+    public function messages()
     {
-        $conversation = $query->where(
-            ['user_a_id' => min($user_id_a, $user_id_b),
-            'user_b_id' => max($user_id_a, $user_id_b)]
-        )->first();
-        
-        return $conversation;
+        return $this->hasMany('App\Message');
     }
 
-    // Devuelve las conversaciones pertenecientes a un usuario junto con sus mensajes
-    public function scopeUserConversations($query, $userId)
+    /**
+    * Usuarios de la conversacion
+    */
+    public function users()
     {
-        $conversations = Conversation::where('user_a_id', $userId)
-        ->orWhere('user_b_id', $userId);
-        return $conversations;
+        return $this->hasManyThrough(
+            'App\User',
+            'App\ConversationUser',
+            'conversation_id',
+            'id',
+            'id',
+            'user_id',
+        );
     }
 }

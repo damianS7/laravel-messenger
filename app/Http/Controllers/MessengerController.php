@@ -12,6 +12,7 @@ use App\Profile;
 use App\Message;
 use App\MessageQueue;
 use App\Conversation;
+use App\User;
 use Auth;
 
 class MessengerController extends Controller
@@ -33,33 +34,25 @@ class MessengerController extends Controller
         $currentUserId = Auth::user()->id;
         
         // Userdata
-        $data['app_user'] = Profile::fullProfile($currentUserId);
-        // Contacts
-        $data['contacts'] = Contact::userContacts($currentUserId)->get();
-        // People
-        $data['people'] = People::appPeople($currentUserId)->get();
+        //$data['app_user'] = Profile::fullProfile($currentUserId);
+        $data['app_user'] = User::info()->where('id', $currentUserId)->with('profile')->first();
         
+        // Contacts
+        //$data['contacts'] = Contact::userContacts($currentUserId)->get();
+        $data['contacts'] = User::where('id', $currentUserId)->first()->contacts()->with('profile')->get();
+        
+        // People
+        $data['people'] = People::people($currentUserId)->with('profile')->get();
+
         // Comprobamos que la cola de mensajes este limpia para que
         // no se dupliquen mensajes.
         MessageQueue::where('to_user_id', $currentUserId)->delete();
 
-        $data['conversations'] = array();
+        // Conversaciones
+        $data['conversations'] = User::where('id', $currentUserId)->first()->conversations()
+        ->with(['users', 'messages'])->get();
+
         // Para cada conversacion obtenemos sus mensajes
-        
-        // Conversations del usuario
-        $conversations = Conversation::userConversations($currentUserId)->get();
-
-        // Conversaciones & Mensajes
-        foreach ($conversations as $index => $conversation) {
-            $messages = Message::conversationMessages($conversation->id)->get();
-            $data['conversations'][$index] = array(
-                'id' => $conversation->id,
-                'user_a_id' => $conversation->user_a_id,
-                'user_b_id' => $conversation->user_b_id,
-                'messages' => $messages
-            );
-        }
-
         return response()->json($data, 200);
     }
 }

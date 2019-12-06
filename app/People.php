@@ -11,16 +11,23 @@ class People extends Model
     protected $table = "users";
 
     // Gente disponible en la app para agregar a contactos
-    public function scopeAppPeople($query, $currentUserId)
+    public function scopePeople($query, $currentUserId)
     {
-        return $query->select(['users.id AS user_id', 'users.name', 'users.phone', 'users.email',
+        return $this->select(['users.id', 'users.name', 'users.phone', 'users.email',
         'profiles.alias', 'profiles.info', 'profiles.avatar',
         'users.created_at AS member_since'])
-        //->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id') // AND users.id = $currentUserId
         ->leftJoin('contacts', 'users.id', '=', DB::raw("contacts.contact_id AND contacts.user_id ='$currentUserId'"))
         ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
         ->whereNull('contacts.id')
         ->where('users.id', '!=', $currentUserId)
         ->orderBy('name', 'ASC');
+    }
+
+    /**
+     * Cada usuario tiene un perfil
+     */
+    public function profile()
+    {
+        return $this->hasOne('App\Profile', 'user_id', 'id');
     }
 }

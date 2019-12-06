@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'laravel_through_key'
     ];
 
     /**
@@ -36,4 +36,49 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Informacion del usuario.
+    public function scopeInfo($query)
+    {
+        return $this->select(['users.id', 'users.name', 'users.email', 'users.phone', 'users.created_at AS member_since']);
+    }
+
+    /**
+     * Cada usuario tiene un perfil
+     */
+    public function profile()
+    {
+        return $this->hasOne('App\Profile', 'user_id', 'id');
+    }
+
+    /**
+     * Cada usuario puede tener muchos contactos
+     */
+    public function contacts()
+    {
+        return $this->hasManyThrough(
+            'App\User',
+            'App\Contact',
+            'user_id',
+            'id',
+            'id',
+            'contact_id'
+        )->select(['users.id', 'users.name', 'users.phone', 'users.email',
+        'users.created_at AS member_since']);
+    }
+
+    /**
+     * Cada usuario puede participar en muchas conversaciones
+     */
+    public function conversations()
+    {
+        return $this->hasManyThrough(
+            'App\Conversation',
+            'App\ConversationUser',
+            'user_id',
+            'id',
+            'id',
+            'conversation_id'
+        );
+    }
 }
