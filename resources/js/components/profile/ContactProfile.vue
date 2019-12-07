@@ -11,7 +11,7 @@
 
     <b-row class="composeBox composeBox-inner h-auto">
       <b-col cols="6" class="profile-avatar-icon h-auto">
-        <img class="img-fluid" :src="'/images/' + selectedUser.avatar" />
+        <img class="img-fluid" :src="'/images/' + selectedUser.profile.avatar" />
       </b-col>
       <b-col cols="6">
         <button v-if="!isContact" @click="addContact" class="btn btn-sm btn-success">ADD CONTACT</button>
@@ -24,11 +24,11 @@
         <b-row class="row sideBar-profile">
           <b-col cols="12">Alias:</b-col>
           <b-col cols="12">
-            <input type="text" class="form-control" :value="selectedUser.alias" readonly />
+            <input type="text" class="form-control" :value="selectedUser.profile.alias" readonly />
           </b-col>
           <b-col cols="12">About me:</b-col>
           <b-col cols="12">
-            <textarea class="form-control" rows="4" :value="selectedUser.info" readonly></textarea>
+            <textarea class="form-control" rows="4" :value="selectedUser.profile.info" readonly></textarea>
           </b-col>
         </b-row>
       </div>
@@ -48,7 +48,7 @@ export default {
     ...mapState(["contacts", "selectedUser"]),
     ...mapMutations(["removeContact", "setSelectedContact"]),
     isContact: function() {
-      return this.$store.getters.isContact(this.selectedUser.user_id);
+      return this.$store.getters.isContact(this.selectedUser.id);
     }
   },
   methods: {
@@ -58,12 +58,12 @@ export default {
     },
     addContact() {
       this.$store.dispatch("saveContact", {
-        userId: this.selectedUser.user_id
+        userId: this.selectedUser.id
       });
     },
     deleteContact() {
       this.$store.dispatch("deleteContact", {
-        userId: this.selectedUser.user_id
+        userId: this.selectedUser.id
       });
     }
   }

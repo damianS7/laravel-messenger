@@ -11,7 +11,7 @@
             </b-col>
 
             <b-col cols="7" sm="5" class="heading-name">
-              <a class="heading-name-meta">{{ appUser.alias }}</a>
+              <a class="heading-name-meta">{{ appUser.profile.alias }}</a>
             </b-col>
 
             <b-col cols="3" sm="2" class="heading-compose">
@@ -105,13 +105,17 @@ export default {
     ...mapState(["appUser", "selectedContact", "selectedUser"]),
     ...mapActions(["fetchData"]),
     appUserAvatarPath: function() {
-      return "/images/" + this.appUser.avatar;
-    },
-    selectedUserAvatarPath: function() {
-      if (typeof this.selectedUser.avatar === "undefined") {
+      if (typeof this.appUser.profile.avatar === "undefined") {
         return false;
       }
-      return "/images/" + this.selectedUser.avatar;
+
+      return "/images/" + this.appUser.profile.avatar;
+    },
+    selectedUserAvatarPath: function() {
+      if (typeof this.selectedUser.profile.avatar === "undefined") {
+        return false;
+      }
+      return "/images/" + this.selectedUser.profile.avatar;
     },
     selectedUserName: function() {
       if (typeof this.selectedUser.name === "undefined") {

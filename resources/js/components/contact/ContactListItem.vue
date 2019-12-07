@@ -33,14 +33,13 @@ export default {
       return "/images/" + this.avatar;
     },
     lastMessageDate: function() {
-      for (var contact of this.contacts) {
-        var conversation = this.$store.getters.getConversationById(
-          contact.conversation_id
-        );
+      for (var user of this.contacts) {
+        // Buscamos la conversacion asociada a este usuario
+        var conversation = this.$store.getters.getConversationWith(user.id);
 
         if (typeof conversation !== "undefined") {
           if (conversation.messages.length > 0) {
-            if (contact.user_id == this.contact_id) {
+            if (user.id == this.contact_id) {
               return conversation.messages[conversation.messages.length - 1]
                 .sent_at;
             }

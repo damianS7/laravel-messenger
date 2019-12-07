@@ -22,11 +22,11 @@
         <b-row class="sideBar-profile">
           <b-col cols="12">Alias:</b-col>
           <b-col cols="12">
-            <input type="text" class="form-control" v-model="appUser.alias" @change="updateProfile" />
+            <input type="text" class="form-control" v-model="appUser.profile.alias" @change="updateProfile" />
           </b-col>
           <b-col cols="12">About you:</b-col>
           <b-col cols="12">
-            <textarea class="form-control" rows="4" v-model="appUser.info" @change="updateProfile"></textarea>
+            <textarea class="form-control" rows="4" v-model="appUser.profile.info" @change="updateProfile"></textarea>
           </b-col>
         </b-row>
       </div>
@@ -68,7 +68,7 @@ export default {
   computed: {
     ...mapState(["appUser"]),
     avatarPath: function() {
-      return "/images/" + this.appUser.avatar;
+      return "/images/" + this.appUser.profile.avatar;
     }
   },
   methods: {
@@ -85,7 +85,7 @@ export default {
       }
     },
     selectAvatar(avatar) {
-      this.appUser.avatar = avatar;
+      this.appUser.profile.avatar = avatar;
       this.$store.dispatch("saveProfile");
     },
     hideProfile(event) {

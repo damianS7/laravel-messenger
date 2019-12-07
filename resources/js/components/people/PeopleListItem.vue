@@ -26,7 +26,7 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "PeopleListItem",
-  props: ["name", "index", "user_id", "avatar"],
+  props: ["name", "userId", "avatar"],
   computed: {
     ...mapState(["people"]),
     ...mapMutations(["addContact"]),
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     peopleToContact() {
-      this.$store.dispatch("saveContact", { userId: this.user_id });
+      this.$store.dispatch("saveContact", { userId: this.userId });
     }
   }
 };

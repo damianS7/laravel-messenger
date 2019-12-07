@@ -27,14 +27,14 @@
 
     <div class="compose-sideBar myhc">
       <contact-list-item
-        v-for="contact of filterContacts"
-        v-bind:key="contact.user_id"
-        :contact_id="contact.user_id"
-        :name="contact.name"
-        :avatar="contact.avatar"
-        :alias="contact.alias"
-        :phone="contact.phone"
-        @click.native="selectContact(contact)"
+        v-for="user of filterContacts"
+        v-bind:key="user.id"
+        :contact_id="user.id"
+        :name="user.name"
+        :phone="user.phone"
+        :avatar="user.profile.avatar"
+        :alias="user.profile.alias"
+        @click.native="selectContact(user)"
       ></contact-list-item>
     </div>
   </b-col>
@@ -52,12 +52,15 @@ export default {
     };
   },
   methods: {
-    selectContact(contact) {
+    selectContact(user) {
+      // Buscamos la conversacion asociada a este usuario
+      var conversation = this.$store.getters.getConversationWith(user.id);
+
       this.$store.dispatch("selectConversationById", {
-        conversationId: contact.conversation_id
+        conversationId: conversation.id
       });
 
-      this.$store.dispatch("selectUserById", { userId: contact.user_id });
+      this.$store.dispatch("selectUserById", { userId: user.id });
     },
     hide() {
       var div = document.getElementsByClassName("side-contacts")[0];
