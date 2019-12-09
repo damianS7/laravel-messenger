@@ -83905,8 +83905,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     // action
     removeContactById: function removeContactById(state, payload) {
-      var contactIndex = state.contacts.findIndex(function (contact) {
-        return contact.user_id === payload.userId;
+      var contactIndex = state.contacts.findIndex(function (user) {
+        return user.id === payload.userId;
       });
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, contactIndex);
     },
@@ -83995,7 +83995,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           var user = context.getters.getUserById(data.userId); // Borramos el usuario de contactos
 
           context.commit("removeContactById", {
-            userId: data.userId
+            userId: user.id
           }); // Movemos el contacto a people
 
           context.commit('addPeople', {

@@ -103,7 +103,7 @@ export default new Vuex.Store({
         // action
         removeContactById(state, payload) {
             var contactIndex = state.contacts.findIndex(
-                contact => contact.user_id === payload.userId);
+                user => user.id === payload.userId);
             Vue.delete(state.contacts, contactIndex);
         },
         // action
@@ -184,7 +184,7 @@ export default new Vuex.Store({
                     var user = context.getters.getUserById(data.userId);
 
                     // Borramos el usuario de contactos
-                    context.commit("removeContactById", { userId: data.userId });
+                    context.commit("removeContactById", { userId: user.id });
 
                     // Movemos el contacto a people
                     context.commit('addPeople', { people: user });
