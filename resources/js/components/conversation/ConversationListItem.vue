@@ -31,27 +31,27 @@ export default {
     return {};
   },
   methods: {
-    getUserConversation() {
-      if (this.conversation.user_a_id == this.appUser.user_id) {
-        return this.conversation.user_b_id;
+    getUserFromConversation() {
+      if (this.conversation.users[0].id == this.appUser.id) {
+        return this.conversation.users[1];
       }
 
-      return this.conversation.user_a_id;
+      return this.conversation.users[0];
     }
   },
   computed: {
     ...mapState(["conversations", "contacts", "appUser"]),
     avatarPath: function() {
-      var userId = this.getUserConversation();
-      var user = this.$store.getters.getUserById(userId);
-      return "/images/" + user.avatar;
+      var userB = this.getUserFromConversation();
+      var user = this.$store.getters.getUserById(userB.id);
+      return "/images/" + user.profile.avatar;
     },
     contactName: function() {
-      var userId = this.getUserConversation();
-      var user = this.$store.getters.getUserById(userId);
+      var userB = this.getUserFromConversation();
+      var user = this.$store.getters.getUserById(userB.id);
 
       // Si la conversacion es de un usuario, mostramos el nombre
-      if (this.$store.getters.isContact(userId)) {
+      if (this.$store.getters.isContact(user.id)) {
         return user.name;
       }
 

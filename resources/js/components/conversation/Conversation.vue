@@ -15,12 +15,12 @@
         </b-col>
       </div>
       <conversation-message
-        v-for="(message, index) of getSelectedConversationMessages"
+        v-for="(message, index) of selectedConversation.messages"
         v-bind:key="index"
         :author_id="message.author_id"
-        :alias="message.author_alias"
+        :alias="senderName(message.author_id)"
         :message="message.content"
-        :name="message.author_name"
+        :name="senderName(message.author_id)"
         :sent_at="message.sent_at"
         :isSender="isSender(message.author_id)"
       ></conversation-message>
@@ -75,6 +75,14 @@ export default {
     };
   },
   methods: {
+    senderName(senderId) {
+      if (this.appUser.id === senderId) {
+        return this.appUser.name;
+      }
+
+      var user = this.$store.getters.getUserById(senderId);
+      return user.name;
+    },
     iconMenu() {
       var div = document.getElementsByClassName("icon-menu")[0];
       if (!this.iconMenuVisible) {
@@ -89,7 +97,7 @@ export default {
       this.input += event.target.innerHTML;
     },
     isSender(author_id) {
-      if (author_id == this.appUser.user_id) {
+      if (author_id == this.appUser.id) {
         return true;
       }
       return false;
@@ -115,22 +123,19 @@ export default {
   },
   computed: {
     ...mapState(["selectedConversation", "appUser", "selectedUser"]),
-    ...mapGetters([
-      "getSelectedConversation",
-      "getSelectedConversationMessages"
-    ]),
+    ...mapGetters([]),
     userSelected: function() {
-      if (typeof this.selectedUser.user_id === "undefined") {
+      if (typeof this.selectedUser.id === "undefined") {
         return false;
       }
       return true;
     },
     emptyChat: function() {
-      if (typeof this.selectedUser.user_id === "undefined") {
+      if (typeof this.selectedUser.id === "undefined") {
         return false;
       }
 
-      if (this.getSelectedConversationMessages.length > 0) {
+      if (this.selectedConversation.messages.length > 0) {
         return false;
       }
 

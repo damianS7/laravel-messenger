@@ -30,14 +30,21 @@ export default {
         conversationId: conversation.id
       });
 
-      var userId = this.$store.getters.getUserIdFromSelectedConversation({});
-      var user = this.$store.getters.getUserById(userId);
+      var userB = this.getUserFromConversation(conversation);
+      var user = this.$store.getters.getUserById(userB.id);
       this.$store.state.selectedUser = user;
       //this.$store.commit("selectContact", userId);
+    },
+    getUserFromConversation(conversation) {
+      if (conversation.users[0].id == this.appUser.id) {
+        return conversation.users[1];
+      }
+
+      return conversation.users[0];
     }
   },
   computed: {
-    ...mapState(["conversations"]),
+    ...mapState(["conversations", "appUser"]),
     filterConversations: function() {
       return this.conversations.filter(conversation => {
         return conversation.messages.length > 0;
