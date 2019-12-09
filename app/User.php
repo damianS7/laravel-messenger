@@ -37,14 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Informacion del usuario.
+    // Informacion del usuario para la app
     public function scopeInfo($query)
     {
         return $this->select(['users.id', 'users.name', 'users.email', 'users.phone', 'users.created_at AS member_since']);
     }
 
     /**
-     * Cada usuario tiene un perfil
+     * Perfil de usuario
      */
     public function profile()
     {
@@ -52,7 +52,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Cada usuario puede tener muchos contactos
+     * Contactos del usuario
      */
     public function contacts()
     {
@@ -68,7 +68,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Cada usuario puede participar en muchas conversaciones
+     * Conversaciones en las que participa el usuario
      */
     public function conversations()
     {
