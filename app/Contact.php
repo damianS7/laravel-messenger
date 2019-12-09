@@ -10,48 +10,12 @@ class Contact extends Model
     public $timestamps = false;
     protected $table = "contacts";
 
-    // Devuelve los contactos de un usuario
-    public function scopeUserContacts($query, $user_id)
-    {
-        $user_contacts = $query->select(['users.id AS user_id', 'users.name',
-            'users.phone','users.email', 'users.created_at AS member_since',
-            'conversations.id AS conversation_id',
-            'profiles.alias', 'profiles.info', 'profiles.avatar'])
-            ->from('users')
-            ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
-            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
-            ->leftJoin('conversations', 'conversations.user_a_id', '=', DB::raw('LEAST(contacts.user_id, contacts.contact_id) AND conversations.user_b_id = GREATEST(contacts.user_id, contacts.contact_id)'))
-            ->where('contacts.user_id', $user_id);
-        return $user_contacts;
-    }
-
-    // Devuelve la informacion de usuario de un contacto
-    public function scopeContactInfo($query, $userId, $contactId)
-    {
-        return $query->select(['users.id AS user_id', 'users.name',
-            'users.phone','users.email', 'users.created_at AS member_since',
-            'conversations.id AS conversation_id',
-            'profiles.alias', 'profiles.info', 'profiles.avatar'])
-            ->from('users')
-            ->leftJoin('contacts', 'users.id', '=', 'contacts.contact_id')
-            ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
-            ->leftJoin(
-                'conversations',
-                'conversations.user_a_id',
-                '=',
-                DB::raw("LEAST('$userId', '$contactId') 
-                AND conversations.user_b_id = 
-                GREATEST('$userId', '$contactId')")
-            )
-            ->where('users.id', $contactId);
-    }
-
     /**
      * Usuario propietario del contacto
      */
     public function owner()
     {
-        return $this->belongsTo('App\User', 'user_id'); // user_id
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
     /**
@@ -59,7 +23,8 @@ class Contact extends Model
      */
     public function contact()
     {
-        return $this->hasOne('App\User', 'id', 'contact_id'); // user_id
+        return $this->belongsTo('App\User', 'contact_id', 'id')->select(['users.id', 'users.name', 'users.phone', 'users.email',
+        'users.created_at AS member_since']);
     }
 
     /**
@@ -67,5 +32,17 @@ class Contact extends Model
      */
     public function conversation()
     {
+        //SELECT t1.conversation_id FROM `conversation_users` AS t1
+        //LEFT JOIN conversation_users AS t2
+        //ON t1.conversation_id = t2.conversation_id
+        //WHERE t1.user_id = 1 AND t2.user_id = 2
+        return $this->hasManyThrough(
+            'App\ConversationUser AS t1',
+            'App\ConversationUser AS t2',
+            'user_id1',
+            't1.conversation_id',
+            'id3',
+            't2.conversation_id'
+        );
     }
 }

@@ -9,6 +9,7 @@ use Auth;
 use DB;
 
 use App\Conversation;
+use App\ConversationUser;
 
 class ContactController extends Controller
 {
@@ -52,15 +53,40 @@ class ContactController extends Controller
         $contact->contact_id = $request['user_id'];
         $contact->save();
 
-        // firstOrCreate
-        $conversation = Conversation::firstOrCreate(
-            ['user_a_id' => min($contact->user_id, $contact->contact_id),
-            'user_b_id' => max($contact->user_id, $contact->contact_id)]
-        );
+        // Buscamos Conversation existente con los dos IDs de usuario
+        $conversation = Conversation::findConversationBetween(
+            $contact->user_id,
+            $contact->contact_id
+        )->with(['users', 'messages'])->first();
+
+        // Si no la encontramos ...
+        if ($conversation === null) {
+            // Creamos una nueva conversacion
+            $conversation = Conversation::create();
+            
+            // Insertamos en ConversationUsers la nueva conversacion con los
+            // dos usuarios
+            ConversationUser::create(
+                array(
+                    'conversation_id' => $conversation->id,
+                    'user_id' => $contact->user_id
+                )
+            );
+
+            ConversationUser::create(
+                array(
+                    'conversation_id' => $conversation->id,
+                    'user_id' => $contact->contact_id
+                )
+            );
+
+            $conversation = Conversation::where('id', $conversation->id)
+            ->with(['users', 'messages'])->first();
+        }
 
         // Obtenemos los contactos del usuario junto con sus perfiles
-        $data_contact = Contact::contactInfo($user_id, $contact->contact_id)->first();
-        $conversation['messages'] = array();
+        //$data_contact = Contact::contactInfo($user_id, $contact->contact_id)->first();
+        $data_contact = User::info()->where('id', $contact->contact_id)->with('profile')->first();
         
         // Devolvemos el json con los datos del nuevo contacto
         return response()->json(['contact' => $data_contact,

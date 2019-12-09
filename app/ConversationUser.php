@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConversationUser extends Model
 {
-    public $timestamps = true;
+    public $timestamps = false;
     protected $table = "conversation_users";
-    
+
+    protected $fillable = [
+        'conversation_id', 'user_id'
+    ];
+
     /**
      * Cada usuario puede estar asociado a varias conversaciones
      */
@@ -22,6 +26,6 @@ class ConversationUser extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->hasMany('App\User');
     }
 }
