@@ -11,6 +11,12 @@ use Auth;
 
 class MessageQueueController extends Controller
 {
+    public function __construct()
+    {
+        // Se necesita esta autentificado para llevar a cabo acciones
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $currentUserid = Auth::user()->id;
