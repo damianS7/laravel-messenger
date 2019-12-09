@@ -41,8 +41,8 @@ class MessengerController extends Controller
         //$data['contacts'] = Contact::userContacts($currentUserId)->get();
         $data['contacts'] = User::where('id', $currentUserId)->first()->contacts()->with('profile')->get();
         
-        // People
-        $data['people'] = People::people($currentUserId)->with('profile')->get();
+        // People (No contactos)
+        $data['people'] = User::people($currentUserId)->with('profile')->get();
 
         // Comprobamos que la cola de mensajes este limpia para que
         // no se dupliquen mensajes.

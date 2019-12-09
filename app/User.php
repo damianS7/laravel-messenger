@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use DB;
 
 class User extends Authenticatable
 {
@@ -36,6 +37,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Gente disponible en la app para agregar a contactos
+    public function scopePeople($query, $currentUserId)
+    {
+        return $this->select(['users.id', 'users.name', 'users.phone', 'users.email',
+        'profiles.alias', 'profiles.info', 'profiles.avatar',
+        'users.created_at AS member_since'])
+        ->leftJoin('contacts', 'users.id', '=', DB::raw("contacts.contact_id AND contacts.user_id ='$currentUserId'"))
+        ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
+        ->whereNull('contacts.id')
+        ->where('users.id', '!=', $currentUserId)
+        ->orderBy('name', 'ASC');
+    }
 
     // Informacion del usuario para la app
     public function scopeInfo($query)
