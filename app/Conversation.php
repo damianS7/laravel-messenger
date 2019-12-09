@@ -46,11 +46,11 @@ class Conversation extends Model
     /**
     * Usuarios de la conversacion
     */
-    public function users()
+    public function participants()
     {
         return $this->hasManyThrough(
             'App\User',
-            'App\ConversationUser',
+            'App\Participant',
             'conversation_id',
             'id',
             'id',

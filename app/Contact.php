@@ -37,8 +37,8 @@ class Contact extends Model
         //ON t1.conversation_id = t2.conversation_id
         //WHERE t1.user_id = 1 AND t2.user_id = 2
         return $this->hasManyThrough(
-            'App\ConversationUser AS t1',
-            'App\ConversationUser AS t2',
+            'App\Participant AS t1',
+            'App\Participant AS t2',
             'user_id1',
             't1.conversation_id',
             'id3',

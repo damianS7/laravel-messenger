@@ -4,7 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ConversationUser extends Model
+/*
+ * Participant es el modelo usado para determinar a los usuarios que participan
+ * en una conversacion determinada.
+ */
+class Participant extends Model
 {
     public $timestamps = false;
     protected $table = "conversation_users";
@@ -14,7 +18,7 @@ class ConversationUser extends Model
     ];
 
     /**
-     * Cada usuario puede estar asociado a varias conversaciones
+     * Participante esta asociado a una conversacion
      */
     public function conversation()
     {
@@ -22,10 +26,10 @@ class ConversationUser extends Model
     }
 
     /**
-     * Cada usuario puede estar asociado a varias conversaciones
+     * Cada Participante es un usuario
      */
     public function user()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User');
     }
 }

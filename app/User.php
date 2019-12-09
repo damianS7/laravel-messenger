@@ -74,7 +74,7 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(
             'App\Conversation',
-            'App\ConversationUser',
+            'App\Participant',
             'user_id',
             'id',
             'id',

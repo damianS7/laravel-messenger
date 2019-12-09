@@ -9,7 +9,7 @@ use Auth;
 use DB;
 
 use App\Conversation;
-use App\ConversationUser;
+use App\Participant;
 
 class ContactController extends Controller
 {
@@ -57,23 +57,22 @@ class ContactController extends Controller
         $conversation = Conversation::findConversationBetween(
             $contact->user_id,
             $contact->contact_id
-        )->with(['users', 'messages'])->first();
+        )->with(['participants', 'messages'])->first();
 
         // Si no la encontramos ...
         if ($conversation === null) {
             // Creamos una nueva conversacion
             $conversation = Conversation::create();
             
-            // Insertamos en ConversationUsers la nueva conversacion con los
-            // dos usuarios
-            ConversationUser::create(
+            // Insertamos a los usuarios participantes en la nueva conversacion
+            Participant::create(
                 array(
                     'conversation_id' => $conversation->id,
                     'user_id' => $contact->user_id
                 )
             );
 
-            ConversationUser::create(
+            Participant::create(
                 array(
                     'conversation_id' => $conversation->id,
                     'user_id' => $contact->contact_id
@@ -81,7 +80,7 @@ class ContactController extends Controller
             );
 
             $conversation = Conversation::where('id', $conversation->id)
-            ->with(['users', 'messages'])->first();
+            ->with(['participants', 'messages'])->first();
         }
 
         // Obtenemos los contactos del usuario junto con sus perfiles

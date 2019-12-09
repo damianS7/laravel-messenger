@@ -21,8 +21,8 @@ export default new Vuex.Store({
     getters: {
         getConversationWith: (state, getters) => (userId) => {
             return state.conversations.find(conversation =>
-                conversation.users[0].id === userId
-                || conversation.users[1].id === userId);
+                conversation.participants[0].id === userId
+                || conversation.participants[1].id === userId);
         },
         getConversationById: (state, getters) => (conversationId) => {
             return state.conversations.find(
@@ -49,11 +49,11 @@ export default new Vuex.Store({
         },
         // Mejorar nombre de metodo
         getUserFromSelectedConversation: (state, getters) => {
-            if (state.selectedConversation.users[0].id == state.appUser.id) {
-                return state.selectedConversation.users[1];
+            if (state.selectedConversation.participants[0].id == state.appUser.id) {
+                return state.selectedConversation.participants[1];
             }
 
-            return state.selectedConversation.users[0];
+            return state.selectedConversation.participants[0];
         },
     },
     mutations: {
@@ -80,8 +80,8 @@ export default new Vuex.Store({
         // Selecciona un contacto basado en su id
         // Este metodo es un action, selectContact es la mutacion
         selectContactById(state, payload) {
-            var contactIndex = state.contacts.findIndex(contact =>
-                contact.user_id === payload.userId
+            var contactIndex = state.contacts.findIndex(user =>
+                user.id === payload.userId
             );
             state.selectedContact = state.contacts[contactIndex];
         },

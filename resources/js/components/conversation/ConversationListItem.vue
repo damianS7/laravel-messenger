@@ -32,11 +32,11 @@ export default {
   },
   methods: {
     getUserFromConversation() {
-      if (this.conversation.users[0].id == this.appUser.id) {
-        return this.conversation.users[1];
+      if (this.conversation.participants[0].id == this.appUser.id) {
+        return this.conversation.participants[1];
       }
 
-      return this.conversation.users[0];
+      return this.conversation.participants[0];
     }
   },
   computed: {

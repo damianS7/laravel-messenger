@@ -50,7 +50,7 @@ class MessengerController extends Controller
 
         // Conversaciones
         $data['conversations'] = User::where('id', $currentUserId)->first()->conversations()
-        ->with(['users', 'messages'])->get();
+        ->with(['participants', 'messages'])->get();
 
         // Para cada conversacion obtenemos sus mensajes
         return response()->json($data, 200);

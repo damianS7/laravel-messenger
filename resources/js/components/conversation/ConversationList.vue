@@ -36,11 +36,11 @@ export default {
       //this.$store.commit("selectContact", userId);
     },
     getUserFromConversation(conversation) {
-      if (conversation.users[0].id == this.appUser.id) {
-        return conversation.users[1];
+      if (conversation.participants[0].id == this.appUser.id) {
+        return conversation.participants[1];
       }
-
-      return conversation.users[0];
+s
+      return conversation.participants[0];
     }
   },
   computed: {

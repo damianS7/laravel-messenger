@@ -2385,11 +2385,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.state.selectedUser = user; //this.$store.commit("selectContact", userId);
     },
     getUserFromConversation: function getUserFromConversation(conversation) {
-      if (conversation.users[0].id == this.appUser.id) {
-        return conversation.users[1];
+      if (conversation.participants[0].id == this.appUser.id) {
+        return conversation.participants[1];
       }
 
-      return conversation.users[0];
+      s;
+      return conversation.participants[0];
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "appUser"]), {
@@ -2455,11 +2456,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     getUserFromConversation: function getUserFromConversation() {
-      if (this.conversation.users[0].id == this.appUser.id) {
-        return this.conversation.users[1];
+      if (this.conversation.participants[0].id == this.appUser.id) {
+        return this.conversation.participants[1];
       }
 
-      return this.conversation.users[0];
+      return this.conversation.participants[0];
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts", "appUser"]), {
@@ -83805,7 +83806,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     getConversationWith: function getConversationWith(state, getters) {
       return function (userId) {
         return state.conversations.find(function (conversation) {
-          return conversation.users[0].id === userId || conversation.users[1].id === userId;
+          return conversation.participants[0].id === userId || conversation.participants[1].id === userId;
         });
       };
     },
@@ -83852,11 +83853,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     // Mejorar nombre de metodo
     getUserFromSelectedConversation: function getUserFromSelectedConversation(state, getters) {
-      if (state.selectedConversation.users[0].id == state.appUser.id) {
-        return state.selectedConversation.users[1];
+      if (state.selectedConversation.participants[0].id == state.appUser.id) {
+        return state.selectedConversation.participants[1];
       }
 
-      return state.selectedConversation.users[0];
+      return state.selectedConversation.participants[0];
     }
   },
   mutations: {
@@ -83883,8 +83884,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     // Selecciona un contacto basado en su id
     // Este metodo es un action, selectContact es la mutacion
     selectContactById: function selectContactById(state, payload) {
-      var contactIndex = state.contacts.findIndex(function (contact) {
-        return contact.user_id === payload.userId;
+      var contactIndex = state.contacts.findIndex(function (user) {
+        return user.id === payload.userId;
       });
       state.selectedContact = state.contacts[contactIndex];
     },
