@@ -15,19 +15,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $currentUserId = Auth::user()->id;
-        $profile = Profile::fullProfile($currentUserId);
-        // Devolvemos el json con el perfil y codigo 200
-        return response()->json(['profile' => $profile], 200);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

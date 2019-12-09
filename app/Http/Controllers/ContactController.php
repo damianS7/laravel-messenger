@@ -20,23 +20,6 @@ class ContactController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        // ID de usuario que necesita los contactos
-        $user_id = Auth::user()->id;
-    
-        // Obtenemos los contactos del usuario junto con sus perfiles
-        $user_contacts = Contact::userContacts($user_id)->get();
-
-        // Devolvemos el json con las notas y codigo 200
-        return response()->json(['contacts' => $user_contacts], 200);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
