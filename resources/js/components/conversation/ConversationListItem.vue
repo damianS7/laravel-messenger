@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "ConversationListItem",
   props: ["id", "conversation"],
@@ -41,17 +41,18 @@ export default {
   },
   computed: {
     ...mapState(["conversations", "contacts", "appUser"]),
+    ...mapGetters(["getUserById", "isContact"]),
     avatarPath: function() {
-      var userB = this.getUserFromConversation();
-      var user = this.$store.getters.getUserById(userB.id);
+      var userConversation = this.getUserFromConversation();
+      var user = this.getUserById(userConversation.id);
       return "/images/" + user.profile.avatar;
     },
     contactName: function() {
-      var userB = this.getUserFromConversation();
-      var user = this.$store.getters.getUserById(userB.id);
+      var userConversation = this.getUserFromConversation();
+      var user = this.getUserById(userConversation.id);
 
       // Si la conversacion es de un usuario, mostramos el alias
-      if (this.$store.getters.isContact(user.id)) {
+      if (this.isContact(user.id)) {
         return user.profile.alias;
       }
 

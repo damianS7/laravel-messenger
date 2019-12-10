@@ -23,17 +23,18 @@
   </b-row>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   props: ["name", "alias", "user_id", "avatar"],
   computed: {
     ...mapState(["contacts"]),
+    ...mapGetters(["getConversationWith"]),
     avatarPath: function() {
       return "/images/" + this.avatar;
     },
     lastMessageDate: function() {
       // Buscamos la conversacion asociada a este usuario
-      var conversation = this.$store.getters.getConversationWith(this.user_id);
+      var conversation = this.getConversationWith(this.user_id);
 
       if (typeof conversation !== "undefined") {
         if (conversation.messages.length > 0) {

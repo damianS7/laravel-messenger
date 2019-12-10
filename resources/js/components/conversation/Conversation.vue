@@ -123,7 +123,6 @@ export default {
   },
   computed: {
     ...mapState(["selectedConversation", "appUser", "selectedUser"]),
-    ...mapGetters([]),
     userSelected: function() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;

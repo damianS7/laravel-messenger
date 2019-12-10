@@ -1926,7 +1926,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MessengerApp",
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"]), {
     showPeople: function showPeople() {
       var div = document.getElementsByClassName("side-people")[0];
       div.style.left = "0%";
@@ -1947,14 +1947,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       // Peticion al servidor de los datos necesarios para inicializar la app
-      this.$store.dispatch("fetch"); // Timer para enviar peticiones al servidor en busca de mensajes nuevos
+      this.$store.dispatch("fetchData"); // Timer para enviar peticiones al servidor en busca de mensajes nuevos
 
       window.setInterval(function () {
         _this.$store.dispatch("fetchLastMessages");
       }, 2000);
     }
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["appUser", "selectedContact", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(["fetchData"]), {
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapState"])(["appUser", "selectedUser"]), {
     appUserAvatarPath: function appUserAvatarPath() {
       if (typeof this.appUser.profile.avatar === "undefined") {
         return false;
@@ -2137,13 +2137,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["name", "alias", "user_id", "avatar"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getConversationWith"]), {
     avatarPath: function avatarPath() {
       return "/images/" + this.avatar;
     },
     lastMessageDate: function lastMessageDate() {
       // Buscamos la conversacion asociada a este usuario
-      var conversation = this.$store.getters.getConversationWith(this.user_id);
+      var conversation = this.getConversationWith(this.user_id);
 
       if (typeof conversation !== "undefined") {
         if (conversation.messages.length > 0) {
@@ -2285,7 +2285,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])([]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser", "selectedUser"]), {
     userSelected: function userSelected() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;
@@ -2436,17 +2436,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.conversation.participants[0];
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts", "appUser"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts", "appUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getUserById", "isContact"]), {
     avatarPath: function avatarPath() {
-      var userB = this.getUserFromConversation();
-      var user = this.$store.getters.getUserById(userB.id);
+      var userConversation = this.getUserFromConversation();
+      var user = this.getUserById(userConversation.id);
       return "/images/" + user.profile.avatar;
     },
     contactName: function contactName() {
-      var userB = this.getUserFromConversation();
-      var user = this.$store.getters.getUserById(userB.id); // Si la conversacion es de un usuario, mostramos el alias
+      var userConversation = this.getUserFromConversation();
+      var user = this.getUserById(userConversation.id); // Si la conversacion es de un usuario, mostramos el alias
 
-      if (this.$store.getters.isContact(user.id)) {
+      if (this.isContact(user.id)) {
         return user.profile.alias;
       } // Si no es contacto mostramos el telefono
 
@@ -2697,6 +2697,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ContactProfile",
@@ -2811,6 +2815,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["appUser"]), {
     avatarPath: function avatarPath() {
+      if (typeof this.appUser.profile.avatar === "undefined") {
+        return "";
+      }
+
       return "/images/" + this.appUser.profile.avatar;
     }
   }),
@@ -69349,10 +69357,12 @@ var render = function() {
             "b-col",
             { staticClass: "profile-avatar-icon h-auto", attrs: { cols: "6" } },
             [
-              _c("img", {
-                staticClass: "img-fluid",
-                attrs: { src: "/images/" + _vm.selectedUser.profile.avatar }
-              })
+              _vm.selectedUser.profile.avatar
+                ? _c("img", {
+                    staticClass: "img-fluid",
+                    attrs: { src: "/images/" + _vm.selectedUser.profile.avatar }
+                  })
+                : _vm._e()
             ]
           ),
           _vm._v(" "),
@@ -84040,7 +84050,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     // ---------------------
     // Actualiza datos de la aplicacion
-    update: function update(context) {
+    updateData: function updateData(context) {
       if (data.length > 0) {
         if (data['app_user']) {// Update user
         }
@@ -84056,7 +84066,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         }
       }
     },
-    fetch: function fetch(context) {
+    fetchData: function fetchData(context) {
       axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
         // Si el request tuvo exito (codigo 200)
         if (response.status == 200) {
