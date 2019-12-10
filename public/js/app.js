@@ -84011,8 +84011,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
             userId: userContact.id
           }); // Agregamos el nuevo contacto usando los datos recibidos
 
-          context.commit("ADD_CONTACT", userContact);
-          context.commit('ADD_CONVERSATION', conversation);
+          context.commit("ADD_CONTACT", userContact); // Comprobamos que no exista ninguna conversacion con el mismo id
+
+          if (typeof context.getters.getConversationById(conversation.id) === 'undefined') {
+            context.commit('ADD_CONVERSATION', conversation);
+          }
         }
       });
     },
