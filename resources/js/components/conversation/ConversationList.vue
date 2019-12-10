@@ -26,25 +26,20 @@ export default {
   methods: {
     selectConversation(conversation) {
       // Seleccionamos la conversacion para que se carguen los mensajes.
-      this.$store.commit("selectConversationById", {
+      this.$store.dispatch("selectConversationById", {
         conversationId: conversation.id
       });
 
-      var userB = this.getUserFromConversation(conversation);
-      var user = this.$store.getters.getUserById(userB.id);
-      this.$store.state.selectedUser = user;
-      //this.$store.commit("selectContact", userId);
-    },
-    getUserFromConversation(conversation) {
-      if (conversation.participants[0].id == this.appUser.id) {
-        return conversation.participants[1];
-      }
-s
-      return conversation.participants[0];
+      // Obtnemos el usuario que esta al otro lado de la conversacion
+      var conversationUser = this.$store.getters
+        .getUserFromSelectedConversation;
+
+      // Seleccionamos el usuario
+      this.$store.dispatch("selectUserById", { userId: conversationUser.id });
     }
   },
   computed: {
-    ...mapState(["conversations", "appUser"]),
+    ...mapState(["conversations"]),
     filterConversations: function() {
       return this.conversations.filter(conversation => {
         return conversation.messages.length > 0;

@@ -2076,7 +2076,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       div.style.left = "-100%";
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "conversations"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     filterContacts: function filterContacts() {
       var _this = this;
 
@@ -2134,45 +2134,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name", "id", "index", "alias", "contact_id", "avatar"],
+  props: ["name", "id", "index", "alias", "user_id", "avatar"],
   methods: {},
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     avatarPath: function avatarPath() {
       return "/images/" + this.avatar;
     },
     lastMessageDate: function lastMessageDate() {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      //for (var user of this.contacts) {
+      // Buscamos la conversacion asociada a este usuario
+      //var conversation = this.$store.getters.getConversationWith(user.id);
+      var conversation = this.$store.getters.getConversationWith(this.user_id);
 
-      try {
-        for (var _iterator = this.contacts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var user = _step.value;
-          // Buscamos la conversacion asociada a este usuario
-          var conversation = this.$store.getters.getConversationWith(user.id);
+      if (typeof conversation !== "undefined") {
+        if (conversation.messages.length > 0) {
+          //if (user.id == this.contact_id) {
+          return conversation.messages[conversation.messages.length - 1].sent_at;
+        } //}
 
-          if (typeof conversation !== "undefined") {
-            if (conversation.messages.length > 0) {
-              if (user.id == this.contact_id) {
-                return conversation.messages[conversation.messages.length - 1].sent_at;
-              }
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
+      } //}
+
 
       return "Never";
     }
@@ -2377,23 +2358,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     selectConversation: function selectConversation(conversation) {
       // Seleccionamos la conversacion para que se carguen los mensajes.
-      this.$store.commit("selectConversationById", {
+      this.$store.dispatch("selectConversationById", {
         conversationId: conversation.id
-      });
-      var userB = this.getUserFromConversation(conversation);
-      var user = this.$store.getters.getUserById(userB.id);
-      this.$store.state.selectedUser = user; //this.$store.commit("selectContact", userId);
-    },
-    getUserFromConversation: function getUserFromConversation(conversation) {
-      if (conversation.participants[0].id == this.appUser.id) {
-        return conversation.participants[1];
-      }
+      }); // Obtnemos el usuario que esta al otro lado de la conversacion
 
-      s;
-      return conversation.participants[0];
+      var conversationUser = this.$store.getters.getUserFromSelectedConversation; // Seleccionamos el usuario
+
+      this.$store.dispatch("selectUserById", {
+        userId: conversationUser.id
+      });
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "appUser"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
     filterConversations: function filterConversations() {
       return this.conversations.filter(function (conversation) {
         return conversation.messages.length > 0;
@@ -2728,7 +2704,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {};
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["removeContact", "setSelectedContact"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selectedUser"]), {
     isContact: function isContact() {
       return this.$store.getters.isContact(this.selectedUser.id);
     }
@@ -68631,7 +68607,7 @@ var render = function() {
           return _c("contact-list-item", {
             key: user.id,
             attrs: {
-              contact_id: user.id,
+              user_id: user.id,
               name: user.name,
               phone: user.phone,
               avatar: user.profile.avatar,
@@ -83803,6 +83779,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     selectedConversation: {}
   },
   getters: {
+    // Obtiene la conversacion entre 2 usuarios usando el id de usuario
     getConversationWith: function getConversationWith(state, getters) {
       return function (userId) {
         return state.conversations.find(function (conversation) {
@@ -83810,6 +83787,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       };
     },
+    // Obtiene una conversacion directamente con el id de conversacion
     getConversationById: function getConversationById(state, getters) {
       return function (conversationId) {
         return state.conversations.find(function (conversation) {
@@ -83817,6 +83795,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       };
     },
+    // Obtiene un usuario del array "People" es decir NO CONTACTOS
     getPeopleById: function getPeopleById(state, getters) {
       return function (userId) {
         return state.people.find(function (user) {
@@ -83824,6 +83803,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       };
     },
+    // Obtiene un usuario del array "Contacts"
     getContactById: function getContactById(state, getters) {
       return function (userId) {
         return state.contacts.find(function (user) {
@@ -83831,6 +83811,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         });
       };
     },
+    // Obtiene un usuario buscando en People y Contacts
     getUserById: function getUserById(state, getters) {
       return function (userId) {
         var user = getters.getContactById(userId);
@@ -83842,6 +83823,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         return user;
       };
     },
+    // Comprueba si un usuario esta en nuestra lista de contactos
     isContact: function isContact(state, getters) {
       return function (userId) {
         if (typeof getters.getContactById(userId) === 'undefined') {
@@ -83851,9 +83833,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         return true;
       };
     },
-    // Mejorar nombre de metodo
+    // Devuelve el usuario al otro lado de la conversacion (receiver)
+    // El metodo devuelve el usuario cuyo ID no coincide con el del usuario
+    // logeado en la aplicacion (nosotros).
     getUserFromSelectedConversation: function getUserFromSelectedConversation(state, getters) {
-      if (state.selectedConversation.participants[0].id == state.appUser.id) {
+      // Si nuestro ID de usuario es igual al del primer participante de
+      // la conversacion, devolvemos el segundo usuario.
+      if (state.appUser.id === state.selectedConversation.participants[0].id) {
         return state.selectedConversation.participants[1];
       }
 
@@ -83881,42 +83867,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     selectUser: function selectUser(state, user) {
       state.selectedUser = user;
     },
-    // Selecciona un contacto basado en su id
-    // Este metodo es un action, selectContact es la mutacion
-    selectContactById: function selectContactById(state, payload) {
-      var contactIndex = state.contacts.findIndex(function (user) {
-        return user.id === payload.userId;
-      });
-      state.selectedContact = state.contacts[contactIndex];
-    },
     // Selecciona una conversacion
     selectConversation: function selectConversation(state, conversation) {
       state.selectedConversation = conversation;
     },
-    // Selecciona una conversacion por su id
-    // Este metodo es un action, selectConversation es la mutacion
-    selectConversationById: function selectConversationById(state, payload) {
-      var conversationIndex = state.conversations.findIndex(function (conversation) {
-        return conversation.id === payload.conversationId;
-      });
-      state.selectedConversation = state.conversations[conversationIndex];
-    },
     removeContact: function removeContact(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);
     },
-    // action
-    removeContactById: function removeContactById(state, payload) {
-      var contactIndex = state.contacts.findIndex(function (user) {
-        return user.id === payload.userId;
-      });
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, contactIndex);
-    },
-    // action
-    removePeopleById: function removePeopleById(state, peopleId) {
-      var peopleIndex = state.people.findIndex(function (people) {
-        return people.id === peopleId;
-      });
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.people, peopleIndex);
+    removePeople: function removePeople(state, index) {
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.people, index);
     },
     addContact: function addContact(state, contact) {
       state.contacts.push(contact);
@@ -83925,6 +83884,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       state.conversations.push(conversation);
     },
     // state, message
+    // {conversation_id, message}
     addMessage: function addMessage(state, payload) {
       // Agregamos el mensaje a la conversacion
       payload.conversation.messages.push(payload.message);
@@ -83939,9 +83899,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var user = context.getters.getUserById(data.userId);
       context.commit('selectUser', user);
     },
+    // Selecciona una conversacion por su id
     selectConversationById: function selectConversationById(context, data) {
       var conversation = context.getters.getConversationById(data.conversationId);
       context.commit('selectConversation', conversation);
+    },
+    removeContactById: function removeContactById(context, data) {
+      var contactIndex = context.state.contacts.findIndex(function (user) {
+        return user.id === data.userId;
+      });
+      context.commit('removeContact', contactIndex);
+    },
+    removePeopleById: function removePeopleById(context, data) {
+      var peopleIndex = context.state.people.findIndex(function (user) {
+        return user.id === data.userId;
+      });
+      context.commit('removePeople', peopleIndex);
     },
     messageToConversation: function messageToConversation(context, message) {
       var conversation = context.getters.getConversationById(message.conversation_id);
@@ -83952,7 +83925,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           messages: []
         };
         context.commit('addConversation', conversation);
-      }
+      } // context.commit('addMessage', { conversationId: conversation.id,
+      // message: message.content }
+      // });
+
 
       context.commit('addMessage', {
         message: message,
@@ -83995,7 +83971,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         if (response.status == 204) {
           var user = context.getters.getUserById(data.userId); // Borramos el usuario de contactos
 
-          context.commit("removeContactById", {
+          context.dispatch("removeContactById", {
             userId: user.id
           }); // Movemos el contacto a people
 
@@ -84020,7 +83996,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           var userContact = response['data']['contact'];
           var conversation = response['data']['conversation']; // Borramos a la persona que hemos agregado de People
 
-          context.commit("removePeopleById", userContact.id); // Agregamos el nuevo contacto usando los datos recibidos
+          context.dispatch("removePeopleById", {
+            userId: userContact.id
+          }); // Agregamos el nuevo contacto usando los datos recibidos
 
           context.commit("addContact", userContact);
           context.commit('addConversation', conversation);
@@ -84047,6 +84025,23 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       });
     },
     // ---------------------
+    // Actualiza datos de la aplicacion
+    update: function update(context) {
+      if (data.length > 0) {
+        if (data['app_user']) {// Update user
+        }
+
+        if (data['conversation']) {// Update conversation, add messages
+          // if converssation exists
+          // merge messages
+          // else
+          // push conversation
+        }
+
+        if (data['user']) {// Update user profile
+        }
+      }
+    },
     fetch: function fetch(context) {
       axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
         // Si el request tuvo exito (codigo 200)
