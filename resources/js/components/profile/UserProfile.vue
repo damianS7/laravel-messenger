@@ -78,6 +78,9 @@ export default {
   computed: {
     ...mapState(["appUser"]),
     avatarPath: function() {
+      if (typeof this.appUser.profile.avatar === "undefined") {
+        return "";
+      }
       return "/images/" + this.appUser.profile.avatar;
     }
   },

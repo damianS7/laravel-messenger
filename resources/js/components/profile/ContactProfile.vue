@@ -11,7 +11,11 @@
 
     <b-row class="composeBox composeBox-inner h-auto">
       <b-col cols="6" class="profile-avatar-icon h-auto">
-        <img class="img-fluid" :src="'/images/' + selectedUser.profile.avatar" />
+        <img
+          v-if="selectedUser.profile.avatar"
+          class="img-fluid"
+          :src="'/images/' + selectedUser.profile.avatar"
+        />
       </b-col>
       <b-col cols="6">
         <button v-if="!isContact" @click="addContact" class="btn btn-sm btn-success">ADD CONTACT</button>

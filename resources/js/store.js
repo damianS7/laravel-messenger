@@ -240,7 +240,7 @@ export default new Vuex.Store({
         },
         // ---------------------
         // Actualiza datos de la aplicacion
-        update(context) {
+        updateData(context) {
             if (data.length > 0) {
                 if (data['app_user']) {
                     // Update user
@@ -259,7 +259,7 @@ export default new Vuex.Store({
                 }
             }
         },
-        fetch(context) {
+        fetchData(context) {
             axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {

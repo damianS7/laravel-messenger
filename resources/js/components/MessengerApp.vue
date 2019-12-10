@@ -75,6 +75,7 @@ import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   name: "MessengerApp",
   methods: {
+    ...mapActions(["fetchData"]),
     showPeople() {
       var div = document.getElementsByClassName("side-people")[0];
       div.style.left = "0%";
@@ -93,7 +94,7 @@ export default {
     },
     init() {
       // Peticion al servidor de los datos necesarios para inicializar la app
-      this.$store.dispatch("fetch");
+      this.$store.dispatch("fetchData");
 
       // Timer para enviar peticiones al servidor en busca de mensajes nuevos
       window.setInterval(() => {
@@ -102,8 +103,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["appUser", "selectedContact", "selectedUser"]),
-    ...mapActions(["fetchData"]),
+    ...mapState(["appUser", "selectedUser"]),
     appUserAvatarPath: function() {
       if (typeof this.appUser.profile.avatar === "undefined") {
         return false;
