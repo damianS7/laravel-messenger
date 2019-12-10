@@ -17,6 +17,14 @@ class MessageQueueController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        $currentUserid = Auth::user()->id;
+        $messages = Message::messagesInQueue($currentUserid)->get();
+        MessageQueue::where('to_user_id', $currentUserid)->delete();
+        return response()->json(['messages' => $messages], 200);
+    }
+    
     // Agrega un mensaje a la cola
     public static function toQueue($message, $to_user_id)
     {
