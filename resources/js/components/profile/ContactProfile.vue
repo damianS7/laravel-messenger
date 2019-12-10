@@ -46,7 +46,6 @@ export default {
   },
   computed: {
     ...mapState(["contacts", "selectedUser"]),
-    ...mapMutations(["removeContact", "setSelectedContact"]),
     isContact: function() {
       return this.$store.getters.isContact(this.selectedUser.id);
     }

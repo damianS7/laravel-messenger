@@ -29,7 +29,7 @@
       <contact-list-item
         v-for="user of filterContacts"
         v-bind:key="user.id"
-        :contact_id="user.id"
+        :user_id="user.id"
         :name="user.name"
         :phone="user.phone"
         :avatar="user.profile.avatar"
@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["contacts", "conversations"]),
+    ...mapState(["contacts"]),
     filterContacts: function() {
       return this.contacts.filter(contact =>
         contact.name.toLowerCase().includes(this.keyword.toLowerCase())
