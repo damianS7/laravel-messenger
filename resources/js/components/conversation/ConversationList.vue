@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import ConversationListItem from "./ConversationListItem";
 
 export default {
@@ -24,18 +24,17 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["selectConversationById", "selectUserById"]),
     selectConversation(conversation) {
       // Seleccionamos la conversacion para que se carguen los mensajes.
-      this.$store.dispatch("selectConversationById", {
-        conversationId: conversation.id
-      });
+      this.selectConversationById({ conversationId: conversation.id });
 
       // Obtnemos el usuario que esta al otro lado de la conversacion
       var conversationUser = this.$store.getters
         .getUserFromSelectedConversation;
 
       // Seleccionamos el usuario
-      this.$store.dispatch("selectUserById", { userId: conversationUser.id });
+      this.selectUserById({ userId: conversationUser.id });
     }
   },
   computed: {

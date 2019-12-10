@@ -29,8 +29,9 @@
       <user-list-item
         v-for="user of filterPeople"
         v-bind:key="user.id"
-        :userId="user.id"
+        :user_id="user.id"
         :name="user.name"
+        :alias="user.profile.alias"
         :avatar="user.profile.avatar"
       ></user-list-item>
     </div>

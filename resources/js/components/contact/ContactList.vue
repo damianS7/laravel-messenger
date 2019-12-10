@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import ContactListItem from "./ContactListItem";
 
 export default {
@@ -52,15 +52,14 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["selectUserById", "selectConversationById"]),
     selectContact(user) {
       // Buscamos la conversacion asociada a este usuario
       var conversation = this.$store.getters.getConversationWith(user.id);
-
-      this.$store.dispatch("selectConversationById", {
-        conversationId: conversation.id
-      });
-
-      this.$store.dispatch("selectUserById", { userId: user.id });
+      // Seleccionamos la conversacion
+      this.selectConversationById({ conversationId: conversation.id });
+      // Seleccionamos el usuario
+      this.selectUserById({ userId: user.id });
     },
     hide() {
       var div = document.getElementsByClassName("side-contacts")[0];

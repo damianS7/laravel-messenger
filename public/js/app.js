@@ -2060,14 +2060,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       keyword: ""
     };
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["selectUserById", "selectConversationById"]), {
     selectContact: function selectContact(user) {
       // Buscamos la conversacion asociada a este usuario
-      var conversation = this.$store.getters.getConversationWith(user.id);
-      this.$store.dispatch("selectConversationById", {
+      var conversation = this.$store.getters.getConversationWith(user.id); // Seleccionamos la conversacion
+
+      this.selectConversationById({
         conversationId: conversation.id
-      });
-      this.$store.dispatch("selectUserById", {
+      }); // Seleccionamos el usuario
+
+      this.selectUserById({
         userId: user.id
       });
     },
@@ -2075,7 +2077,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var div = document.getElementsByClassName("side-contacts")[0];
       div.style.left = "-100%";
     }
-  },
+  }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     filterContacts: function filterContacts() {
       var _this = this;
@@ -2134,8 +2136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["name", "id", "index", "alias", "user_id", "avatar"],
-  methods: {},
+  props: ["name", "alias", "user_id", "avatar"],
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts"]), {
     avatarPath: function avatarPath() {
       return "/images/" + this.avatar;
@@ -2146,6 +2147,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (typeof conversation !== "undefined") {
         if (conversation.messages.length > 0) {
+          // Buscamos el ultimo mensaje de la conversacion y obtenemos la fecha
           return conversation.messages[conversation.messages.length - 1].sent_at;
         }
       }
@@ -2350,20 +2352,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       keyword: ""
     };
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["selectConversationById", "selectUserById"]), {
     selectConversation: function selectConversation(conversation) {
       // Seleccionamos la conversacion para que se carguen los mensajes.
-      this.$store.dispatch("selectConversationById", {
+      this.selectConversationById({
         conversationId: conversation.id
       }); // Obtnemos el usuario que esta al otro lado de la conversacion
 
       var conversationUser = this.$store.getters.getUserFromSelectedConversation; // Seleccionamos el usuario
 
-      this.$store.dispatch("selectUserById", {
+      this.selectUserById({
         userId: conversationUser.id
       });
     }
-  },
+  }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
     filterConversations: function filterConversations() {
       return this.conversations.filter(function (conversation) {
@@ -2442,10 +2444,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     contactName: function contactName() {
       var userB = this.getUserFromConversation();
-      var user = this.$store.getters.getUserById(userB.id); // Si la conversacion es de un usuario, mostramos el nombre
+      var user = this.$store.getters.getUserById(userB.id); // Si la conversacion es de un usuario, mostramos el alias
 
       if (this.$store.getters.isContact(user.id)) {
-        return user.name;
+        return user.profile.alias;
       } // Si no es contacto mostramos el telefono
 
 
@@ -2509,6 +2511,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -2619,22 +2622,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PeopleListItem",
-  props: ["name", "userId", "avatar"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["addContact"]), {
+  props: ["name", "alias", "user_id", "avatar"],
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["people"]), {
     avatarPath: function avatarPath() {
       return "/images/" + this.avatar;
     }
   }),
-  methods: {
-    peopleToContact: function peopleToContact() {
-      this.$store.dispatch("saveContact", {
-        userId: this.userId
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["saveContact"]), {
+    addContact: function addContact() {
+      this.saveContact({
+        userId: this.user_id
       });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -2696,30 +2700,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ContactProfile",
-  data: function data() {
-    return {};
-  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["contacts", "selectedUser"]), {
     isContact: function isContact() {
       return this.$store.getters.isContact(this.selectedUser.id);
     }
   }),
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["saveContact", "deleteContact"]), {
     hideProfile: function hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
     },
     addContact: function addContact() {
-      this.$store.dispatch("saveContact", {
+      this.saveContact({
         userId: this.selectedUser.id
       });
     },
-    deleteContact: function deleteContact() {
-      this.$store.dispatch("deleteContact", {
+    removeContact: function removeContact() {
+      this.deleteContact({
         userId: this.selectedUser.id
       });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -2789,6 +2790,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserProfile",
@@ -2803,7 +2814,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return "/images/" + this.appUser.profile.avatar;
     }
   }),
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["saveProfile"]), {
     avatarMenu: function avatarMenu() {
       var div = document.getElementsByClassName("avatar-menu")[0];
 
@@ -2817,18 +2828,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         div.style.bottom = "-100%";
       }
     },
-    selectAvatar: function selectAvatar(avatar) {
-      this.appUser.profile.avatar = avatar;
-      this.$store.dispatch("saveProfile");
-    },
     hideProfile: function hideProfile(event) {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "-100%";
     },
+    selectAvatar: function selectAvatar(avatar) {
+      this.appUser.profile.avatar = avatar;
+      this.saveProfile();
+    },
     updateProfile: function updateProfile(event) {
-      this.$store.dispatch("saveProfile");
+      this.saveProfile();
     }
-  }
+  })
 });
 
 /***/ }),
@@ -69170,8 +69181,9 @@ var render = function() {
           return _c("user-list-item", {
             key: user.id,
             attrs: {
-              userId: user.id,
+              user_id: user.id,
               name: user.name,
+              alias: user.profile.alias,
               avatar: user.profile.avatar
             }
           })
@@ -69229,9 +69241,13 @@ var render = function() {
                 "b-col",
                 { staticClass: "sideBar-name", attrs: { cols: "12" } },
                 [
-                  _c("span", { staticClass: "name-meta" }, [
-                    _vm._v(_vm._s(_vm.name))
-                  ])
+                  _vm.alias !== null
+                    ? _c("span", { staticClass: "name-meta" }, [
+                        _vm._v(_vm._s(_vm.alias))
+                      ])
+                    : _c("span", { staticClass: "name-meta" }, [
+                        _vm._v(_vm._s(_vm.name))
+                      ])
                 ]
               )
             ],
@@ -69250,7 +69266,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-sm btn-primary",
-                        on: { click: _vm.peopleToContact }
+                        on: { click: _vm.addContact }
                       },
                       [_vm._v("ADD")]
                     )
@@ -69357,7 +69373,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-sm btn-danger",
-                    on: { click: _vm.deleteContact }
+                    on: { click: _vm.removeContact }
                   },
                   [_vm._v("DELETE CONTACT")]
                 )
@@ -83843,73 +83859,73 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   },
   mutations: {
     // Asigna el usuario de la app
-    setUser: function setUser(state, appUser) {
+    SET_USER: function SET_USER(state, appUser) {
       state.appUser = appUser;
     },
     // Asigna los contactos del usuario
-    setContacts: function setContacts(state, contacts) {
+    SET_CONTACTS: function SET_CONTACTS(state, contacts) {
       state.contacts = contacts;
     },
     // Asigna los usuarios disponibles en la app que no son contactos
-    setPeople: function setPeople(state, people) {
+    SET_PEOPLE: function SET_PEOPLE(state, people) {
       state.people = people;
     },
     // Asigna las conversaciones
-    setConversations: function setConversations(state, conversations) {
+    SET_CONVERSATIONS: function SET_CONVERSATIONS(state, conversations) {
       state.conversations = conversations;
     },
     // Selecciona un usuario
-    selectUser: function selectUser(state, user) {
+    SET_SELECTED_USER: function SET_SELECTED_USER(state, user) {
       state.selectedUser = user;
     },
     // Selecciona una conversacion
-    selectConversation: function selectConversation(state, conversation) {
+    SET_SELECTED_CONVERSATION: function SET_SELECTED_CONVERSATION(state, conversation) {
       state.selectedConversation = conversation;
     },
-    removeContact: function removeContact(state, index) {
+    REMOVE_CONTACT: function REMOVE_CONTACT(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.contacts, index);
     },
-    removePeople: function removePeople(state, index) {
+    REMOVE_PEOPLE: function REMOVE_PEOPLE(state, index) {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](state.people, index);
     },
-    addContact: function addContact(state, contact) {
+    ADD_CONTACT: function ADD_CONTACT(state, contact) {
       state.contacts.push(contact);
     },
-    addConversation: function addConversation(state, conversation) {
+    ADD_CONVERSATION: function ADD_CONVERSATION(state, conversation) {
       state.conversations.push(conversation);
     },
     // state, message
     // {conversation_id, message}
-    addMessage: function addMessage(state, payload) {
+    ADD_MESSAGE: function ADD_MESSAGE(state, payload) {
       // Agregamos el mensaje a la conversacion
       payload.conversation.messages.push(payload.message);
     },
     // state, people
-    addPeople: function addPeople(state, payload) {
+    ADD_PEOPLE: function ADD_PEOPLE(state, payload) {
       state.people.push(payload.people);
     }
   },
   actions: {
     selectUserById: function selectUserById(context, data) {
       var user = context.getters.getUserById(data.userId);
-      context.commit('selectUser', user);
+      context.commit('SET_SELECTED_USER', user);
     },
     // Selecciona una conversacion por su id
     selectConversationById: function selectConversationById(context, data) {
       var conversation = context.getters.getConversationById(data.conversationId);
-      context.commit('selectConversation', conversation);
+      context.commit('SET_SELECTED_CONVERSATION', conversation);
     },
     removeContactById: function removeContactById(context, data) {
       var contactIndex = context.state.contacts.findIndex(function (user) {
         return user.id === data.userId;
       });
-      context.commit('removeContact', contactIndex);
+      context.commit('REMOVE_CONTACT', contactIndex);
     },
     removePeopleById: function removePeopleById(context, data) {
       var peopleIndex = context.state.people.findIndex(function (user) {
         return user.id === data.userId;
       });
-      context.commit('removePeople', peopleIndex);
+      context.commit('REMOVE_PEOPLE', peopleIndex);
     },
     messageToConversation: function messageToConversation(context, message) {
       var conversation = context.getters.getConversationById(message.conversation_id);
@@ -83919,20 +83935,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           id: message.conversation_id,
           messages: []
         };
-        context.commit('addConversation', conversation);
-      } // context.commit('addMessage', { conversationId: conversation.id,
+        context.commit('ADD_CONVERSATION', conversation);
+      } // context.commit('ADD_MESSAGE', { conversationId: conversation.id,
       // message: message.content }
       // });
 
 
-      context.commit('addMessage', {
+      context.commit('ADD_MESSAGE', {
         message: message,
         conversation: conversation
       });
     },
     // Envia los datos del perfil actualizado a la base de datos
     saveProfile: function saveProfile(context) {
-      var profile = this.state.appUser.profile;
+      var profile = context.state.appUser.profile;
       axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
         profile: profile,
         _method: "put"
@@ -83970,7 +83986,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
             userId: user.id
           }); // Movemos el contacto a people
 
-          context.commit('addPeople', {
+          context.commit('ADD_PEOPLE', {
             people: user
           });
         }
@@ -83995,8 +84011,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
             userId: userContact.id
           }); // Agregamos el nuevo contacto usando los datos recibidos
 
-          context.commit("addContact", userContact);
-          context.commit('addConversation', conversation);
+          context.commit("ADD_CONTACT", userContact);
+          context.commit('ADD_CONVERSATION', conversation);
         }
       });
     },
@@ -84043,13 +84059,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         if (response.status == 200) {
           var data = response["data"]; // Userdata
 
-          context.commit('setUser', data['app_user']); // People
+          context.commit('SET_USER', data['app_user']); // People
 
-          context.commit('setPeople', data['people']); // Contacts
+          context.commit('SET_PEOPLE', data['people']); // Contacts
 
-          context.commit('setContacts', data['contacts']); // Conversations
+          context.commit('SET_CONTACTS', data['contacts']); // Conversations
 
-          context.commit('setConversations', data['conversations']);
+          context.commit('SET_CONVERSATIONS', data['conversations']);
         }
       });
     }

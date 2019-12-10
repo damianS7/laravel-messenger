@@ -22,11 +22,21 @@
         <b-row class="sideBar-profile">
           <b-col cols="12">Alias:</b-col>
           <b-col cols="12">
-            <input type="text" class="form-control" v-model="appUser.profile.alias" @change="updateProfile" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="appUser.profile.alias"
+              @change="updateProfile"
+            />
           </b-col>
           <b-col cols="12">About you:</b-col>
           <b-col cols="12">
-            <textarea class="form-control" rows="4" v-model="appUser.profile.info" @change="updateProfile"></textarea>
+            <textarea
+              class="form-control"
+              rows="4"
+              v-model="appUser.profile.info"
+              @change="updateProfile"
+            ></textarea>
           </b-col>
         </b-row>
       </div>
@@ -48,7 +58,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "UserProfile",
@@ -72,6 +82,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["saveProfile"]),
     avatarMenu() {
       var div = document.getElementsByClassName("avatar-menu")[0];
       if (!this.avatarMenuVisible) {
@@ -84,16 +95,16 @@ export default {
         div.style.bottom = "-100%";
       }
     },
-    selectAvatar(avatar) {
-      this.appUser.profile.avatar = avatar;
-      this.$store.dispatch("saveProfile");
-    },
     hideProfile(event) {
       var div = document.getElementsByClassName("side-profile")[0];
       div.style.left = "-100%";
     },
+    selectAvatar(avatar) {
+      this.appUser.profile.avatar = avatar;
+      this.saveProfile();
+    },
     updateProfile(event) {
-      this.$store.dispatch("saveProfile");
+      this.saveProfile();
     }
   }
 };

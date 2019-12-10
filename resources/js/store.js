@@ -67,70 +67,70 @@ export default new Vuex.Store({
     },
     mutations: {
         // Asigna el usuario de la app
-        setUser(state, appUser) {
+        SET_USER(state, appUser) {
             state.appUser = appUser
         },
         // Asigna los contactos del usuario
-        setContacts(state, contacts) {
+        SET_CONTACTS(state, contacts) {
             state.contacts = contacts
         },
         // Asigna los usuarios disponibles en la app que no son contactos
-        setPeople(state, people) {
+        SET_PEOPLE(state, people) {
             state.people = people
         },
         // Asigna las conversaciones
-        setConversations(state, conversations) {
+        SET_CONVERSATIONS(state, conversations) {
             state.conversations = conversations;
         },
         // Selecciona un usuario
-        selectUser(state, user) {
+        SET_SELECTED_USER(state, user) {
             state.selectedUser = user;
         },
         // Selecciona una conversacion
-        selectConversation(state, conversation) {
+        SET_SELECTED_CONVERSATION(state, conversation) {
             state.selectedConversation = conversation;
         },
-        removeContact(state, index) {
+        REMOVE_CONTACT(state, index) {
             Vue.delete(state.contacts, index);
         },
-        removePeople(state, index) {
+        REMOVE_PEOPLE(state, index) {
             Vue.delete(state.people, index);
         },
-        addContact(state, contact) {
+        ADD_CONTACT(state, contact) {
             state.contacts.push(contact);
         },
-        addConversation(state, conversation) {
+        ADD_CONVERSATION(state, conversation) {
             state.conversations.push(conversation);
         },
         // state, message
         // {conversation_id, message}
-        addMessage(state, payload) {
+        ADD_MESSAGE(state, payload) {
             // Agregamos el mensaje a la conversacion
             payload.conversation.messages.push(payload.message);
         },
         // state, people
-        addPeople(state, payload) {
+        ADD_PEOPLE(state, payload) {
             state.people.push(payload.people);
         },
     },
     actions: {
         selectUserById(context, data) {
             var user = context.getters.getUserById(data.userId);
-            context.commit('selectUser', user);
+            context.commit('SET_SELECTED_USER', user);
         },
         // Selecciona una conversacion por su id
         selectConversationById(context, data) {
             var conversation = context.getters.getConversationById(data.conversationId);
-            context.commit('selectConversation', conversation);
+            context.commit('SET_SELECTED_CONVERSATION', conversation);
         },
         removeContactById(context, data) {
             var contactIndex = context.state.contacts.findIndex(
                 user => user.id === data.userId);
-            context.commit('removeContact', contactIndex);
+            context.commit('REMOVE_CONTACT', contactIndex);
         },
         removePeopleById(context, data) {
             var peopleIndex = context.state.people.findIndex(user => user.id === data.userId);
-            context.commit('removePeople', peopleIndex);
+            context.commit('REMOVE_PEOPLE', peopleIndex);
         },
         messageToConversation(context, message) {
             var conversation = context.getters.getConversationById(
@@ -138,17 +138,17 @@ export default new Vuex.Store({
 
             if (typeof conversation === 'undefined') {
                 conversation = { id: message.conversation_id, messages: [] };
-                context.commit('addConversation', conversation);
+                context.commit('ADD_CONVERSATION', conversation);
             }
 
-            // context.commit('addMessage', { conversationId: conversation.id,
+            // context.commit('ADD_MESSAGE', { conversationId: conversation.id,
             // message: message.content }
             // });
-            context.commit('addMessage', { message, conversation });
+            context.commit('ADD_MESSAGE', { message, conversation });
         },
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
-            var profile = this.state.appUser.profile;
+            var profile = context.state.appUser.profile;
             axios.post("http://127.0.0.1:8000/profile/" + profile.id, {
                 profile: profile,
                 _method: "put"
@@ -186,7 +186,7 @@ export default new Vuex.Store({
                     context.dispatch("removeContactById", { userId: user.id });
 
                     // Movemos el contacto a people
-                    context.commit('addPeople', { people: user });
+                    context.commit('ADD_PEOPLE', { people: user });
                 }
             });
         },
@@ -208,8 +208,8 @@ export default new Vuex.Store({
                     context.dispatch("removePeopleById", { userId: userContact.id });
 
                     // Agregamos el nuevo contacto usando los datos recibidos
-                    context.commit("addContact", userContact);
-                    context.commit('addConversation', conversation);
+                    context.commit("ADD_CONTACT", userContact);
+                    context.commit('ADD_CONVERSATION', conversation);
 
                 }
             });
@@ -261,13 +261,13 @@ export default new Vuex.Store({
                 if (response.status == 200) {
                     var data = response["data"];
                     // Userdata
-                    context.commit('setUser', data['app_user']);
+                    context.commit('SET_USER', data['app_user']);
                     // People
-                    context.commit('setPeople', data['people']);
+                    context.commit('SET_PEOPLE', data['people']);
                     // Contacts
-                    context.commit('setContacts', data['contacts']);
+                    context.commit('SET_CONTACTS', data['contacts']);
                     // Conversations
-                    context.commit('setConversations', data['conversations']);
+                    context.commit('SET_CONVERSATIONS', data['conversations']);
                 }
             });
         },

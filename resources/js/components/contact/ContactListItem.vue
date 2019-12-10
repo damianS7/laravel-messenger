@@ -25,8 +25,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["name", "id", "index", "alias", "user_id", "avatar"],
-  methods: {},
+  props: ["name", "alias", "user_id", "avatar"],
   computed: {
     ...mapState(["contacts"]),
     avatarPath: function() {
@@ -38,6 +37,7 @@ export default {
 
       if (typeof conversation !== "undefined") {
         if (conversation.messages.length > 0) {
+          // Buscamos el ultimo mensaje de la conversacion y obtenemos la fecha
           return conversation.messages[conversation.messages.length - 1]
             .sent_at;
         }

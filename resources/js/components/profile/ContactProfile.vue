@@ -15,7 +15,7 @@
       </b-col>
       <b-col cols="6">
         <button v-if="!isContact" @click="addContact" class="btn btn-sm btn-success">ADD CONTACT</button>
-        <button v-if="isContact" @click="deleteContact" class="btn btn-sm btn-danger">DELETE CONTACT</button>
+        <button v-if="isContact" @click="removeContact" class="btn btn-sm btn-danger">DELETE CONTACT</button>
       </b-col>
     </b-row>
 
@@ -41,9 +41,6 @@ import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "ContactProfile",
-  data: function() {
-    return {};
-  },
   computed: {
     ...mapState(["contacts", "selectedUser"]),
     isContact: function() {
@@ -51,19 +48,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["saveContact", "deleteContact"]),
     hideProfile() {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
     },
     addContact() {
-      this.$store.dispatch("saveContact", {
-        userId: this.selectedUser.id
-      });
+      this.saveContact({ userId: this.selectedUser.id });
     },
-    deleteContact() {
-      this.$store.dispatch("deleteContact", {
-        userId: this.selectedUser.id
-      });
+    removeContact() {
+      this.deleteContact({ userId: this.selectedUser.id });
     }
   }
 };

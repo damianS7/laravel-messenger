@@ -50,9 +50,9 @@ export default {
       var userB = this.getUserFromConversation();
       var user = this.$store.getters.getUserById(userB.id);
 
-      // Si la conversacion es de un usuario, mostramos el nombre
+      // Si la conversacion es de un usuario, mostramos el alias
       if (this.$store.getters.isContact(user.id)) {
-        return user.name;
+        return user.profile.alias;
       }
 
       // Si no es contacto mostramos el telefono
