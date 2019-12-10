@@ -25,7 +25,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  props: ["name", "id", "index", "alias", "contact_id", "avatar"],
+  props: ["name", "id", "index", "alias", "user_id", "avatar"],
   methods: {},
   computed: {
     ...mapState(["contacts"]),
@@ -33,17 +33,13 @@ export default {
       return "/images/" + this.avatar;
     },
     lastMessageDate: function() {
-      for (var user of this.contacts) {
-        // Buscamos la conversacion asociada a este usuario
-        var conversation = this.$store.getters.getConversationWith(user.id);
+      // Buscamos la conversacion asociada a este usuario
+      var conversation = this.$store.getters.getConversationWith(this.user_id);
 
-        if (typeof conversation !== "undefined") {
-          if (conversation.messages.length > 0) {
-            if (user.id == this.contact_id) {
-              return conversation.messages[conversation.messages.length - 1]
-                .sent_at;
-            }
-          }
+      if (typeof conversation !== "undefined") {
+        if (conversation.messages.length > 0) {
+          return conversation.messages[conversation.messages.length - 1]
+            .sent_at;
         }
       }
       return "Never";

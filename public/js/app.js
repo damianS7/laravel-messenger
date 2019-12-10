@@ -2141,19 +2141,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return "/images/" + this.avatar;
     },
     lastMessageDate: function lastMessageDate() {
-      //for (var user of this.contacts) {
       // Buscamos la conversacion asociada a este usuario
-      //var conversation = this.$store.getters.getConversationWith(user.id);
       var conversation = this.$store.getters.getConversationWith(this.user_id);
 
       if (typeof conversation !== "undefined") {
         if (conversation.messages.length > 0) {
-          //if (user.id == this.contact_id) {
           return conversation.messages[conversation.messages.length - 1].sent_at;
-        } //}
-
-      } //}
-
+        }
+      }
 
       return "Never";
     }
