@@ -80,7 +80,7 @@ export default {
         return this.appUser.name;
       }
 
-      var user = this.$store.getters.getUserById(senderId);
+      var user = this.getUserById(senderId);
       return user.name;
     },
     iconMenu() {
@@ -123,6 +123,7 @@ export default {
   },
   computed: {
     ...mapState(["selectedConversation", "appUser", "selectedUser"]),
+    ...mapGetters(["getUserById"]),
     userSelected: function() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;

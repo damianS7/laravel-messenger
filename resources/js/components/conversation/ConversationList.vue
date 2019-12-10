@@ -27,14 +27,14 @@ export default {
     ...mapActions(["selectConversationById", "selectUserById"]),
     selectConversation(conversation) {
       // Seleccionamos la conversacion para que se carguen los mensajes.
-      this.selectConversationById({ conversationId: conversation.id });
+      this.selectConversationById(conversation.id);
 
       // Obtnemos el usuario que esta al otro lado de la conversacion
       var conversationUser = this.$store.getters
         .getUserFromSelectedConversation;
 
       // Seleccionamos el usuario
-      this.selectUserById({ userId: conversationUser.id });
+      this.selectUserById(conversationUser.id);
     }
   },
   computed: {

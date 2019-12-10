@@ -114,22 +114,23 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        selectUserById(context, data) {
-            var user = context.getters.getUserById(data.userId);
+        selectUserById(context, userId) {
+            var user = context.getters.getUserById(userId);
             context.commit('SET_SELECTED_USER', user);
         },
         // Selecciona una conversacion por su id
-        selectConversationById(context, data) {
-            var conversation = context.getters.getConversationById(data.conversationId);
+        selectConversationById(context, conversationId) {
+            var conversation = context.getters.getConversationById(conversationId);
             context.commit('SET_SELECTED_CONVERSATION', conversation);
         },
-        removeContactById(context, data) {
+        removeContactById(context, userId) {
             var contactIndex = context.state.contacts.findIndex(
-                user => user.id === data.userId);
+                user => user.id === userId);
             context.commit('REMOVE_CONTACT', contactIndex);
         },
-        removePeopleById(context, data) {
-            var peopleIndex = context.state.people.findIndex(user => user.id === data.userId);
+        removePeopleById(context, userId) {
+            var peopleIndex = context.state.people.findIndex(
+                user => user.id === userId);
             context.commit('REMOVE_PEOPLE', peopleIndex);
         },
         messageToConversation(context, message) {
@@ -183,7 +184,7 @@ export default new Vuex.Store({
                     var user = context.getters.getUserById(data.userId);
 
                     // Borramos el usuario de contactos
-                    context.dispatch("removeContactById", { userId: user.id });
+                    context.dispatch("removeContactById", user.id);
 
                     // Movemos el contacto a people
                     context.commit('ADD_PEOPLE', { people: user });
@@ -205,7 +206,7 @@ export default new Vuex.Store({
                     var userContact = response['data']['contact'];
                     var conversation = response['data']['conversation'];
                     // Borramos a la persona que hemos agregado de People
-                    context.dispatch("removePeopleById", { userId: userContact.id });
+                    context.dispatch("removePeopleById", userContact.id);
 
                     // Agregamos el nuevo contacto usando los datos recibidos
                     context.commit("ADD_CONTACT", userContact);

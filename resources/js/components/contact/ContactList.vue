@@ -57,9 +57,9 @@ export default {
       // Buscamos la conversacion asociada a este usuario
       var conversation = this.$store.getters.getConversationWith(user.id);
       // Seleccionamos la conversacion
-      this.selectConversationById({ conversationId: conversation.id });
+      this.selectConversationById(conversation.id);
       // Seleccionamos el usuario
-      this.selectUserById({ userId: user.id });
+      this.selectUserById(user.id);
     },
     hide() {
       var div = document.getElementsByClassName("side-contacts")[0];

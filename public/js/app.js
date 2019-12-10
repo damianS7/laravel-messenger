@@ -2065,13 +2065,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // Buscamos la conversacion asociada a este usuario
       var conversation = this.$store.getters.getConversationWith(user.id); // Seleccionamos la conversacion
 
-      this.selectConversationById({
-        conversationId: conversation.id
-      }); // Seleccionamos el usuario
+      this.selectConversationById(conversation.id); // Seleccionamos el usuario
 
-      this.selectUserById({
-        userId: user.id
-      });
+      this.selectUserById(user.id);
     },
     hide: function hide() {
       var div = document.getElementsByClassName("side-contacts")[0];
@@ -2242,7 +2238,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.appUser.name;
       }
 
-      var user = this.$store.getters.getUserById(senderId);
+      var user = this.getUserById(senderId);
       return user.name;
     },
     iconMenu: function iconMenu() {
@@ -2285,7 +2281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser", "selectedUser"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getUserById"]), {
     userSelected: function userSelected() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;
@@ -2355,15 +2351,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["selectConversationById", "selectUserById"]), {
     selectConversation: function selectConversation(conversation) {
       // Seleccionamos la conversacion para que se carguen los mensajes.
-      this.selectConversationById({
-        conversationId: conversation.id
-      }); // Obtnemos el usuario que esta al otro lado de la conversacion
+      this.selectConversationById(conversation.id); // Obtnemos el usuario que esta al otro lado de la conversacion
 
       var conversationUser = this.$store.getters.getUserFromSelectedConversation; // Seleccionamos el usuario
 
-      this.selectUserById({
-        userId: conversationUser.id
-      });
+      this.selectUserById(conversationUser.id);
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations"]), {
@@ -83916,24 +83908,24 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     }
   },
   actions: {
-    selectUserById: function selectUserById(context, data) {
-      var user = context.getters.getUserById(data.userId);
+    selectUserById: function selectUserById(context, userId) {
+      var user = context.getters.getUserById(userId);
       context.commit('SET_SELECTED_USER', user);
     },
     // Selecciona una conversacion por su id
-    selectConversationById: function selectConversationById(context, data) {
-      var conversation = context.getters.getConversationById(data.conversationId);
+    selectConversationById: function selectConversationById(context, conversationId) {
+      var conversation = context.getters.getConversationById(conversationId);
       context.commit('SET_SELECTED_CONVERSATION', conversation);
     },
-    removeContactById: function removeContactById(context, data) {
+    removeContactById: function removeContactById(context, userId) {
       var contactIndex = context.state.contacts.findIndex(function (user) {
-        return user.id === data.userId;
+        return user.id === userId;
       });
       context.commit('REMOVE_CONTACT', contactIndex);
     },
-    removePeopleById: function removePeopleById(context, data) {
+    removePeopleById: function removePeopleById(context, userId) {
       var peopleIndex = context.state.people.findIndex(function (user) {
-        return user.id === data.userId;
+        return user.id === userId;
       });
       context.commit('REMOVE_PEOPLE', peopleIndex);
     },
@@ -83992,9 +83984,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         if (response.status == 204) {
           var user = context.getters.getUserById(data.userId); // Borramos el usuario de contactos
 
-          context.dispatch("removeContactById", {
-            userId: user.id
-          }); // Movemos el contacto a people
+          context.dispatch("removeContactById", user.id); // Movemos el contacto a people
 
           context.commit('ADD_PEOPLE', {
             people: user
@@ -84017,9 +84007,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           var userContact = response['data']['contact'];
           var conversation = response['data']['conversation']; // Borramos a la persona que hemos agregado de People
 
-          context.dispatch("removePeopleById", {
-            userId: userContact.id
-          }); // Agregamos el nuevo contacto usando los datos recibidos
+          context.dispatch("removePeopleById", userContact.id); // Agregamos el nuevo contacto usando los datos recibidos
 
           context.commit("ADD_CONTACT", userContact); // Comprobamos que no exista ninguna conversacion con el mismo id
 
