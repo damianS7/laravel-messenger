@@ -26,20 +26,20 @@ class MessageController extends Controller
     {
         // User ID
         $user_id = Auth::user()->id;
-
+        
         $message = new Message;
         $message->conversation_id = $conversationId;
         $message->author_id = $user_id;
         $message->content = $request['message'];
         $message->save();
-
+        
         $messageData = Message::messageInfo($message->id)->first();
-        $conversation = Conversation::find($conversationId)->with('users')->first();
-
-        if ($conversation->users[0]->id == $user_id) {
-            $to_user_id = $conversation->users[1]->id;
+        $conversation = Conversation::where('id', $conversationId)->with('participants')->first();
+        
+        if ($conversation->participants[0]->id == $user_id) {
+            $to_user_id = $conversation->participants[1]->id;
         } else {
-            $to_user_id = $conversation->users[0]->id;
+            $to_user_id = $conversation->participants[0]->id;
         }
 
         MessageQueueController::toQueue($message, $to_user_id);
