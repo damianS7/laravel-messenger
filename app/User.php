@@ -95,4 +95,17 @@ class User extends Authenticatable
             'conversation_id'
         );
     }
+
+    // Mensajes destinados al usuario
+    public function messagesInQueue()
+    {
+        return $this->hasManyThrough(
+            'App\Message',
+            'App\MessageQueue',
+            'to_user_id',
+            'id',
+            'id',
+            'message_id'
+        );
+    }
 }
