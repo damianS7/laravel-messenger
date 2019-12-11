@@ -18,7 +18,7 @@
         v-for="(message, index) of selectedConversation.messages"
         v-bind:key="index"
         :author_id="message.author_id"
-        :alias="senderName(message.author_id)"
+        :alias="senderAlias(message.author_id)"
         :message="message.content"
         :name="senderName(message.author_id)"
         :sent_at="message.sent_at"
@@ -82,6 +82,14 @@ export default {
 
       var user = this.getUserById(senderId);
       return user.name;
+    },
+    senderAlias(senderId) {
+      if (this.appUser.id === senderId) {
+        return this.appUser.profile.alias;
+      }
+
+      var user = this.getUserById(senderId);
+      return user.profile.alias;
     },
     iconMenu() {
       var div = document.getElementsByClassName("icon-menu")[0];
