@@ -18,9 +18,8 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('contact_id');
             $table->unique(['user_id', 'contact_id']);
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('contact_id')->references('id')->on('users');
-            // unique
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('contact_id')->references('id')->on('users')->onDelete('CASCADE');
         });
     }
 
