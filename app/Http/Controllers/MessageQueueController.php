@@ -20,7 +20,11 @@ class MessageQueueController extends Controller
     public function index()
     {
         $currentUserid = Auth::user()->id;
-        $messages = Message::messagesInQueue($currentUserid)->get();
+        // Hay que devolver un array con las conversaciones y los mensajes
+        $messages = Auth::user()->messagesInQueue()
+        ->with(['conversation.participants'])
+        ->get();
+
         MessageQueue::where('to_user_id', $currentUserid)->delete();
         return response()->json(['messages' => $messages], 200);
     }
