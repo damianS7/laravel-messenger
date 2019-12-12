@@ -111,17 +111,16 @@ export default {
       return false;
     },
     sendMessage(event) {
-      // No hay nada que enviar
-      if (this.input.length == 0) {
-        return;
+      // Si existe texto que enviar ...
+      if (this.input.trim().length > 0) {
+        // Y hay una conversacion seleccionada ...
+        if (typeof this.selectedConversation.id !== "undefined") {
+          // Enviamos el mensaje
+          this.$store.dispatch("postMessage", this.input);
+        }
       }
 
-      // Ningun usuario seleccionado
-      if (typeof this.selectedConversation.id !== "undefined") {
-        this.$store.dispatch("postMessage", this.input);
-      }
-
-      // Borrar texto del input
+      // Reiniciamos el texto del input
       this.input = "";
     }
   },
