@@ -18,18 +18,6 @@ class Message extends Model
     {
     }
 
-    // Devuelve un mensaje con toda la informacion relacionada
-    public function scopeMessageInfo($query, $messageId)
-    {
-        $message = $query->select(['messages.*',
-        'users.name AS author_name', 'profiles.alias AS author_alias'])
-        ->join('users', 'users.id', '=', 'messages.author_id')
-        ->leftJoin('profiles', 'users.id', '=', 'profiles.user_id')
-        ->where('messages.id', $messageId)
-        ->orderBy('messages.sent_at', 'ASC');
-        return $message;
-    }
-
     /**
      * Los mensajes pertenecen a una conversacion
      */

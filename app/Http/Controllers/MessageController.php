@@ -33,8 +33,11 @@ class MessageController extends Controller
         $message->content = $request['message'];
         $message->save();
         
-        $messageData = Message::messageInfo($message->id)->first();
-        $conversation = Conversation::where('id', $conversationId)->with('participants')->first();
+        //$message = Message::with(['author'])->where('id', $message->id)->first();
+        $message = Message::where('id', $message->id)->first();
+        
+        $conversation = Conversation::where('id', $conversationId)
+            ->with(['participants'])->first();
         
         if ($conversation->participants[0]->id == $user_id) {
             $to_user_id = $conversation->participants[1]->id;
@@ -43,7 +46,7 @@ class MessageController extends Controller
         }
 
         MessageQueueController::toQueue($message, $to_user_id);
-        return response()->json($messageData, 200);
+        return response()->json(['message' => $message], 200);
     }
 
     /**
