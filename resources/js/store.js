@@ -30,6 +30,11 @@ export default new Vuex.Store({
             return state.conversations.find(
                 conversation => conversation.id === conversationId);
         },
+        // Devuelve el index en el que se encuentra una conversacion en el array
+        getConversationIndexById: (state, getters) => (conversationId) => {
+            return state.conversations.findIndex(
+                conversation => conversation.id === conversationId);
+        },
         // Obtiene un usuario del array "People" es decir NO CONTACTOS
         getPeopleById: (state, getters) => (userId) => {
             return state.people.find(user => user.id === userId);
@@ -67,16 +72,16 @@ export default new Vuex.Store({
     },
     mutations: {
         // Asigna el usuario de la app
-        SET_USER(state, appUser) {
-            state.appUser = appUser
+        SET_USER(state, user) {
+            state.appUser = user;
         },
         // Asigna los contactos del usuario
-        SET_CONTACTS(state, contacts) {
-            state.contacts = contacts
+        SET_CONTACTS(state, users) {
+            state.contacts = users;
         },
         // Asigna los usuarios disponibles en la app que no son contactos
-        SET_PEOPLE(state, people) {
-            state.people = people
+        SET_PEOPLE(state, users) {
+            state.people = users;
         },
         // Asigna las conversaciones
         SET_CONVERSATIONS(state, conversations) {
@@ -90,63 +95,83 @@ export default new Vuex.Store({
         SET_SELECTED_CONVERSATION(state, conversation) {
             state.selectedConversation = conversation;
         },
+        // Borra un usuario de contacts
         REMOVE_CONTACT(state, index) {
             Vue.delete(state.contacts, index);
         },
+        // Borra un usuario de people
         REMOVE_PEOPLE(state, index) {
             Vue.delete(state.people, index);
         },
-        ADD_CONTACT(state, contact) {
-            state.contacts.push(contact);
+        // Agrega un usuario a contacts
+        ADD_CONTACT(state, user) {
+            state.contacts.push(user);
         },
+        // Agrega una nueva conversacion al array que contiene las conversaciones
         ADD_CONVERSATION(state, conversation) {
             state.conversations.push(conversation);
         },
-        // state, message
-        // {conversation_id, message}
-        ADD_MESSAGE(state, payload) {
-            // Agregamos el mensaje a la conversacion
-            payload.conversation.messages.push(payload.message);
+        // Agrega un usuario a people
+        ADD_PEOPLE(state, user) {
+            state.people.push(user);
         },
-        // state, people
-        ADD_PEOPLE(state, payload) {
-            state.people.push(payload.people);
+        // Mejorar metodo, pasar dos parametros?
+        ADD_MESSAGE(state, { index, message }) {
+            // Agregamos el mensaje a la conversacion
+            state.conversations[index].messages.push(
+                {
+                    id: message.id,
+                    conversation_id: message.conversation_id,
+                    sent_at: message.sent_at,
+                    author_id: message.author_id,
+                    content: message.content
+                }
+            );
         },
     },
     actions: {
+        // Selecciona el usuario con el id indicado
         selectUserById(context, userId) {
             var user = context.getters.getUserById(userId);
             context.commit('SET_SELECTED_USER', user);
         },
-        // Selecciona una conversacion por su id
+        // Selecciona la conversacion con el id indicado
         selectConversationById(context, conversationId) {
             var conversation = context.getters.getConversationById(conversationId);
             context.commit('SET_SELECTED_CONVERSATION', conversation);
         },
+        // Elimina el contacto con el id indicado
         removeContactById(context, userId) {
             var contactIndex = context.state.contacts.findIndex(
                 user => user.id === userId);
             context.commit('REMOVE_CONTACT', contactIndex);
         },
+        // Elimina un usuario del array people con el id indicado
         removePeopleById(context, userId) {
             var peopleIndex = context.state.people.findIndex(
                 user => user.id === userId);
             context.commit('REMOVE_PEOPLE', peopleIndex);
         },
-        messageToConversation(context, message) {
-            var conversation = context.getters.getConversationById(
-                message.conversation_id);
-
-            if (typeof conversation === 'undefined') {
-                conversation = { id: message.conversation_id, messages: [] };
-                context.commit('ADD_CONVERSATION', conversation);
-            }
-
-            // context.commit('ADD_MESSAGE', { conversationId: conversation.id,
-            // message: message.content }
-            // });
-            context.commit('ADD_MESSAGE', { message, conversation });
+        // Este metodo realiza una peticion al backend y recibe los datos necesarios
+        // para inicializar la aplicacion
+        fetchData(context) {
+            axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
+                // Si el request tuvo exito (codigo 200)
+                if (response.status == 200) {
+                    var data = response["data"];
+                    // Userdata
+                    context.commit('SET_USER', data['app_user']);
+                    // People
+                    context.commit('SET_PEOPLE', data['people']);
+                    // Contacts
+                    context.commit('SET_CONTACTS', data['contacts']);
+                    // Conversations
+                    context.commit('SET_CONVERSATIONS', data['conversations']);
+                }
+            });
         },
+        // ============= REVISAR A PARTIR DE AQUI
+
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
             var profile = context.state.appUser.profile;
@@ -163,16 +188,54 @@ export default new Vuex.Store({
             }).then(function (response) {
                 // Si el request tuvo exito (codigo 200)
                 if (response.status == 200) {
-                    var message = response['data'];
                     // Si no hay datos ...
-                    if (message.length == 0) {
+                    if (response['data'].length == 0) {
                         return;
                     }
 
+                    var message = response['data']['message'];
                     context.dispatch('messageToConversation', message);
                 }
             });
         },
+        // Peticion al servidor para recibir los nuevos mensajes
+        fetchLastMessages(context) {
+            axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
+                // Si el request tuvo exito (codigo 200)
+                if (response.status == 200) {
+                    var messages = response['data']['messages'];
+                    // Si no hay datos ...
+                    if (messages.length == 0) {
+                        return;
+                    }
+                    // Iteramos sobre los datos
+                    for (var index in messages) {
+                        var message = messages[index];
+                        context.dispatch('messageToConversation', message);
+                    }
+                }
+
+            });
+        },
+        messageToConversation(context, message) {
+            var conversationIndex = context.getters.getConversationIndexById(
+                message.conversation_id);
+
+            // Si el index no se encuentra es que la conversacion no existe
+            if (conversationIndex === -1) {
+                // Agregamos el campo de los mensajes al objeto
+                message.conversation.messages = [];
+                // Agregamos la conversacion
+                context.commit('ADD_CONVERSATION', message.conversation);
+                // Buscamos de nuevo la conversacion
+                conversationIndex = context.getters.getConversationIndexById(
+                    message.conversation_id);
+            }
+
+            // Agregamos el mensaje a la conversacion indicada
+            context.commit('ADD_MESSAGE', { index: conversationIndex, message });
+        },
+
         // Peticion para borrar un contacto
         // context, user
         deleteContact(context, data) {
@@ -187,7 +250,7 @@ export default new Vuex.Store({
                     context.dispatch("removeContactById", user.id);
 
                     // Movemos el contacto a people
-                    context.commit('ADD_PEOPLE', { people: user });
+                    context.commit('ADD_PEOPLE', user);
                 }
             });
         },
@@ -219,27 +282,7 @@ export default new Vuex.Store({
                 }
             });
         },
-        // Peticion al servidor para recibir los nuevos mensajes
-        fetchLastMessages(context) {
-            axios.get("http://127.0.0.1:8000/conversations/update").then(function (response) {
-                // Si el request tuvo exito (codigo 200)
-                if (response.status == 200) {
-                    var messages = response['data']['messages'];
-                    // Si no hay datos ...
-                    if (messages.length == 0) {
-                        return;
-                    }
 
-                    // Iteramos sobre los datos
-                    for (var index in messages) {
-                        var message = messages[index];
-                        context.dispatch('messageToConversation', message);
-                    }
-                }
-
-            });
-        },
-        // ---------------------
         // Actualiza datos de la aplicacion
         updateData(context) {
             if (data.length > 0) {
@@ -259,22 +302,6 @@ export default new Vuex.Store({
                     // Update user profile
                 }
             }
-        },
-        fetchData(context) {
-            axios.get("http://127.0.0.1:8000/messenger/fetch").then(function (response) {
-                // Si el request tuvo exito (codigo 200)
-                if (response.status == 200) {
-                    var data = response["data"];
-                    // Userdata
-                    context.commit('SET_USER', data['app_user']);
-                    // People
-                    context.commit('SET_PEOPLE', data['people']);
-                    // Contacts
-                    context.commit('SET_CONTACTS', data['contacts']);
-                    // Conversations
-                    context.commit('SET_CONVERSATIONS', data['conversations']);
-                }
-            });
         },
     }
 })
