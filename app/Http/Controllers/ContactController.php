@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\User;
+use App\Http\Requests\ContactStoreRequest;
 use Auth;
 use DB;
 
@@ -25,7 +26,7 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactStoreRequest $request)
     {
         // ID de usuario que agregara el contacto
         $user_id = Auth::user()->id;
@@ -66,12 +67,12 @@ class ContactController extends Controller
             ->with(['participants', 'messages'])->first();
         }
 
-        // Obtenemos los contactos del usuario junto con sus perfiles
-        //$data_contact = Contact::contactInfo($user_id, $contact->contact_id)->first();
-        $data_contact = User::info()->where('id', $contact->contact_id)->with('profile')->first();
+        // Buscamos al contacto
+        $userContact = User::info()->where('id', $contact->contact_id)
+        ->with('profile')->first();
         
-        // Devolvemos el json con los datos del nuevo contacto
-        return response()->json(['contact' => $data_contact,
+        // Devolvemos el json con los datos del nuevo contacto y la conversacion
+        return response()->json(['contact' => $userContact,
             'conversation' => $conversation], 200);
     }
 
@@ -81,16 +82,21 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($contact_id)
+    public function destroy($contactId)
     {
         // Id del usuario que va a eliminar contactos de su "agenda"
-        $user_id = Auth::user()->id;
+        $currentUserId = Auth::user()->id;
 
         // Elimina un contacto
-        $contact = Contact::where(['user_id' => $user_id,'contact_id' => $contact_id])->first();
+        $contact = Contact::where(
+            [
+                'user_id' => $currentUserId,
+                'contact_id' => $contactId
+            ]
+        )->first();
         $contact->delete();
 
-        // Elimina la conversacion
-        return response()->json([$contact], 204);
+        // Elimina el contacto
+        return response()->json(['contact' => $contact], 204);
     }
 }

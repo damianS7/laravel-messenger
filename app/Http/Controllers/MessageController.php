@@ -7,6 +7,7 @@ use Auth;
 use App\Message;
 use App\Conversation;
 use App\MessageQueue;
+use App\Http\Requests\MessageStoreRequest;
 
 class MessageController extends Controller
 {
@@ -22,7 +23,7 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $conversationId)
+    public function store(MessageStoreRequest $request, $conversationId)
     {
         // User ID
         $user_id = Auth::user()->id;
