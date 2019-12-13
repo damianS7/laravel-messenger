@@ -1,16 +1,23 @@
 ## Laravel Messenger
-Aplicacion de mensajeria similar a Whatsapp. La aplicacion usa Laravel como backend y VueJS/VueX/VueRouter y Bootstrap para el frontend
-## Tecnologias en uso
+Aplicacion de mensajeria estilo Whatsapp. La aplicacion usa Laravel como backend y Vue/VueX/Bootstrap como frontend
+
+## Tecnologias
 - Laravel
+- Laravel Echo (WebSocket)
+- Bootstrap-Vue
+- Font-awesome
 - VueJS/Vuex
+- MySQL
 
 ## Funciones
-- Agregar contactos
-- Borrar contactos
+- Interfaz estilo "Whatsapp"
+- Envio de mensajes entre usuarios
+- Buscar "gente" registrada
+- Agregar/Borrar contactos
 - Buscar/Filtrar contactos
-- Enviar mensajes
+- Seleccion de avatar de usuario
+- Sistema de perfiles
 - Emojis
-- Ver informacion de perfil de usuario y contacto
 
 ## Interfaz Grafica
 Creditos a:
