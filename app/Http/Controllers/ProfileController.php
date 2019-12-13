@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Profile;
+use App\Http\Requests\ProfileUpdateRequest;
 use Auth;
 
 class ProfileController extends Controller
@@ -21,7 +22,7 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $profile_id)
+    public function update(ProfileUpdateRequest $request, $profile_id)
     {
         $user_id = Auth::user()->id;
         $profile = Profile::where(['id' => $profile_id , 'user_id' => $user_id])->first();
