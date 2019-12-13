@@ -30,15 +30,13 @@ class MessengerController extends Controller
      */
     public function index()
     {
-        // ID de usuario que necesita los datos
+        // ID del usuario logeado en la app
         $currentUserId = Auth::user()->id;
         
-        // Userdata
-        //$data['app_user'] = Profile::fullProfile($currentUserId);
+        // Datos de usuario logeado en la app
         $data['app_user'] = User::info()->where('id', $currentUserId)->with('profile')->first();
         
         // Contacts
-        //$data['contacts'] = Contact::userContacts($currentUserId)->get();
         $data['contacts'] = User::where('id', $currentUserId)->first()->contacts()->with('profile')->get();
         
         // People (No contactos)
@@ -49,8 +47,8 @@ class MessengerController extends Controller
         MessageQueue::where('to_user_id', $currentUserId)->delete();
 
         // Conversaciones
-        $data['conversations'] = User::where('id', $currentUserId)->first()->conversations()
-        ->with(['participants', 'messages'])->get();
+        $data['conversations'] = User::where('id', $currentUserId)->first()
+        ->conversations()->with(['participants', 'messages'])->get();
 
         // Para cada conversacion obtenemos sus mensajes
         return response()->json($data, 200);

@@ -38,7 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Gente disponible en la app para agregar a contactos
+    // Gente disponible en la app para agregar a contactos.
+    // La consulta devuelve usuarios que NO son contactos del usuario.
     public function scopePeople($query, $currentUserId)
     {
         return $this->select(['users.id', 'users.name', 'users.phone', 'users.email',
@@ -57,17 +58,13 @@ class User extends Authenticatable
         return $this->select(['users.id', 'users.name', 'users.email', 'users.phone', 'users.created_at AS member_since']);
     }
 
-    /**
-     * Perfil de usuario
-     */
+    // Perfil del usuario
     public function profile()
     {
         return $this->hasOne('App\Profile', 'user_id', 'id');
     }
 
-    /**
-     * Contactos del usuario
-     */
+    // Contactos del usuario (User)
     public function contacts()
     {
         return $this->hasManyThrough(
@@ -81,9 +78,7 @@ class User extends Authenticatable
         'users.created_at AS member_since']);
     }
 
-    /**
-     * Conversaciones en las que participa el usuario
-     */
+    // Conversaciones en las que participa el usuario
     public function conversations()
     {
         return $this->hasManyThrough(

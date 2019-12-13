@@ -19,13 +19,18 @@ class MessageQueueController extends Controller
 
     public function index()
     {
+        // ID del usuario logeado en la app
         $currentUserid = Auth::user()->id;
-        // Hay que devolver un array con las conversaciones y los mensajes
+        
+        // Buscamos los mensajes que el usuario aun no ha recibido
         $messages = Auth::user()->messagesInQueue()
         ->with(['conversation.participants'])
         ->get();
 
+        // Eliminamos los mensajes de la DB
         MessageQueue::where('to_user_id', $currentUserid)->delete();
+
+        // Enviamos los mensajes al usuario
         return response()->json(['messages' => $messages], 200);
     }
     

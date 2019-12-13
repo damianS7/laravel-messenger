@@ -13,22 +13,13 @@ class Message extends Model
         'laravel_through_key'
     ];
 
-    // Devuelve los mensajes de una conversacion anteriores a una fecha.
-    public function scopeConversationMessagesBeforeDate($query, $conversationId, $date)
-    {
-    }
-
-    /**
-     * Los mensajes pertenecen a una conversacion
-     */
+    // Conversacion a la que pertenece el mensaje
     public function conversation()
     {
         return $this->belongsTo('App\Conversation');
     }
 
-    /**
-     * Los mensajes pertenecen a un usuario
-     */
+    // Author del mensaje
     public function author()
     {
         return $this->belongsTo('App\User');

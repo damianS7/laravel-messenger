@@ -25,27 +25,33 @@ class MessageController extends Controller
      */
     public function store(MessageStoreRequest $request, $conversationId)
     {
-        // User ID
-        $user_id = Auth::user()->id;
+        // ID del usuario logeado en la app
+        $currentUserId = Auth::user()->id;
         
+        // Creamos el mensaje usando el modelo
         $message = new Message;
         $message->conversation_id = $conversationId;
-        $message->author_id = $user_id;
+        $message->author_id = $currentUserId;
         $message->content = $request['message'];
         $message->save();
         
-        //$message = Message::with(['author'])->where('id', $message->id)->first();
+        // Buscamos el mensaje de nuevo para obtener toda la info
         $message = Message::where('id', $message->id)->first();
         
+        // Buscamos la conversacion a la que pertenece el mensaje
         $conversation = Conversation::where('id', $conversationId)
             ->with(['participants'])->first();
         
-        if ($conversation->participants[0]->id == $user_id) {
+        // Comprobamos quien es el destinatario del mensaje.
+        // Para ello nos aseguramos que el ID del usuario es diferente al ID
+        // del usuario logeado en la app.
+        if ($conversation->participants[0]->id == $currentUserId) {
             $to_user_id = $conversation->participants[1]->id;
         } else {
             $to_user_id = $conversation->participants[0]->id;
         }
 
+        // Enviamos el mensaje a la cola de mensajes
         MessageQueueController::toQueue($message, $to_user_id);
         return response()->json(['message' => $message], 200);
     }

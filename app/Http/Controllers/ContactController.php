@@ -28,27 +28,30 @@ class ContactController extends Controller
      */
     public function store(ContactStoreRequest $request)
     {
-        // ID de usuario que agregara el contacto
-        $user_id = Auth::user()->id;
+        // ID de usuario logeado en la app que agregara el contacto
+        $currentUserId = Auth::user()->id;
 
-        // Agrega un contacto
+        // Preparamos el modelo del nuevo contacto
         $contact = new Contact;
-        $contact->user_id = $user_id;
+        $contact->user_id = $currentUserId;
         $contact->contact_id = $request['user_id'];
         $contact->save();
 
         // Buscamos Conversation existente con los dos IDs de usuario
+        // Puesto que es posible que hayan sido contactos anteriormente.
         $conversation = Conversation::findConversationBetween(
             $contact->user_id,
             $contact->contact_id
         )->with(['participants', 'messages'])->first();
 
-        // Si no la encontramos ...
+        // Si no existe una conversacion anterior entre estos dos usuarios
         if ($conversation === null) {
             // Creamos una nueva conversacion
             $conversation = Conversation::create();
             
             // Insertamos a los usuarios participantes en la nueva conversacion
+
+            // Participante 1
             Participant::create(
                 array(
                     'conversation_id' => $conversation->id,
@@ -56,6 +59,7 @@ class ContactController extends Controller
                 )
             );
 
+            // Participante 2
             Participant::create(
                 array(
                     'conversation_id' => $conversation->id,
@@ -63,6 +67,7 @@ class ContactController extends Controller
                 )
             );
 
+            // Buscamos de nuevo la conversacion
             $conversation = Conversation::where('id', $conversation->id)
             ->with(['participants', 'messages'])->first();
         }
@@ -87,13 +92,15 @@ class ContactController extends Controller
         // Id del usuario que va a eliminar contactos de su "agenda"
         $currentUserId = Auth::user()->id;
 
-        // Elimina un contacto
+        // Buscamos el contacto
         $contact = Contact::where(
             [
                 'user_id' => $currentUserId,
                 'contact_id' => $contactId
             ]
         )->first();
+        
+        // Y Eliminamos el contacto
         $contact->delete();
 
         // Elimina el contacto

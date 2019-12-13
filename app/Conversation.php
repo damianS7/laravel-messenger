@@ -18,6 +18,7 @@ class Conversation extends Model
         'laravel_through_key'
     ];
 
+    // Query para obtener la conversacion de dos usuarios
     public function scopeFindConversationBetween($query, $userA_id, $userB_id)
     {
         //SELECT t1.* FROM conversations AS t1
@@ -35,17 +36,13 @@ class Conversation extends Model
         ->where('cuB.user_id', '=', $userB_id);
     }
     
-    /**
-    * Mensajes de la conversation
-    */
+    // Mensajes de la conversation
     public function messages()
     {
         return $this->hasMany('App\Message');
     }
 
-    /**
-    * Usuarios de la conversacion
-    */
+    // Usuarios de la conversacion
     public function participants()
     {
         return $this->hasManyThrough(

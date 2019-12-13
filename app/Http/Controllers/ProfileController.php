@@ -24,8 +24,11 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request, $profile_id)
     {
-        $user_id = Auth::user()->id;
-        $profile = Profile::where(['id' => $profile_id , 'user_id' => $user_id])->first();
+        // ID del usuario logeado en la app
+        $currentUserId = Auth::user()->id;
+        $profile = Profile::where(['id' => $profile_id,
+            'user_id' => $currentUserId]
+        )->first();
         $profile->alias = $request['profile']['alias'];
         $profile->info = $request['profile']['info'];
         $profile->avatar = $request['profile']['avatar'];
