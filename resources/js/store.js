@@ -170,8 +170,6 @@ export default new Vuex.Store({
                 }
             });
         },
-        // ============= REVISAR A PARTIR DE AQUI
-
         // Envia los datos del perfil actualizado a la base de datos
         saveProfile(context) {
             var profile = context.state.appUser.profile;
@@ -193,6 +191,7 @@ export default new Vuex.Store({
                         return;
                     }
 
+                    // Enviamos el mensaje a la conversacion
                     var message = response['data']['message'];
                     context.dispatch('messageToConversation', message);
                 }
@@ -211,17 +210,21 @@ export default new Vuex.Store({
                     // Iteramos sobre los datos
                     for (var index in messages) {
                         var message = messages[index];
+                        // Enviamos el mensaje a la conversacion
                         context.dispatch('messageToConversation', message);
                     }
                 }
 
             });
         },
+        // Este metodo envia los mensajes a la conversacion correspondiente.
+        // Tambien agrega la conversacion si no existe al array conversations.
         messageToConversation(context, message) {
+            // Index de la conversacion a la que enviar los mensajes
             var conversationIndex = context.getters.getConversationIndexById(
                 message.conversation_id);
 
-            // Si el index no se encuentra es que la conversacion no existe
+            // Si el index es -1, la conversacion no se encontro.
             if (conversationIndex === -1) {
                 // Agregamos el campo de los mensajes al objeto
                 message.conversation.messages = [];
@@ -234,25 +237,6 @@ export default new Vuex.Store({
 
             // Agregamos el mensaje a la conversacion indicada
             context.commit('ADD_MESSAGE', { index: conversationIndex, message });
-        },
-
-        // Peticion para borrar un contacto
-        // context, user
-        deleteContact(context, data) {
-            axios.post("http://127.0.0.1:8000/contacts/" + data.userId, {
-                _method: "delete"
-            }).then(function (response) {
-                // Si el request tuvo exito (codigo 200)
-                if (response.status == 204) {
-                    var user = context.getters.getUserById(data.userId);
-
-                    // Borramos el usuario de contactos
-                    context.dispatch("removeContactById", user.id);
-
-                    // Movemos el contacto a people
-                    context.commit('ADD_PEOPLE', user);
-                }
-            });
         },
         // Peticion para agregar un contacto
         saveContact(context, data) {
@@ -282,26 +266,22 @@ export default new Vuex.Store({
                 }
             });
         },
+        // Peticion para borrar un contacto
+        deleteContact(context, data) {
+            axios.post("http://127.0.0.1:8000/contacts/" + data.userId, {
+                _method: "delete"
+            }).then(function (response) {
+                // Si el request tuvo exito (codigo 200)
+                if (response.status == 204) {
+                    var user = context.getters.getUserById(data.userId);
 
-        // Actualiza datos de la aplicacion
-        updateData(context) {
-            if (data.length > 0) {
-                if (data['app_user']) {
-                    // Update user
-                }
+                    // Borramos el usuario de contactos
+                    context.dispatch("removeContactById", user.id);
 
-                if (data['conversation']) {
-                    // Update conversation, add messages
-                    // if converssation exists
-                    // merge messages
-                    // else
-                    // push conversation
+                    // Movemos el contacto a people
+                    context.commit('ADD_PEOPLE', user);
                 }
-
-                if (data['user']) {
-                    // Update user profile
-                }
-            }
+            });
         },
     }
 })

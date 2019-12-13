@@ -36,7 +36,9 @@ export default {
       // Buscamos la conversacion asociada a este usuario
       var conversation = this.getConversationWith(this.user_id);
 
+      // Si la conversacion existe ...
       if (typeof conversation !== "undefined") {
+        // Si en la conversacion hay mensajes ...
         if (conversation.messages.length > 0) {
           // Buscamos el ultimo mensaje de la conversacion y obtenemos la fecha
           return conversation.messages[conversation.messages.length - 1]

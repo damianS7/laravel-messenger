@@ -75,6 +75,7 @@ export default {
     };
   },
   methods: {
+    // Nombre del usuario que envia el mensaje
     senderName(senderId) {
       if (this.appUser.id === senderId) {
         return this.appUser.name;
@@ -83,6 +84,7 @@ export default {
       var user = this.getUserById(senderId);
       return user.name;
     },
+    // Alias del usuario que envia el mensaje
     senderAlias(senderId) {
       if (this.appUser.id === senderId) {
         return this.appUser.profile.alias;
@@ -91,6 +93,7 @@ export default {
       var user = this.getUserById(senderId);
       return user.profile.alias;
     },
+    // Muestra/oculta el menu de los iconos de conversacion
     iconMenu() {
       var div = document.getElementsByClassName("icon-menu")[0];
       if (!this.iconMenuVisible) {
@@ -101,15 +104,19 @@ export default {
         div.style.bottom = "-100%";
       }
     },
+    // Al hacer click sobre un icono, este es insertado en el input
     insertIcon(event) {
       this.input += event.target.innerHTML;
     },
+    // Devuelve true o false si el usuario que envia el mensaje es la persona
+    // logeada en la app (true) o no (false)
     isSender(author_id) {
       if (author_id == this.appUser.id) {
         return true;
       }
       return false;
     },
+    // Envia el mensaje al servidor
     sendMessage(event) {
       // Si existe texto que enviar ...
       if (this.input.trim().length > 0) {
@@ -124,6 +131,7 @@ export default {
       this.input = "";
     }
   },
+  // Mantiene permanentemente el scroll de la conversacion abajo
   updated() {
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
@@ -131,12 +139,14 @@ export default {
   computed: {
     ...mapState(["selectedConversation", "appUser", "selectedUser"]),
     ...mapGetters(["getUserById"]),
+    // True si se ha seleccionado un usuario
     userSelected: function() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;
       }
       return true;
     },
+    // True si la conversacion esta vacia
     emptyChat: function() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;

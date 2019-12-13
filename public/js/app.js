@@ -2139,9 +2139,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     lastMessageDate: function lastMessageDate() {
       // Buscamos la conversacion asociada a este usuario
-      var conversation = this.getConversationWith(this.user_id);
+      var conversation = this.getConversationWith(this.user_id); // Si la conversacion existe ...
 
       if (typeof conversation !== "undefined") {
+        // Si en la conversacion hay mensajes ...
         if (conversation.messages.length > 0) {
           // Buscamos el ultimo mensaje de la conversacion y obtenemos la fecha
           return conversation.messages[conversation.messages.length - 1].sent_at;
@@ -2233,6 +2234,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: {
+    // Nombre del usuario que envia el mensaje
     senderName: function senderName(senderId) {
       if (this.appUser.id === senderId) {
         return this.appUser.name;
@@ -2241,6 +2243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var user = this.getUserById(senderId);
       return user.name;
     },
+    // Alias del usuario que envia el mensaje
     senderAlias: function senderAlias(senderId) {
       if (this.appUser.id === senderId) {
         return this.appUser.profile.alias;
@@ -2249,6 +2252,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var user = this.getUserById(senderId);
       return user.profile.alias;
     },
+    // Muestra/oculta el menu de los iconos de conversacion
     iconMenu: function iconMenu() {
       var div = document.getElementsByClassName("icon-menu")[0];
 
@@ -2260,9 +2264,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         div.style.bottom = "-100%";
       }
     },
+    // Al hacer click sobre un icono, este es insertado en el input
     insertIcon: function insertIcon(event) {
       this.input += event.target.innerHTML;
     },
+    // Devuelve true o false si el usuario que envia el mensaje es la persona
+    // logeada en la app (true) o no (false)
     isSender: function isSender(author_id) {
       if (author_id == this.appUser.id) {
         return true;
@@ -2270,6 +2277,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return false;
     },
+    // Envia el mensaje al servidor
     sendMessage: function sendMessage(event) {
       // Si existe texto que enviar ...
       if (this.input.trim().length > 0) {
@@ -2284,11 +2292,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.input = "";
     }
   },
+  // Mantiene permanentemente el scroll de la conversacion abajo
   updated: function updated() {
     var div = document.getElementById("conversation");
     div.scrollTop = div.scrollHeight;
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["selectedConversation", "appUser", "selectedUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getUserById"]), {
+    // True si se ha seleccionado un usuario
     userSelected: function userSelected() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;
@@ -2296,6 +2306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return true;
     },
+    // True si la conversacion esta vacia
     emptyChat: function emptyChat() {
       if (typeof this.selectedUser.id === "undefined") {
         return false;
@@ -2427,7 +2438,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {};
   },
   methods: {
+    // Devuelve el otro participante de la conversacion.
     getUserFromConversation: function getUserFromConversation() {
+      // Si el participante [0] somos nosotros, devolvemos el participante [1]
       if (this.conversation.participants[0].id == this.appUser.id) {
         return this.conversation.participants[1];
       }
@@ -2436,11 +2449,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["conversations", "contacts", "appUser"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["getUserById", "isContact"]), {
+    // Path del avatar que aparece en el item de la conversacion
     avatarPath: function avatarPath() {
       var userConversation = this.getUserFromConversation();
       var user = this.getUserById(userConversation.id);
       return "/images/" + user.profile.avatar;
     },
+    // Nombre de usuario que aparece en el item de la conversacion
     contactName: function contactName() {
       var userConversation = this.getUserFromConversation();
       var user = this.getUserById(userConversation.id); // Si la conversacion es de un usuario, mostramos el alias
@@ -2452,7 +2467,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return user.phone;
     },
+    // Fecha del ultimo mensaje de la conversacion
     lastMessageDate: function lastMessageDate() {
+      // Si la conversacion tiene mensajes ...
       if (this.conversation.messages.length > 0) {
         return this.conversation.messages[this.conversation.messages.length - 1].sent_at;
       }
@@ -2713,12 +2730,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
     },
+    // Metodo para agregar contactos
     addContact: function addContact() {
+      // Action
       this.saveContact({
         userId: this.selectedUser.id
       });
     },
+    // Metodo para eliminar contactos
     removeContact: function removeContact() {
+      // Action
       this.deleteContact({
         userId: this.selectedUser.id
       });
@@ -83977,7 +83998,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         }
       });
     },
-    // ============= REVISAR A PARTIR DE AQUI
     // Envia los datos del perfil actualizado a la base de datos
     saveProfile: function saveProfile(context) {
       var profile = context.state.appUser.profile;
@@ -83997,7 +84017,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           // Si no hay datos ...
           if (response['data'].length == 0) {
             return;
-          }
+          } // Enviamos el mensaje a la conversacion
+
 
           var message = response['data']['message'];
           context.dispatch('messageToConversation', message);
@@ -84017,14 +84038,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
 
           for (var index in messages) {
-            var message = messages[index];
+            var message = messages[index]; // Enviamos el mensaje a la conversacion
+
             context.dispatch('messageToConversation', message);
           }
         }
       });
     },
+    // Este metodo envia los mensajes a la conversacion correspondiente.
+    // Tambien agrega la conversacion si no existe al array conversations.
     messageToConversation: function messageToConversation(context, message) {
-      var conversationIndex = context.getters.getConversationIndexById(message.conversation_id); // Si el index no se encuentra es que la conversacion no existe
+      // Index de la conversacion a la que enviar los mensajes
+      var conversationIndex = context.getters.getConversationIndexById(message.conversation_id); // Si el index es -1, la conversacion no se encontro.
 
       if (conversationIndex === -1) {
         // Agregamos el campo de los mensajes al objeto
@@ -84039,22 +84064,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       context.commit('ADD_MESSAGE', {
         index: conversationIndex,
         message: message
-      });
-    },
-    // Peticion para borrar un contacto
-    // context, user
-    deleteContact: function deleteContact(context, data) {
-      axios.post("http://127.0.0.1:8000/contacts/" + data.userId, {
-        _method: "delete"
-      }).then(function (response) {
-        // Si el request tuvo exito (codigo 200)
-        if (response.status == 204) {
-          var user = context.getters.getUserById(data.userId); // Borramos el usuario de contactos
-
-          context.dispatch("removeContactById", user.id); // Movemos el contacto a people
-
-          context.commit('ADD_PEOPLE', user);
-        }
       });
     },
     // Peticion para agregar un contacto
@@ -84082,22 +84091,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         }
       });
     },
-    // Actualiza datos de la aplicacion
-    updateData: function updateData(context) {
-      if (data.length > 0) {
-        if (data['app_user']) {// Update user
-        }
+    // Peticion para borrar un contacto
+    deleteContact: function deleteContact(context, data) {
+      axios.post("http://127.0.0.1:8000/contacts/" + data.userId, {
+        _method: "delete"
+      }).then(function (response) {
+        // Si el request tuvo exito (codigo 200)
+        if (response.status == 204) {
+          var user = context.getters.getUserById(data.userId); // Borramos el usuario de contactos
 
-        if (data['conversation']) {// Update conversation, add messages
-          // if converssation exists
-          // merge messages
-          // else
-          // push conversation
-        }
+          context.dispatch("removeContactById", user.id); // Movemos el contacto a people
 
-        if (data['user']) {// Update user profile
+          context.commit('ADD_PEOPLE', user);
         }
-      }
+      });
     }
   }
 }));

@@ -31,7 +31,9 @@ export default {
     return {};
   },
   methods: {
+    // Devuelve el otro participante de la conversacion.
     getUserFromConversation() {
+      // Si el participante [0] somos nosotros, devolvemos el participante [1]
       if (this.conversation.participants[0].id == this.appUser.id) {
         return this.conversation.participants[1];
       }
@@ -42,11 +44,13 @@ export default {
   computed: {
     ...mapState(["conversations", "contacts", "appUser"]),
     ...mapGetters(["getUserById", "isContact"]),
+    // Path del avatar que aparece en el item de la conversacion
     avatarPath: function() {
       var userConversation = this.getUserFromConversation();
       var user = this.getUserById(userConversation.id);
       return "/images/" + user.profile.avatar;
     },
+    // Nombre de usuario que aparece en el item de la conversacion
     contactName: function() {
       var userConversation = this.getUserFromConversation();
       var user = this.getUserById(userConversation.id);
@@ -59,7 +63,9 @@ export default {
       // Si no es contacto mostramos el telefono
       return user.phone;
     },
+    // Fecha del ultimo mensaje de la conversacion
     lastMessageDate: function() {
+      // Si la conversacion tiene mensajes ...
       if (this.conversation.messages.length > 0) {
         return this.conversation.messages[this.conversation.messages.length - 1]
           .sent_at;

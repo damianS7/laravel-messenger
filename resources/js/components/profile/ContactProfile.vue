@@ -57,10 +57,14 @@ export default {
       var div = document.getElementsByClassName("side-contact-profile")[0];
       div.style.right = "-100%";
     },
+    // Metodo para agregar contactos
     addContact() {
+      // Action
       this.saveContact({ userId: this.selectedUser.id });
     },
+    // Metodo para eliminar contactos
     removeContact() {
+      // Action
       this.deleteContact({ userId: this.selectedUser.id });
     }
   }
